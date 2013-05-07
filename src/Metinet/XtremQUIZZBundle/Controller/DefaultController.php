@@ -9,12 +9,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/hello/{name}")
+     * @Route("/")
      * @Template()
-     * test
      */
-    public function indexAction($name)
+    public function indexAction()
     {
-        return array('name' => $name);
+        
+        return array();
+    }
+    
+    /**
+     * @Route("/amis")
+     * @Template()
+     */
+    public function amisAction()
+    {
+        $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
+        return array("friends" => $friends['data']);
     }
 }

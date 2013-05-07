@@ -3,7 +3,7 @@
 namespace Metinet\Bundle\FacebookBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
-use Metinet\Bundle\ContestBundle\Entity\User;
+use Metinet\Bundle\XtremQUIZZBundle\Entity\User;
 
 /**
  * Sets the session on the request.
