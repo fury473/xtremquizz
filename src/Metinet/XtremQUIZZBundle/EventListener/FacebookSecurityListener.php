@@ -1,6 +1,6 @@
 <?php
 
-namespace Metinet\Bundle\XtremQUIZZBundle\EventListener;
+namespace Metinet\XtremQUIZZBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

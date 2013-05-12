@@ -2,6 +2,8 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
+	<h1>XtremQUIZZ</h1>
+	{#
     <h2>Hello {{ user.firstname }} {{ user.lastname }}</h2>
     <img src="{{ user.picture }}" alt="{{ user.firstname }} {{ user.lastname }}" />
     <p>
@@ -9,4 +11,5 @@
         <strong>ID Facebook</strong>: {{ user.fb_uid }}<br />
         <strong>Créé en BDD le</strong>: {{ user.created_at|date('d/m/Y H:i') }}
     </p>
+	#}
 {% endblock %}
