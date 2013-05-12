@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class QuizzController extends Controller
+class QuestionController extends Controller
 {
     /**
-     * @Route("/admin/quizz/")
+     * @Route("/admin/question/")
      * @Template()
      */
     public function indexAction()

@@ -1,15 +1,15 @@
 <?php
 
-namespace Metinet\XtremQUIZZBundle\Admin\Controller;
+namespace Metinet\XtremQUIZZBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class QuizzController extends Controller
+class AnswerController extends Controller
 {
     /**
-     * @Route("/admin/quizz/")
+     * @Route("/reponse/")
      * @Template()
      */
     public function indexAction()
