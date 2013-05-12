@@ -2,11 +2,6 @@ metinet_xtrem_quizz:
     resource: "@MetinetXtremQUIZZBundle/Controller/"
     type:     annotation
     prefix:   /
-
-metinet_facebook:
-    resource: "@MetinetFacebookBundle/Controller/"
-    type:     annotation
-    prefix:   /
 _security_check:
     pattern: /login_check
 _security_logout:
