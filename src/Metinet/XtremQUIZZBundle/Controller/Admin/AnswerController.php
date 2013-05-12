@@ -1,6 +1,6 @@
 <?php
 
-namespace Metinet\XtremQUIZZBundle\Admin\Controller;
+namespace Metinet\XtremQUIZZBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
