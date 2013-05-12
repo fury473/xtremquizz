@@ -2,6 +2,7 @@ xtremquizz
 
 Chef de Projet:
  - Olivier Haag
+ 
 Développeurs:
  - Marion Excoffier
  - Julie Duisit
