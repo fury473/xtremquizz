@@ -1,0 +1,25 @@
+<h3>S'identifier</h3>
+
+{% if error %}
+ <div class="errors">{{ error.message }}</div>
+{% endif %}
+
+<form action="{{ path('login_check') }}" method="post">
+ <table>
+  <tr>
+   <td>Login</td>
+   <td><input type="text" name="_username" id="usernameInput" value="" size="10" /></td>
+  </tr>
+
+  <tr>
+   <td>Password</td>
+   <td><input type="password" name="_password" id="passwordInput" size="10" /></td>
+  </tr>
+   
+  <tr>
+   <td colspan="2"><input type="submit" value="S'identifier" class="myButton" /></td>
+  </tr>
+ </table>
+      
+ <input type="hidden" name="_target_path" value="/admin" />
+</form>
