@@ -11,10 +11,10 @@ class ThemeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('picture')
-            ->add('shortDesc')
-            ->add('longDesc')
+            ->add('title', null, array('label' => 'Titre'))
+            ->add('picture', null, array('label' => 'Image'))
+            ->add('shortDesc', null, array('label' => 'Petite description'))
+            ->add('longDesc', null, array('label' => 'Grande description'))
         ;
     }
 

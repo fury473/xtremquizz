@@ -9,12 +9,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class ThemeController extends Controller
 {
     /**
-     * @Route("/theme/")
+     * @Route("/theme/", name="theme")
      * @Template()
      */
     public function indexAction()
     {
-        
-        return array();
     }
 }

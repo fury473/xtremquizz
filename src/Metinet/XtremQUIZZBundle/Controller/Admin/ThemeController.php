@@ -21,7 +21,6 @@ class ThemeController extends Controller
      * Lists all Theme entities.
      *
      * @Route("/", name="admin_theme")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class ThemeController extends Controller
     /**
      * Creates a new Theme entity.
      *
-     * @Route("/", name="admin_theme_create")
+     * @Route("/create", name="admin_theme_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Theme:new.html.twig")
      */
@@ -66,7 +65,6 @@ class ThemeController extends Controller
      * Displays a form to create a new Theme entity.
      *
      * @Route("/new", name="admin_theme_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class ThemeController extends Controller
      * Finds and displays a Theme entity.
      *
      * @Route("/{id}", name="admin_theme_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class ThemeController extends Controller
      * Displays a form to edit an existing Theme entity.
      *
      * @Route("/{id}/edit", name="admin_theme_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)

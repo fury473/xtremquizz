@@ -5,7 +5,6 @@
 
     <form action="{{ path('admin_theme_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
-            
         <p>
             <button type="submit">Créer</button>
         </p>
@@ -13,7 +12,7 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('admin_theme') }}">Retour à la liste</a>
+        <a href="{{ path('admin_theme') }}">Retour</a>
     </li>
 </ul>
 {% endblock %}
