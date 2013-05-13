@@ -44,3 +44,9 @@ security:
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/admin/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_user/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_answer/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_question/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_quizz/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_quizz_result/*, roles: [ ROLE_ADMIN ] }
+        - { path: ^/admin_theme/*, roles: [ ROLE_ADMIN ] }
