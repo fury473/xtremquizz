@@ -1,0 +1,66 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Utilisateurs</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Fbuid</th>
+                <td>{{ entity.fbUid }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ entity.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ entity.picture }}</td>
+            </tr>
+            <tr>
+                <th>Points</th>
+                <td>{{ entity.points }}</td>
+            </tr>
+            <tr>
+                <th>Temps moyen</th>
+                <td>{{ entity.averageTime }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de quizz</th>
+                <td>{{ entity.nbQuizz }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Dernière connexion</th>
+                <td>{{ entity.lastconnectAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_user') }}">Retour à la liste</a>
+    </li>
+    <li>
+        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">Modifier</a>
+    </li>
+    <li>
+        <form action="{{ path('admin_user_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

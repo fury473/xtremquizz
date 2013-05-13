@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Résultat du quizz</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Date de début</th>
+                <td>{{ entity.dateStart|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin</th>
+                <td>{{ entity.dateEnd|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Moyenne</th>
+                <td>{{ entity.average }}</td>
+            </tr>
+            <tr>
+                <th>Points gagnés</th>
+                <td>{{ entity.winPoints }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_quizz_result') }}">Retour à la liste</a>
+    </li>
+    <li>
+        <a href="{{ path('admin_quizz_result_edit', { 'id': entity.id }) }}">Modifier</a>
+    </li>
+    <li>
+        <form action="{{ path('admin_quizz_result_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

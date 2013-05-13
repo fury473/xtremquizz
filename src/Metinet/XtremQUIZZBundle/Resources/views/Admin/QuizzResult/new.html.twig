@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>QuizzResult creation</h1>
+
+    <form action="{{ path('admin_quizz_result_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit">Créer</button>
+        </p>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_quizz_result') }}">Retour à la liste</a>
+    </li>
+</ul>
+{% endblock %}

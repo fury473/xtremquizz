@@ -1,5 +1,47 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block body -%}
+    <h1>QuizzResult list</h1>
 
-{% endblock %}
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datestart</th>
+                <th>Dateend</th>
+                <th>Average</th>
+                <th>Winpoints</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_quizz_result_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.dateStart %}{{ entity.dateStart|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.dateEnd %}{{ entity.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.average }}</td>
+                <td>{{ entity.winPoints }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_quizz_result_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_quizz_result_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_quizz_result_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,34 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Question</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ entity.picture }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_question') }}">Retour à la liste</a>
+    </li>
+    <li>
+        <a href="{{ path('admin_question_edit', { 'id': entity.id }) }}">Modifier</a>
+    </li>
+    <li>
+        <form action="{{ path('admin_question_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

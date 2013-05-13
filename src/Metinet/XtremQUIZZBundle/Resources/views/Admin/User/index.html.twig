@@ -1,5 +1,55 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block body -%}
+    <h1>Liste des utilisateurs</h1>
 
-{% endblock %}
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Fbuid</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Username</th>
+                <th>Picture</th>
+                <th>Points</th>
+                <th>Averagetime</th>
+                <th>Nbquizz</th>
+                <th>Createdat</th>
+                <th>Lastconnectat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.fbUid }}</td>
+                <td>{{ entity.firstname }}</td>
+                <td>{{ entity.lastname }}</td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.picture }}</td>
+                <td>{{ entity.points }}</td>
+                <td>{{ entity.averageTime }}</td>
+                <td>{{ entity.nbQuizz }}</td>
+                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.lastconnectAt %}{{ entity.lastconnectAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">Afficher</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">Modifier</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_user_new') }}">Nouvel utilisateur</a>
+        </li>
+    </ul>
+    {% endblock %}

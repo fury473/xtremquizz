@@ -1,0 +1,78 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Quizz</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Titre</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ entity.picture }}</td>
+            </tr>
+            <tr>
+                <th>Courte description</th>
+                <td>{{ entity.shortDesc }}</td>
+            </tr>
+            <tr>
+                <th>Longue description</th>
+                <td>{{ entity.longDesc }}</td>
+            </tr>
+            <tr>
+                <th>Points à gagner</th>
+                <td>{{ entity.winPoints }}</td>
+            </tr>
+            <tr>
+                <th>Temps moyen</th>
+                <td>{{ entity.averageTime }}</td>
+            </tr>
+            <tr>
+                <th>Resultat 1</th>
+                <td>{{ entity.txtWin1 }}</td>
+            </tr>
+            <tr>
+                <th>Resultat 3</th>
+                <td>{{ entity.txtWin3 }}</td>
+            </tr>
+            <tr>
+                <th>Resultat 2</th>
+                <td>{{ entity.txtWin2 }}</td>
+            </tr>
+            <tr>
+                <th>Resultat 4</th>
+                <td>{{ entity.txtWin4 }}</td>
+            </tr>
+            <tr>
+                <th>Titre du partage</th>
+                <td>{{ entity.shareWallTitle }}</td>
+            </tr>
+            <tr>
+                <th>Description du partage</th>
+                <td>{{ entity.shareWallDesc }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste</a>
+    </li>
+    <li>
+        <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier</a>
+    </li>
+    <li>
+        <form action="{{ path('admin_quizz_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

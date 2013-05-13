@@ -1,5 +1,39 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block body -%}
+    <h1>Liste des réponses</h1>
 
-{% endblock %}
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Réponse correcte</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.title }}</td>
+                <td>{{ entity.isCorrect }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_answer_show', { 'id': entity.id }) }}">Afficher</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_answer_edit', { 'id': entity.id }) }}">Modifier</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_answer_new') }}">Nouvelle réponse</a>
+        </li>
+    </ul>
+    {% endblock %}
