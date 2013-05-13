@@ -1,6 +1,6 @@
 <?php
 
-namespace Metinet\XtremQuizzBundle\Manager;
+namespace Metinet\XtremQUIZZBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 

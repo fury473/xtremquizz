@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Theme
  *
  * @ORM\Table(name="theme")
- * @ORM\Entity(repositoryClass="Metinet\Bundle\FacebookBundle\Entity\Repository\ThemeRepository")
+ * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\ThemeRepository")
  */
 class Theme
 {
@@ -168,10 +168,10 @@ class Theme
     /**
      * Add quizzes
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Quizz $quizzes
+     * @param \Metinet\XtremQUIZZBundle\Entity\Quizz $quizzes
      * @return Theme
      */
-    public function addQuizze(\Metinet\Bundle\FacebookBundle\Entity\Quizz $quizzes)
+    public function addQuizze(\Metinet\XtremQUIZZBundle\Entity\Quizz $quizzes)
     {
         $this->quizzes[] = $quizzes;
 
@@ -181,9 +181,9 @@ class Theme
     /**
      * Remove quizzes
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Quizz $quizzes
+     * @param \Metinet\XtremQUIZZBundle\Entity\Quizz $quizzes
      */
-    public function removeQuizze(\Metinet\Bundle\FacebookBundle\Entity\Quizz $quizzes)
+    public function removeQuizze(\Metinet\XtremQUIZZBundle\Entity\Quizz $quizzes)
     {
         $this->quizzes->removeElement($quizzes);
     }

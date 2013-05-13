@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Question
  *
  * @ORM\Table(name="question")
- * @ORM\Entity(repositoryClass="Metinet\Bundle\FacebookBundle\Entity\Repository\QuestionRepository")
+ * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\QuestionRepository")
  */
 class Question
 {
@@ -114,10 +114,10 @@ class Question
     /**
      * Set quizz
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Quizz $quizz
+     * @param \Metinet\XtremQUIZZBundle\Entity\Quizz $quizz
      * @return Question
      */
-    public function setQuizz(\Metinet\Bundle\FacebookBundle\Entity\Quizz $quizz = null)
+    public function setQuizz(\Metinet\XtremQUIZZBundle\Entity\Quizz $quizz = null)
     {
         $this->quizz = $quizz;
 
@@ -127,7 +127,7 @@ class Question
     /**
      * Get quizz
      *
-     * @return \Metinet\Bundle\FacebookBundle\Entity\Quizz
+     * @return \Metinet\XtremQUIZZBundle\Entity\Quizz
      */
     public function getQuizz()
     {
@@ -137,10 +137,10 @@ class Question
     /**
      * Add answers
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Answer $answers
+     * @param \Metinet\XtremQUIZZBundle\Entity\Answer $answers
      * @return Question
      */
-    public function addAnswer(\Metinet\Bundle\FacebookBundle\Entity\Answer $answers)
+    public function addAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answers)
     {
         $this->answers[] = $answers;
 
@@ -150,9 +150,9 @@ class Question
     /**
      * Remove answers
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Answer $answers
+     * @param \Metinet\XtremQUIZZBundle\Entity\Answer $answers
      */
-    public function removeAnswer(\Metinet\Bundle\FacebookBundle\Entity\Answer $answers)
+    public function removeAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answers)
     {
         $this->answers->removeElement($answers);
     }

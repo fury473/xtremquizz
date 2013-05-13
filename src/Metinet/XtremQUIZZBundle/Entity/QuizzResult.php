@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * QuizzResult
  *
  * @ORM\Table(name="quizz_result")
- * @ORM\Entity(repositoryClass="Metinet\Bundle\FacebookBundle\Entity\Repository\QuizzResultRepository")
+ * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\QuizzResultRepository")
  */
 class QuizzResult
 {
@@ -166,10 +166,10 @@ class QuizzResult
     /**
      * Set user
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\User $user
+     * @param \Metinet\XtremQUIZZBundle\Entity\User $user
      * @return QuizzResult
      */
-    public function setUser(\Metinet\Bundle\FacebookBundle\Entity\User $user = null)
+    public function setUser(\Metinet\XtremQUIZZBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -179,7 +179,7 @@ class QuizzResult
     /**
      * Get user
      *
-     * @return \Metinet\Bundle\FacebookBundle\Entity\User
+     * @return \Metinet\XtremQUIZZBundle\Entity\User
      */
     public function getUser()
     {
@@ -189,10 +189,10 @@ class QuizzResult
     /**
      * Set quizz
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Quizz $quizz
+     * @param \Metinet\XtremQUIZZBundle\Entity\Quizz $quizz
      * @return QuizzResult
      */
-    public function setQuizz(\Metinet\Bundle\FacebookBundle\Entity\Quizz $quizz = null)
+    public function setQuizz(\Metinet\XtremQUIZZBundle\Entity\Quizz $quizz = null)
     {
         $this->quizz = $quizz;
 
@@ -202,7 +202,7 @@ class QuizzResult
     /**
      * Get quizz
      *
-     * @return \Metinet\Bundle\FacebookBundle\Entity\Quizz
+     * @return \Metinet\XtremQUIZZBundle\Entity\Quizz
      */
     public function getQuizz()
     {

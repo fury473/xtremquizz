@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Metinet\Bundle\FacebookBundle\Entity\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\UserRepository")
  */
 class User
 {
@@ -357,10 +357,10 @@ class User
     /**
      * Add quizzResults
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults
+     * @param \Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults
      * @return User
      */
-    public function addQuizzResult(\Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults)
+    public function addQuizzResult(\Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults)
     {
         $this->quizzResults[] = $quizzResults;
 
@@ -370,9 +370,9 @@ class User
     /**
      * Remove quizzResults
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults
+     * @param \Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults
      */
-    public function removeQuizzResult(\Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults)
+    public function removeQuizzResult(\Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults)
     {
         $this->quizzResults->removeElement($quizzResults);
     }
@@ -390,10 +390,10 @@ class User
     /**
      * Add answers
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Answer $answers
+     * @param \Metinet\XtremQUIZZBundle\Entity\Answer $answers
      * @return User
      */
-    public function addAnswer(\Metinet\Bundle\FacebookBundle\Entity\Answer $answers)
+    public function addAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answers)
     {
         $this->answers[] = $answers;
 
@@ -403,9 +403,9 @@ class User
     /**
      * Remove answers
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Answer $answers
+     * @param \Metinet\XtremQUIZZBundle\Entity\Answer $answers
      */
-    public function removeAnswer(\Metinet\Bundle\FacebookBundle\Entity\Answer $answers)
+    public function removeAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answers)
     {
         $this->answers->removeElement($answers);
     }

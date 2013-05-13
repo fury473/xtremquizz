@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Quizz
  *
  * @ORM\Table(name="quizz")
- * @ORM\Entity(repositoryClass="Metinet\Bundle\FacebookBundle\Entity\Repository\QuizzRepository")
+ * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\QuizzRepository")
  */
 class Quizz
 {
@@ -512,10 +512,10 @@ class Quizz
     /**
      * Add quizzResults
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults
+     * @param \Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults
      * @return Quizz
      */
-    public function addQuizzResult(\Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults)
+    public function addQuizzResult(\Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults)
     {
         $this->quizzResults[] = $quizzResults;
 
@@ -525,9 +525,9 @@ class Quizz
     /**
      * Remove quizzResults
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults
+     * @param \Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults
      */
-    public function removeQuizzResult(\Metinet\Bundle\FacebookBundle\Entity\QuizzResult $quizzResults)
+    public function removeQuizzResult(\Metinet\XtremQUIZZBundle\Entity\QuizzResult $quizzResults)
     {
         $this->quizzResults->removeElement($quizzResults);
     }
@@ -545,10 +545,10 @@ class Quizz
     /**
      * Add questions
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Question $questions
+     * @param \Metinet\XtremQUIZZBundle\Entity\Question $questions
      * @return Quizz
      */
-    public function addQuestion(\Metinet\Bundle\FacebookBundle\Entity\Question $questions)
+    public function addQuestion(\Metinet\XtremQUIZZBundle\Entity\Question $questions)
     {
         $this->questions[] = $questions;
 
@@ -558,9 +558,9 @@ class Quizz
     /**
      * Remove questions
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Question $questions
+     * @param \Metinet\XtremQUIZZBundle\Entity\Question $questions
      */
-    public function removeQuestion(\Metinet\Bundle\FacebookBundle\Entity\Question $questions)
+    public function removeQuestion(\Metinet\XtremQUIZZBundle\Entity\Question $questions)
     {
         $this->questions->removeElement($questions);
     }
@@ -578,10 +578,10 @@ class Quizz
     /**
      * Set theme
      *
-     * @param \Metinet\Bundle\FacebookBundle\Entity\Theme $theme
+     * @param \Metinet\XtremQUIZZBundle\Entity\Theme $theme
      * @return Quizz
      */
-    public function setTheme(\Metinet\Bundle\FacebookBundle\Entity\Theme $theme = null)
+    public function setTheme(\Metinet\XtremQUIZZBundle\Entity\Theme $theme = null)
     {
         $this->theme = $theme;
 
@@ -591,7 +591,7 @@ class Quizz
     /**
      * Get theme
      *
-     * @return \Metinet\Bundle\FacebookBundle\Entity\Theme
+     * @return \Metinet\XtremQUIZZBundle\Entity\Theme
      */
     public function getTheme()
     {
