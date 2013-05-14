@@ -10,12 +10,31 @@
             <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
         </ul>
         
-        <p>Nombre de joueurs : {{ nbJoueur }}</p>
-        <p>Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}</p>
-        <p>Nouveaux joueurs (30 jours) : {{ nbJoueur30j }}</p>
-        <p>Nombre de quizz disponibles : {{ nbQuizz }}</p>
-        <p>Score moyen des joueurs : {{ scoreMoyen }}</p>
-        <p>Nombre de quizz lancés par les joueurs : blabla</p>
-        <p>Les 3 tops : blabla</p>
-        <p>Les 3 flops : blabla</p>
+        <div>
+            Nombre de joueurs : {{ nbJoueur }}<br/>
+            Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}<br/>
+            Nouveaux joueurs (30 jours) : {{ nbJoueur30j }}<br/>
+        </div>
+        
+        <div>
+            Nombre de quizz disponibles : {{ nbQuizz }}<br/>
+            Nombre de quizz lancés par les joueurs : {{ nbQuizzJoues }}<br/>
+        </div>   
+        
+        <div>Score moyen des joueurs : {{ scoreMoyen }}<br/></div>
+        
+        <div>
+            Les 3 tops : 
+                <ul>
+                    {% for t in top %}
+                        <li>{{ t['title'] }}</li>
+                    {% endfor %}
+                </ul>
+            Les 3 flops :
+                <ul>
+                    {% for f in flop %}
+                        <li>{{ f['title'] }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
 {% endblock %}

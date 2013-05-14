@@ -125,6 +125,13 @@ class Quizz
      * @ORM\Column(name="state", type="integer")
      */
     private $state;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_launches", type="integer")
+     */
+    private $nbLaunches;
 
     /**
      * @ORM\OneToMany(targetEntity="QuizzResult", mappedBy="quizz", cascade={"remove", "persist"})
@@ -151,6 +158,7 @@ class Quizz
         $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->state = 0;
+        $this->nbLaunches = 0;
     }
 
     /**
@@ -506,6 +514,29 @@ class Quizz
     public function getState()
     {
         return $this->state;
+    }
+    
+    /**
+     * Set nbLaunches
+     *
+     * @param integer $nbLaunches
+     * @return Quizz
+     */
+    public function setNbLaunches($nbLaunches)
+    {
+        $this->nbLaunches = $nbLaunches;
+
+        return $this;
+    }
+
+    /**
+     * Get nbLaunches
+     *
+     * @return integer
+     */
+    public function getNbLaunches()
+    {
+        return $this->nbLaunches;
     }
 
 

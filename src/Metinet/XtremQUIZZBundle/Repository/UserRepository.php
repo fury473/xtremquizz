@@ -24,14 +24,13 @@ class UserRepository extends EntityRepository {
     public function getNbJoueur7jours() {
         $date = date('Y-m-d');
         $NewDate=Date('Y-m-d', strtotime("-7 days"));
-        
         return $this->_em->createQuery("
 			SELECT
 				COUNT(i)
 			FROM
 				MetinetXtremQUIZZBundle:User i
                         WHERE
-                                i.createdAt >= $NewDate AND i.createdAt <= $date
+                                i.createdAt BETWEEN '$NewDate' AND '$date'
 		");
     }
     
@@ -44,7 +43,7 @@ class UserRepository extends EntityRepository {
 			FROM
 				MetinetXtremQUIZZBundle:User i
                         WHERE
-                                i.createdAt >= $NewDate AND i.createdAt <= $date
+                                i.createdAt BETWEEN '$NewDate' AND '$date'
 		");
     }
     

@@ -29,8 +29,18 @@ class DefaultController extends Controller
         
         $repQuizz = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
         $nbQuizz = $repQuizz->getNbQuizz()->execute();
+        $nbQuizzJoues = $repQuizz->getNbQuizzJoues()->execute();
+        $nbTopQuizz = $repQuizz->getTopQuizz()->execute();
+        $nbFlopQuizz = $repQuizz->getFlopQuizz()->execute();
 
-        return array('nbJoueur' => $nbJoueur[0][1], 'nbJoueur7j' => $nbJoueur7j[0][1], 'nbJoueur30j' => $nbJoueur30j[0][1], 'nbQuizz' => $nbQuizz[0][1], 'scoreMoyen' => $scoreMoyen[0][1]);
+        return array('nbJoueur' => $nbJoueur[0][1], 
+            'nbJoueur7j' => $nbJoueur7j[0][1], 
+            'nbJoueur30j' => $nbJoueur30j[0][1], 
+            'nbQuizz' => $nbQuizz[0][1], 
+            'scoreMoyen' => $scoreMoyen[0][1], 
+            'nbQuizzJoues' => $nbQuizzJoues[0][1],
+            'top' => $nbTopQuizz,
+            'flop' => $nbFlopQuizz);
     }
 
         
