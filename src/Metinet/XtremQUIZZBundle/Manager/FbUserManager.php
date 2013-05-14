@@ -24,7 +24,7 @@ class FbUserManager
         $dbal = $this->em->getConnection();
 
         $myNull = null;
-        $user = array(
+         $user = array(
             'id'            => null,
             'fb_uid'         => $fbId,
             'email'         => null,
@@ -32,6 +32,11 @@ class FbUserManager
             'lastname'      => null,
             'picture'       => "https://graph.facebook.com/".$fbId."/picture",
             'created_at'    => $now,
+            'nb_quizz'      => 0,
+            'lastconnect_at'    => $now,
+            'username'      => null,
+            'points'        => 0,
+            'average_time'  => 0,
         );
 
         $query = 'INSERT INTO user (fb_uid, email, picture, firstname, lastname, created_at) VALUES (:fbUid, :email, :picture, :firstname, :lastname, :created_at);';
@@ -43,6 +48,12 @@ class FbUserManager
         $std->bindParam(':email',  $myNull, \PDO::PARAM_NULL);
         $std->bindParam(':firstname', $myNull, \PDO::PARAM_NULL);
         $std->bindParam(':lastname', $myNull, \PDO::PARAM_NULL);
+        $std->bindParam(':nb_quizz', $user['nb_quizz'], \PDO::PARAM_STR);
+        $std->bindParam(':lastconnect_at', $user['lastconnect_at'], \PDO::PARAM_STR);
+        $std->bindParam(':username', $myNull, \PDO::PARAM_NULL);
+        $std->bindParam(':points', $user['points'], \PDO::PARAM_STR);
+        $std->bindParam(':average_time', $user['average_time'], \PDO::PARAM_STR);
+
 
         $fbDatas = $this->facebook->api('/me');
         if (!empty($fbDatas)) {
