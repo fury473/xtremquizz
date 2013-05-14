@@ -4,7 +4,6 @@ namespace Metinet\XtremQUIZZBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Metinet\XtremQUIZZBundle\Entity\User;
@@ -38,7 +37,6 @@ class UserController extends Controller
      * Creates a new User entity.
      *
      * @Route("/create", name="admin_user_create")
-     * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:User:new.html.twig")
      */
     public function createAction(Request $request)
@@ -81,7 +79,7 @@ class UserController extends Controller
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/{id}", name="admin_user_show")
+     * @Route("/{id}/show", name="admin_user_show")
      * @Template()
      */
     public function showAction($id)
@@ -131,8 +129,7 @@ class UserController extends Controller
     /**
      * Edits an existing User entity.
      *
-     * @Route("/{id}", name="admin_user_update")
-     * @Method("PUT")
+     * @Route("/{id}/update", name="admin_user_update")
      * @Template("MetinetXtremQUIZZBundle:User:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -166,8 +163,7 @@ class UserController extends Controller
     /**
      * Deletes a User entity.
      *
-     * @Route("/{id}", name="admin_user_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="admin_user_delete")
      */
     public function deleteAction(Request $request, $id)
     {

@@ -4,7 +4,6 @@ namespace Metinet\XtremQUIZZBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Metinet\XtremQUIZZBundle\Entity\Answer;
@@ -38,7 +37,6 @@ class AnswerController extends Controller
      * Creates a new Answer entity.
      *
      * @Route("/create", name="admin_answer_create")
-     * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Answer:new.html.twig")
      */
     public function createAction(Request $request)
@@ -81,7 +79,7 @@ class AnswerController extends Controller
     /**
      * Finds and displays a Answer entity.
      *
-     * @Route("/{id}", name="admin_answer_show")
+     * @Route("/{id}/show", name="admin_answer_show")
      * @Template()
      */
     public function showAction($id)
@@ -131,8 +129,7 @@ class AnswerController extends Controller
     /**
      * Edits an existing Answer entity.
      *
-     * @Route("/{id}", name="admin_answer_update")
-     * @Method("PUT")
+     * @Route("/{id}/update", name="admin_answer_update")
      * @Template("MetinetXtremQUIZZBundle:Answer:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -166,8 +163,7 @@ class AnswerController extends Controller
     /**
      * Deletes a Answer entity.
      *
-     * @Route("/{id}", name="admin_answer_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="admin_answer_delete")
      */
     public function deleteAction(Request $request, $id)
     {

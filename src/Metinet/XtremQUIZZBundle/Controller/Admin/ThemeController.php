@@ -4,7 +4,6 @@ namespace Metinet\XtremQUIZZBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Metinet\XtremQUIZZBundle\Entity\Theme;
@@ -38,7 +37,6 @@ class ThemeController extends Controller
      * Creates a new Theme entity.
      *
      * @Route("/create", name="admin_theme_create")
-     * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Theme:new.html.twig")
      */
     public function createAction(Request $request)
@@ -81,7 +79,7 @@ class ThemeController extends Controller
     /**
      * Finds and displays a Theme entity.
      *
-     * @Route("/{id}", name="admin_theme_show")
+     * @Route("/{id}/show", name="admin_theme_show")
      * @Template()
      */
     public function showAction($id)
@@ -131,8 +129,7 @@ class ThemeController extends Controller
     /**
      * Edits an existing Theme entity.
      *
-     * @Route("/{id}", name="admin_theme_update")
-     * @Method("PUT")
+     * @Route("/{id}/update", name="admin_theme_update")
      * @Template("MetinetXtremQUIZZBundle:Theme:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
@@ -166,8 +163,7 @@ class ThemeController extends Controller
     /**
      * Deletes a Theme entity.
      *
-     * @Route("/{id}", name="admin_theme_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="admin_theme_delete")
      */
     public function deleteAction(Request $request, $id)
     {
