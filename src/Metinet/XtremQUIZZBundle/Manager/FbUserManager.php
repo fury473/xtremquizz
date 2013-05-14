@@ -27,41 +27,26 @@ class FbUserManager
          $user = array(
             'id'            => null,
             'fb_uid'         => $fbId,
-            'email'         => null,
             'firstname'     => null,
             'lastname'      => null,
             'picture'       => "https://graph.facebook.com/".$fbId."/picture",
-            'created_at'    => $now,
-            'nb_quizz'      => 0,
-            'lastconnect_at'    => $now,
-            'username'      => null,
-            'points'        => 0,
-            'average_time'  => 0,
+            'created_at'    => $now
         );
 
-        $query = 'INSERT INTO user (fb_uid, email, picture, firstname, lastname, created_at) VALUES (:fbUid, :email, :picture, :firstname, :lastname, :created_at);';
+        $query = 'INSERT INTO user (fb_uid, picture, firstname, lastname, created_at) VALUES (:fbUid, :picture, :firstname, :lastname, :created_at);';
         $std = $dbal->prepare($query);
 
         $std->bindParam(':fbUid', $user['fb_uid'], \PDO::PARAM_STR);
         $std->bindParam(':created_at', $user['created_at'], \PDO::PARAM_STR);
         $std->bindParam(':picture', $user['picture'], \PDO::PARAM_STR);
-        $std->bindParam(':email',  $myNull, \PDO::PARAM_NULL);
         $std->bindParam(':firstname', $myNull, \PDO::PARAM_NULL);
         $std->bindParam(':lastname', $myNull, \PDO::PARAM_NULL);
-        $std->bindParam(':nb_quizz', $user['nb_quizz'], \PDO::PARAM_STR);
-        $std->bindParam(':lastconnect_at', $user['lastconnect_at'], \PDO::PARAM_STR);
-        $std->bindParam(':username', $myNull, \PDO::PARAM_NULL);
-        $std->bindParam(':points', $user['points'], \PDO::PARAM_STR);
-        $std->bindParam(':average_time', $user['average_time'], \PDO::PARAM_STR);
 
 
         $fbDatas = $this->facebook->api('/me');
+        echo $fbDatas;
+        
         if (!empty($fbDatas)) {
-
-            if (isset($fbDatas['email'])) {
-                $user['email'] = $fbDatas['email'];
-                $std->bindParam(':email', $fbDatas['email'], \PDO::PARAM_STR);
-            }
 
             if (isset($fbDatas['first_name'])) {
                 $user['firstname'] = $fbDatas['first_name'];

@@ -3,8 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Xtrem QUIZZ - LP Metinet 2013{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link type="text/css" rel="stylesheet" href="{{ asset('/bundles/metinetlisteetudiant/css/style.css') }}" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
     </head>
     <body>
         <div id="fb-root"></div>

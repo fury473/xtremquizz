@@ -14,16 +14,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        
-        return array();
-    }
-    
-    /**
-     * @Route("/amis")
-     * @Template()
-     */
-    public function amisAction()
-    {
         $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
         return array("friends" => $friends['data']);
     }

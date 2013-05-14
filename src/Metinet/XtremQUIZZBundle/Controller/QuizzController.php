@@ -14,7 +14,6 @@ class QuizzController extends Controller
      */
     public function indexAction()
     {
-        
         return array();
     }
 }
