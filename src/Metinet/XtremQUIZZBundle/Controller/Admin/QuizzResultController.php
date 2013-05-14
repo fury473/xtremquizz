@@ -21,7 +21,6 @@ class QuizzResultController extends Controller
      * Lists all QuizzResult entities.
      *
      * @Route("/", name="admin_quizz_result")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class QuizzResultController extends Controller
     /**
      * Creates a new QuizzResult entity.
      *
-     * @Route("/", name="admin_quizz_result_create")
+     * @Route("/create", name="admin_quizz_result_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:QuizzResult:new.html.twig")
      */
@@ -66,7 +65,6 @@ class QuizzResultController extends Controller
      * Displays a form to create a new QuizzResult entity.
      *
      * @Route("/new", name="admin_quizz_result_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class QuizzResultController extends Controller
      * Finds and displays a QuizzResult entity.
      *
      * @Route("/{id}", name="admin_quizz_result_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class QuizzResultController extends Controller
      * Displays a form to edit an existing QuizzResult entity.
      *
      * @Route("/{id}/edit", name="admin_quizz_result_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)

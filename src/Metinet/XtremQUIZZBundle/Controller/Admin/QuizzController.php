@@ -21,7 +21,6 @@ class QuizzController extends Controller
      * Lists all Quizz entities.
      *
      * @Route("/", name="admin_quizz")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class QuizzController extends Controller
     /**
      * Creates a new Quizz entity.
      *
-     * @Route("/", name="admin_quizz_create")
+     * @Route("/create", name="admin_quizz_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Quizz:new.html.twig")
      */
@@ -66,7 +65,6 @@ class QuizzController extends Controller
      * Displays a form to create a new Quizz entity.
      *
      * @Route("/new", name="admin_quizz_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class QuizzController extends Controller
      * Finds and displays a Quizz entity.
      *
      * @Route("/{id}", name="admin_quizz_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class QuizzController extends Controller
      * Displays a form to edit an existing Quizz entity.
      *
      * @Route("/{id}/edit", name="admin_quizz_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)

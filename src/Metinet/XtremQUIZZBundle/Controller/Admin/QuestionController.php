@@ -21,7 +21,6 @@ class QuestionController extends Controller
      * Lists all Question entities.
      *
      * @Route("/", name="admin_question")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class QuestionController extends Controller
     /**
      * Creates a new Question entity.
      *
-     * @Route("/", name="admin_question_create")
+     * @Route("/create", name="admin_question_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Question:new.html.twig")
      */
@@ -66,7 +65,6 @@ class QuestionController extends Controller
      * Displays a form to create a new Question entity.
      *
      * @Route("/new", name="admin_question_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class QuestionController extends Controller
      * Finds and displays a Question entity.
      *
      * @Route("/{id}", name="admin_question_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class QuestionController extends Controller
      * Displays a form to edit an existing Question entity.
      *
      * @Route("/{id}/edit", name="admin_question_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)

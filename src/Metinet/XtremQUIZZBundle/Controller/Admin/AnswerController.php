@@ -21,7 +21,6 @@ class AnswerController extends Controller
      * Lists all Answer entities.
      *
      * @Route("/", name="admin_answer")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class AnswerController extends Controller
     /**
      * Creates a new Answer entity.
      *
-     * @Route("/", name="admin_answer_create")
+     * @Route("/create", name="admin_answer_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:Answer:new.html.twig")
      */
@@ -66,7 +65,6 @@ class AnswerController extends Controller
      * Displays a form to create a new Answer entity.
      *
      * @Route("/new", name="admin_answer_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class AnswerController extends Controller
      * Finds and displays a Answer entity.
      *
      * @Route("/{id}", name="admin_answer_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class AnswerController extends Controller
      * Displays a form to edit an existing Answer entity.
      *
      * @Route("/{id}/edit", name="admin_answer_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)

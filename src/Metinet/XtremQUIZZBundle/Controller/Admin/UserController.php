@@ -21,7 +21,6 @@ class UserController extends Controller
      * Lists all User entities.
      *
      * @Route("/", name="admin_user")
-     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -38,7 +37,7 @@ class UserController extends Controller
     /**
      * Creates a new User entity.
      *
-     * @Route("/", name="admin_user_create")
+     * @Route("/create", name="admin_user_create")
      * @Method("POST")
      * @Template("MetinetXtremQUIZZBundle:User:new.html.twig")
      */
@@ -66,7 +65,6 @@ class UserController extends Controller
      * Displays a form to create a new User entity.
      *
      * @Route("/new", name="admin_user_new")
-     * @Method("GET")
      * @Template()
      */
     public function newAction()
@@ -84,7 +82,6 @@ class UserController extends Controller
      * Finds and displays a User entity.
      *
      * @Route("/{id}", name="admin_user_show")
-     * @Method("GET")
      * @Template()
      */
     public function showAction($id)
@@ -109,7 +106,6 @@ class UserController extends Controller
      * Displays a form to edit an existing User entity.
      *
      * @Route("/{id}/edit", name="admin_user_edit")
-     * @Method("GET")
      * @Template()
      */
     public function editAction($id)
