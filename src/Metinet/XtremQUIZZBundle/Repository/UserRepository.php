@@ -20,5 +20,26 @@ class UserRepository extends EntityRepository {
 				MetinetXtremQUIZZBundle:User i
 		');
     }
-
+    
+    public function getNbJoueur7jours() {
+        return $this->_em->createQuery('
+			SELECT
+				COUNT(i)
+			FROM
+				MetinetXtremQUIZZBundle:User i
+                        WHERE
+                                created_at BETWEEN DATE() - 7 AND DATE()
+		');
+    }
+    
+    public function getNbJoueur30jours() {
+        return $this->_em->createQuery('
+			SELECT
+				COUNT(i)
+			FROM
+				MetinetXtremQUIZZBundle:User i
+                        WHERE
+                                created_at BETWEEN GETDATE() - 30 and GETDATE()
+		');
+    }
 }

@@ -5,10 +5,17 @@
 	<h1>XTREM QUIZZ</h1>
         
         <ul class="menu">
+            <li><a href="{{ path('admin') }}">Accueil</a></li>
             <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
             <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
         </ul>
         
-        {#<p>Nombre de joueur : {{ nbJoueur() }}</p>
-        {% render "MetinetXtremQUIZZBundle:Default:nbJoueur" %} #}
+        <p>Nombre de joueur : {{ nbJoueur }}</p>
+        <p>Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}</p>
+        <p>Nouveaux joueurs (30 jours) : {{ nbJoueur30j }}</p>
+        <p>Nombre de quizz disponibles : blabla</p>
+        <p>Score moyen des joueurs : blabla</p>
+        <p>Nombre de quizz lancés par les joueurs : blabla</p>
+        <p>Les 3 tops : blabla</p>
+        <p>Les 3 flops : blabla</p>
 {% endblock %}

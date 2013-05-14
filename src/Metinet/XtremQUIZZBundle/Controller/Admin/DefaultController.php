@@ -16,13 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="admin")
      * @Template()
      */
     public function indexAction()
     {
-        
-        return array();
+        $rep = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
+        $nbJoueur = $rep->getNbJoueur()->execute();
+        $nbJoueur7j = $rep->getNbJoueur7jours()->execute();
+        $nbJoueur30j = $rep->getNbJoueur30jours()->execute();
+
+        return array('nbJoueur' => $nbJoueur[0][1], 'nbJoueur7j' => $nbJoueur7j[0][1], 'nbJoueur30j' => $nbJoueur30j[0][1]);
     }
 
         
@@ -65,16 +69,5 @@ class DefaultController extends Controller
     public function logoutAction()
     {
     
-    }
-    
-    /**
-     * @Template()
-     */
-    public function nbJoueurAction()
-    {
-        $rep = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
-        $nbJoueur = $rep->getNbJoueur()->execute();
-
-        return array('nbJoueur' => $nbJoueur);
     }
 }
