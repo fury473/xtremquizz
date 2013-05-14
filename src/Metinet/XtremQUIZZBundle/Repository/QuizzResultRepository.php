@@ -12,4 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuizzResultRepository extends EntityRepository
 {
+    private function getNbQuizzLances(){
+        
+    }
 }

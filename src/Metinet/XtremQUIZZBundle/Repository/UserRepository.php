@@ -22,24 +22,38 @@ class UserRepository extends EntityRepository {
     }
     
     public function getNbJoueur7jours() {
-        return $this->_em->createQuery('
+        $date = date('Y-m-d');
+        $NewDate=Date('Y-m-d', strtotime("-7 days"));
+        
+        return $this->_em->createQuery("
 			SELECT
 				COUNT(i)
 			FROM
 				MetinetXtremQUIZZBundle:User i
                         WHERE
-                                created_at BETWEEN DATE() - 7 AND DATE()
-		');
+                                i.createdAt >= $NewDate AND i.createdAt <= $date
+		");
     }
     
     public function getNbJoueur30jours() {
-        return $this->_em->createQuery('
+        $date = date('Y-m-d');
+        $NewDate=Date('Y-m-d', strtotime("-30 days"));
+        return $this->_em->createQuery("
 			SELECT
 				COUNT(i)
 			FROM
 				MetinetXtremQUIZZBundle:User i
                         WHERE
-                                created_at BETWEEN GETDATE() - 30 and GETDATE()
-		');
+                                i.createdAt >= $NewDate AND i.createdAt <= $date
+		");
+    }
+    
+    public function getScoreMoyen(){
+        return $this->_em->createQuery("
+                        SELECT
+                                AVG(i.points)
+                        FROM
+                                MetinetXtremQUIZZBundle:User i
+                ");
     }
 }

@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuizzRepository extends EntityRepository
 {
+    public function getNbQuizz() {
+        return $this->_em->createQuery('
+			SELECT
+				COUNT(i)
+			FROM
+				MetinetXtremQUIZZBundle:Quizz i
+                        WHERE
+                                i.state = 1
+		');
+    }
 }

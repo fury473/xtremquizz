@@ -21,12 +21,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $rep = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
-        $nbJoueur = $rep->getNbJoueur()->execute();
-        $nbJoueur7j = $rep->getNbJoueur7jours()->execute();
-        $nbJoueur30j = $rep->getNbJoueur30jours()->execute();
+        $repJoueur = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
+        $nbJoueur = $repJoueur->getNbJoueur()->execute();
+        $nbJoueur7j = $repJoueur->getNbJoueur7jours()->execute();
+        $nbJoueur30j = $repJoueur->getNbJoueur30jours()->execute();
+        $scoreMoyen = $repJoueur->getScoreMoyen()->execute();
+        
+        $repQuizz = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
+        $nbQuizz = $repQuizz->getNbQuizz()->execute();
 
-        return array('nbJoueur' => $nbJoueur[0][1], 'nbJoueur7j' => $nbJoueur7j[0][1], 'nbJoueur30j' => $nbJoueur30j[0][1]);
+        return array('nbJoueur' => $nbJoueur[0][1], 'nbJoueur7j' => $nbJoueur7j[0][1], 'nbJoueur30j' => $nbJoueur30j[0][1], 'nbQuizz' => $nbQuizz[0][1], 'scoreMoyen' => $scoreMoyen[0][1]);
     }
 
         
