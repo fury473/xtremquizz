@@ -1,18 +1,25 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Nouveau theme</h1>
+<h1>XTREM QUIZZ</h1>
 
-    <form action="{{ path('admin_theme_create') }}" method="post" {{ form_enctype(form) }}>
+<ul class="menu">
+    <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+    <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+</ul>
+
+<h2>Nouveau theme</h2>
+
+<form action="{{ path('admin_theme_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <p>
             <button type="submit">Créer</button>
         </p>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_theme') }}">Retour</a>
-    </li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('admin_theme') }}">Retour</a>
+        </li>
+    </ul>
 {% endblock %}

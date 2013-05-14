@@ -1,7 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Liste des quizz</h1>
+    <h1>XTREM QUIZZ</h1>
+        
+    <ul class="menu">
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+    </ul>
+
+    <h2>Liste des quizz</h2>
 
     <table class="records_list">
         <thead>

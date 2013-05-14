@@ -2,18 +2,13 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
-<<<<<<< HEAD
-	<h1>salut</h1>
-=======
-	<h1>Xtrem QUIZZ</h1>
->>>>>>> momo
-	{#
-    <h2>Hello {{ user.firstname }} {{ user.lastname }}</h2>
-    <img src="{{ user.picture }}" alt="{{ user.firstname }} {{ user.lastname }}" />
-    <p>
-        <strong>ID SQL</strong>: {{ user.id }}<br />
-        <strong>ID Facebook</strong>: {{ user.fb_uid }}<br />
-        <strong>Créé en BDD le</strong>: {{ user.created_at|date('d/m/Y H:i') }}
-    </p>
-	#}
+	<h1>XTREM QUIZZ</h1>
+        
+        <ul class="menu">
+            <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+            <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        </ul>
+        
+        {#<p>Nombre de joueur : {{ nbJoueur() }}</p>
+        {% render "MetinetXtremQUIZZBundle:Default:nbJoueur" %} #}
 {% endblock %}

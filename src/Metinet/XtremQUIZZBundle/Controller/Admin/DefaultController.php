@@ -66,4 +66,15 @@ class DefaultController extends Controller
     {
     
     }
+    
+    /**
+     * @Template()
+     */
+    public function nbJoueurAction()
+    {
+        $rep = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
+        $nbJoueur = $rep->getNbJoueur()->execute();
+
+        return array('nbJoueur' => $nbJoueur);
+    }
 }
