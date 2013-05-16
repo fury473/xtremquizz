@@ -3,12 +3,28 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-    <h2>Hello {{ user.firstname }} {{ user.lastname }}</h2>
     <img src="{{ user.picture }}" alt="{{ user.firstname }} {{ user.lastname }}" />
+    <img src="https://graph.facebook.com/{{ user.fb_uid }}/picture?type=large"/>
     <p>
-        <strong>ID SQL</strong>: {{ user.id }}<br />
-        <strong>ID Facebook</strong>: {{ user.fb_uid }}<br />
-        <strong>Créé en BDD le</strong>: {{ user.created_at|date('d/m/Y H:i') }}
+        {{ user.firstname }} {{ user.lastname }}<br />
+        Points: {{ points }} <br />
+            {% if classementJoueur == NULL %}
+                 Classement général: {{ totalJoueur }}/{{ totalJoueur }}
+            {% else %}
+                  Classement général: {{ classementJoueur }}/{{ totalJoueur }}
+            {% endif %}
+       
     </p>
+    
+    <h2>Les derniers quizz disponibles</h2>
+
+    <p>
+        Quizz 1<br />
+        Quizz 2<br />
+        Quizz 3<br />
+        Quizz 4
+    </p>
+    
+    <h2>Classement de vos amis</h2>
 	
 {% endblock %}

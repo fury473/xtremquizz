@@ -56,6 +56,50 @@ class UserRepository extends EntityRepository {
                 ");
     }
     
+                                MetinetXtremQUIZZBundle:User i
+                ");
+        }
+        if ($offset) {
+        return $this->_em->createQuery('
+			SELECT
+				i.averageTime
+			FROM
+				MetinetXtremQUIZZBundle:User i
+		');
+        }
+	
+	public function getPoints(){
+        return $this->_em->createQuery("
+                        SELECT
+                                i.points
+                        FROM
+                                MetinetXtremQUIZZBundle:User i
+                ");
+    }
+    
+        public function getAverageTime() {
+        return $this->_em->createQuery('
+			SELECT
+				i.averageTime
+			FROM
+				MetinetXtremQUIZZBundle:User i
+		');
+    }
+    
+    public function getClassementJoueur($Jpoints, $averageTime) {
+
+        return $this->_em->createQuery("
+                        SELECT
+				COUNT(i)
+			FROM
+				MetinetXtremQUIZZBundle:User i
+                        WHERE
+                                i.points > $Jpoints OR (i.points = $Jpoints AND i.averageTime < $averageTime)
+		");
+        }
+    
+    
+    
     public function getRank($limit = null, $offset = 0){
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.points', 'DESC');
