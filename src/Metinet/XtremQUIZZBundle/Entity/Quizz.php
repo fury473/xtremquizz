@@ -73,16 +73,16 @@ class Quizz
     /**
      * @var string
      *
-     * @ORM\Column(name="txt_win_3", type="string", length=255)
-     */
-    private $txtWin3;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="txt_win_2", type="string", length=255)
      */
     private $txtWin2;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txt_win_3", type="string", length=255)
+     */
+    private $txtWin3;
 
     /**
      * @var string
@@ -133,6 +133,7 @@ class Quizz
 
     /**
      * @ORM\OneToMany(targetEntity="Question", mappedBy="quizz", cascade={"remove", "persist"})
+     * @ORM\OrderBy({"title" = "ASC"})
      */
     protected $questions;
 
@@ -151,6 +152,14 @@ class Quizz
         $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->state = 0;
+    }
+    
+    /**
+     * Display the quizz as his title
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 
     /**

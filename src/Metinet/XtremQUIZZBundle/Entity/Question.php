@@ -43,6 +43,7 @@ class Question
 
     /**
      * @ORM\OneToMany(targetEntity="Answer", mappedBy="question", cascade={"remove", "persist"})
+     * @ORM\OrderBy({"title" = "ASC"})
      */
     protected $answers;
 
@@ -54,6 +55,13 @@ class Question
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Display the question as his title
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     /**
      * Get id

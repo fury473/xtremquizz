@@ -113,6 +113,14 @@ class User
         $this->createdAt = new \DateTime();
         $this->averageTime = 0;
     }
+    
+    /**
+     * Display the user as his firstname and lastname
+     */
+    public function __toString()
+    {
+        return $this->firstname.'  '.$this->lastname;
+    }
 
     /**
      * Get id

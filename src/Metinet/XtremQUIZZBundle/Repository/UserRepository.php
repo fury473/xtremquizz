@@ -42,4 +42,16 @@ class UserRepository extends EntityRepository {
                                 created_at BETWEEN GETDATE() - 30 and GETDATE()
 		');
     }
+    
+    public function getRank($limit = null, $offset = 0){
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.points', 'DESC');
+        if ($limit) {
+            $qb->setMaxResults($limit);
+        }
+        if ($offset) {
+            $qb->setFirstResult($offset);
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -62,6 +62,14 @@ class Theme
     {
         $this->quizzes = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    /**
+     * Display the theme as his title
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     /**
      * Get id

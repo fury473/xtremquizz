@@ -60,6 +60,14 @@ class QuizzResult
      * @ORM\JoinColumn(name="quizz_id", referencedColumnName="id")
      */
     protected $quizz;
+    
+    /**
+     * Display the quizz result as his id
+     */
+    public function __toString()
+    {
+        return $this->id;
+    }
 
     /**
      * Get id
