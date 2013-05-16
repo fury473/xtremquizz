@@ -13,6 +13,15 @@ use Doctrine\ORM\EntityRepository;
 class QuizzResultRepository extends EntityRepository
 {
     private function getNbQuizzLances(){
-        
+        $qb = $this->createQueryBuilder('q')
+            ->where('q.user = :user')
+            ->andWhere('q.quizz = :quizz')
+            ->setParameters(array('user' => $user_id, 'quizz' => $quizz_id))
+            ->getQuery()
+            ->getResult();
+        if(count($qb) > 0)
+            return $qb[0];
+        else
+            return null;
     }
 }

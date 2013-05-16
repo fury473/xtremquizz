@@ -12,9 +12,11 @@ class AnswerType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('isCorrect')
+            ->add('isCorrect', 'checkbox', array(
+                'label'     => 'Bonne Réponse',
+                'required'  => false
+            ))
             ->add('question')
-            ->add('users')
         ;
     }
 

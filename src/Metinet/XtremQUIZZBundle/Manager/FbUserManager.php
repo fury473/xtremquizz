@@ -44,7 +44,6 @@ class FbUserManager
 
 
         $fbDatas = $this->facebook->api('/me');
-        echo $fbDatas;
         
         if (!empty($fbDatas)) {
 
@@ -88,11 +87,61 @@ class FbUserManager
         return $user;
     }
     
+    public function getMe()
+    {
+        try {
+            $user = $this->facebook->api('/me');
+            return $user;
+        }
+        catch (Exception $e) {
+            echo "Erreur API FB ".$e;
+            return null;
+        }
+    }
+    
+    public function getMyId()
+    {
+        $user = $this->findUserByFbId($this->getMyFbId());
+        return $user['id'];
+    }
+    
+    public function getMyFbId()
+    {
+        try {
+            $user = $this->facebook->api('/me?fields=id');
+            return $user['id'];
+        }
+        catch (Exception $e) {
+            echo "Erreur API FB ".$e;
+            return null;
+        }
+    }
+    
     public function getUserFriends($fbId)
     {
         try {
             $lstFriends = $this->facebook->api('/'.$fbId."/friends");
             return $lstFriends;
+        }
+        catch (Exception $e) {
+            echo "Erreur API FB ".$e;
+            return null;
+        }
+    }
+    
+    public function getUserFriendUsers($fbId)
+    {
+        try {
+            $lstFriends = $this->facebook->api('/'.$fbId."/friends?fields=installed");
+            $lstUserFriends = array();
+            foreach ($lstFriends as $friend) {
+                if(isset($friend["installed"]) && $friend["installed"]) {
+                    array_push($lstUserFriends, $friend);
+                }
+            }
+            
+            if(empty($lstUserFriends)) return null;
+            return $lstUserFriends;
         }
         catch (Exception $e) {
             echo "Erreur API FB ".$e;

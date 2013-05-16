@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>{{ quizz.title }}</h1>
+    {% for question in quizz.questions %}
+        <div>
+            {{ question.title }}
+            <ul>
+            {% for answer in question.answers %}
+                <li>{{ answer.title }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    <div>
+        <a href="{{ path('quizz_validate', { 'id': quizz.id }) }}">
+            Valider les réponses
+        </a>
+        <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">
+            Retour à la fiche
+        </a>
+    </div>
+{% endblock %}

@@ -54,6 +54,15 @@ class Answer
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    
+    /**
+     * Display the answer as his title
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
+
 
     /**
      * Get id
