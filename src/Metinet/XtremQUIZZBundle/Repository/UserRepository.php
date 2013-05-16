@@ -54,18 +54,6 @@ class UserRepository extends EntityRepository {
                         FROM
                                 MetinetXtremQUIZZBundle:User i
                 ");
-    }
-    
-                                MetinetXtremQUIZZBundle:User i
-                ");
-        }
-        if ($offset) {
-        return $this->_em->createQuery('
-			SELECT
-				i.averageTime
-			FROM
-				MetinetXtremQUIZZBundle:User i
-		');
         }
 	
 	public function getPoints(){
