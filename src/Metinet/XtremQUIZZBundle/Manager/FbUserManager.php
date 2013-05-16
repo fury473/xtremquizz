@@ -16,6 +16,11 @@ class FbUserManager
         $this->em       = $em;
         $this->facebook = $facebook;
     }
+    
+    public function getRepository($entity)
+    {
+        return $this->em->getRepository('MetinetXtremQUIZZBundle:'.$entity);
+    }
 
     public function createUserFromUid($fbId)
     {
@@ -129,24 +134,56 @@ class FbUserManager
         }
     }
     
-    public function getUserFriendUsers($fbId)
+    public function getFbFriendUsers($fbId)
     {
         try {
             $lstFriends = $this->facebook->api('/'.$fbId."/friends?fields=installed");
-            $lstUserFriends = array();
-            foreach ($lstFriends as $friend) {
+            $lstFbUserFriends = array();
+            foreach ($lstFriends['data'] as $friend) {
                 if(isset($friend["installed"]) && $friend["installed"]) {
-                    array_push($lstUserFriends, $friend);
+                    array_push($lstFbUserFriends, $friend);
                 }
             }
             
-            if(empty($lstUserFriends)) return null;
-            return $lstUserFriends;
+            if(empty($lstFbUserFriends)) return null;
+            return $lstFbUserFriends;
         }
         catch (Exception $e) {
             echo "Erreur API FB ".$e;
             return null;
         }
     }
+    
+    public function getFriendUsers($fbId)
+    {
+        $lstFbUserFriends = $this->getFbFriendUsers($fbId);
+        if(is_null($lstFbUserFriends)) {
+            return null;
+        }
+        
+        $lstUserFriends = array();
+        foreach ($lstFbUserFriends as $fbFriend) {
+            $friend = $this->findUserByFbId($fbFriend['id']);
+            array_push($lstUserFriends, $friend);
+        }
+        return $lstUserFriends;
+    }
+    
+    public function getFriendUsersWhoCompletedQuizz($fbId, $quizzId) {
+        $lstUserFriends = $this->getFriendUsers($fbId);
+        $lstUserFriendsWhoCompletedQuizz = array();
+        foreach($lstUserFriends as $userFriends) {
+            $hasCompletedQuizz = $this->getRepository("QuizzResult")->findByUserIdAndQuizzId($userFriends['id'], $quizzId);
+            if(!is_null($hasCompletedQuizz)) {
+                array_push($lstUserFriendsWhoCompletedQuizz, $userFriends);
+            }
+        }
+        if(count($lstUserFriendsWhoCompletedQuizz) > 0) {
+            return $lstUserFriendsWhoCompletedQuizz;
+        }
+        
+        return null;
+    }
+    
 
 }

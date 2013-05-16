@@ -11,7 +11,7 @@
         {% if friendUsers is defined %}
             <ul>
                 {% for friendUser in friendUsers %}
-                    <li>{{ friendUser }}</li>
+                    <li>{{ friendUser.firstname }} {{ friendUser.lastname }}</li>
                 {% endfor %}
             </ul>
         {% else %}

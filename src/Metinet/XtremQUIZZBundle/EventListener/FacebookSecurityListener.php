@@ -54,7 +54,7 @@ class FacebookSecurityListener
             // Pas dans le canvas Facebook. On redirige sur l'application
             $redirectUrl = $this->container->getParameter('fb_app_canvas_url');
             $response    = new Response(sprintf("<script type='text/javascript'>top.location.href= '%s';</script>", $redirectUrl));
-            $event->setResponse($response);
+            //$event->setResponse($response);
         } else {
 
             $userId  = $this->container->get('fos_facebook.api')->getUser();
@@ -66,7 +66,7 @@ class FacebookSecurityListener
                  */
                 $redirectUrl = $this->container->get('fos_facebook.api')->getLoginUrl(array('scope' => 'email,publish_actions'));
                 $response    = new Response(sprintf("<script type='text/javascript'>top.location.href= '%s';</script>", $redirectUrl));
-                $event->setResponse($response);
+                //$event->setResponse($response);
             }
             else {
 

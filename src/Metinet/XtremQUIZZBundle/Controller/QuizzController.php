@@ -39,7 +39,7 @@ class QuizzController extends Controller
         $em = $this->getDoctrine()->getManager();
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         
-        $friendUsers = $fbUserManager->getUserFriendUsers("me");
+        $friendUsers = $fbUserManager->getFriendUsersWhoCompletedQuizz($fbUserManager->getMyFbId(), $id);
         $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
         $top10 = $em->getRepository('MetinetXtremQUIZZBundle:User')->getRank(10);
         $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->findByUserIdAndQuizzId($fbUserManager->getMyId(), $id);
