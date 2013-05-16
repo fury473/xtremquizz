@@ -1,10 +1,98 @@
 body{
     font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: #333;
+    top:0;
+    background-color: #e9eaed;
 }
 
-h2{
-    font-size: 14px;
+#logo {
+    margin-left: -115px;
 }
 
+.blockaccueil {
+    background-color: white;
+    width:600px;
+    padding: 0 20px 0 20px;
+    margin:auto;
+}
+
+.blockblue {
+    background-color: #edeff4;
+}
+
+.contenustat {
+    padding:15px;
+    margin-top: -15px;
+}
+
+table td {
+    width: 250px;
+    border:5px solid white;
+}
+
+h2 {
+    font-weight: lighter;
+    color:#777;
+}
+
+h3 {
+    color:#3b5998;
+    background-color: #f6f7f8;
+    margin-top: -1px;
+    padding: 5px;
+}
+
+.margintop {
+    margin-top: -143px;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.menu li {
+    list-style: none;
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    height: 30px;
+    padding-top:10px;
+}
+
+.menu li a {
+    height: 30px;
+    text-decoration: none;
+    padding:10px;
+    color:#3b5998;
+}
+
+.menu li:hover {
+    background-color: #f6f7f8;
+    cursor: pointer;
+}
+
+.menu li a:hover {
+    background-color: #f6f7f8;
+}
+
+.menu {
+    margin-bottom: 50px;
+}
+
+.corps {
+   padding: 20px;
+}
+
+#menu-classement li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#menu-classement li:hover {
+    cursor: pointer;
+    background-color: #f6f7f8;
+}

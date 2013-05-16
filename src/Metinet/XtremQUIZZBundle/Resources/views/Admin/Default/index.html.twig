@@ -2,39 +2,62 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
-	<h1>XTREM QUIZZ</h1>
-        
-        <ul class="menu">
-            <li><a href="{{ path('admin') }}">Accueil</a></li>
-            <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-            <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        </ul>
-        
-        <div>
-            Nombre de joueurs : {{ nbJoueur }}<br/>
-            Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}<br/>
-            Nouveaux joueurs (30 jours) : {{ nbJoueur30j }}<br/>
-        </div>
-        
-        <div>
-            Nombre de quizz disponibles : {{ nbQuizz }}<br/>
-            Nombre de quizz lancés par les joueurs : {{ nbQuizzJoues }}<br/>
-        </div>   
-        
-        <div>Score moyen des joueurs : {{ scoreMoyen }}<br/></div>
-        
-        <div>
-            Les 3 tops : 
-                <ul>
-                    {% for t in top %}
+
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo-xtremquizz.png') }}" id="logo"/>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}" class="lien-menu">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}" class="lien-menu">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}" class="lien-menu">Gestion des quizz</a></li>
+    </ul>
+</div>
+
+<div class="blockaccueil corps">
+    <h2>Statistiques</h2>
+
+    <table>
+        <tr>
+            <td class="blockblue">
+                <h3>Joueurs</h3>
+                <div class="contenustat">
+                    <p>Nombre de joueurs : {{ nbJoueur }}</p>
+                    <p>Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}</p>
+                    <p>Nouveaux joueurs (30 jours) : {{ nbJoueur30j }}</p>
+                </div>
+            </td>
+
+            <td rowspan="3" class="blockblue">
+                <h3 class="margintop">Classement</h3>
+                <div class="contenustat">
+                    <ul id="menu-classement">
+                        <li>Les 3 tops</li>
+                        <li>Les 3 flops</li>
+                    </ul>
+                    
+                    <ul>
+                        {% for t in top %}
                         <li>{{ t['title'] }}</li>
-                    {% endfor %}
-                </ul>
-            Les 3 flops :
-                <ul>
-                    {% for f in flop %}
+                        {% endfor %}
+                    </ul>
+                    <ul>
+                        {% for f in flop %}
                         <li>{{ f['title'] }}</li>
-                    {% endfor %}
-                </ul>
-        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="blockblue">
+                <h3>Quizz</h3>
+                <div class="contenustat">
+                    <p>Nombre de quizz disponibles : {{ nbQuizz }}</p>
+                    <p>Nombre de quizz lancés par les joueurs : {{ nbQuizzJoues }}</p>
+                    <p>Score moyen des joueurs : {{ scoreMoyen }}</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 {% endblock %}
