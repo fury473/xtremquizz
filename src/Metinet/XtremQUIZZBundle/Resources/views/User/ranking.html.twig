@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% set user = app.session.get('user') %}
+
+    <h2>Hello {{ user.firstname }} {{ user.lastname }}</h2>
+    <img src="{{ user.picture }}" alt="{{ user.firstname }} {{ user.lastname }}" />
+    <p>
+        <strong>ID SQL</strong>: {{ user.id }}<br />
+        <strong>ID Facebook</strong>: {{ user.fb_uid }}<br />
+        <strong>Créé en BDD le</strong>: {{ user.created_at|date('d/m/Y H:i') }}
+    </p>
+    <h1>XTREM QUIZZ</h1>
+
+    <h2>Classement géneral</h2>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Classement</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Points</th>
+                <th>Temps moyen</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.rank }}</td>
+                <td>{{ entity.firstname }}</td>
+                <td>{{ entity.lastname }}</td>
+                <td>{{ entity.points }}</td>
+                <td>{{ entity.averageTime }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+        
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function defierUnAmis() {
+            console.log('test');
+            FB.ui({
+                method: 'apprequests',
+                message: "Je te met au défi d'en savoir plus que moi sur XtremQUIZZ !",
+            }, requestCallback);
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+    </script>
+{% endblock %}

@@ -86,8 +86,29 @@ class UserRepository extends EntityRepository {
 		");
         }
     
-    
-    
+        public function getClassementAll() {
+
+        return $this->_em->createQuery("
+                        SELECT
+				i.id, i.fbUid, i.firstname, i.lastname, i.username, i.points, i.averageTime
+			FROM
+				MetinetXtremQUIZZBundle:User i
+                        ORDER BY
+                                i.points DESC
+		");
+        }
+        public function getDoublonsPoints() {
+        return $this->_em->createQuery("
+                        SELECT 
+                                i.id, i.points, COUNT(i.points) occ
+                        FROM 
+                                MetinetXtremQUIZZBundle:User i
+                        GROUP BY 
+                                i.points
+                        HAVING 
+                                COUNT(i.points) >1
+		");
+        }
     public function getRank($limit = null, $offset = 0){
         $qb = $this->createQueryBuilder('u')
             ->orderBy('u.points', 'DESC');
