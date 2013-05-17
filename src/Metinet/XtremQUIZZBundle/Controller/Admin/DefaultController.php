@@ -26,7 +26,8 @@ class DefaultController extends Controller
         $nbJoueur7j = $repJoueur->getNbJoueur7jours()->execute();
         $nbJoueur30j = $repJoueur->getNbJoueur30jours()->execute();
         $scoreMoyen = $repJoueur->getScoreMoyen()->execute();
-        
+        $derniersJoueurs = $repJoueur->get10DerJoueurs()->execute();
+                
         $repQuizz = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
         $nbQuizz = $repQuizz->getNbQuizz()->execute();
         $nbQuizzJoues = $repQuizz->getNbQuizzJoues()->execute();
@@ -40,7 +41,8 @@ class DefaultController extends Controller
             'scoreMoyen' => $scoreMoyen[0][1], 
             'nbQuizzJoues' => $nbQuizzJoues[0][1],
             'top' => $nbTopQuizz,
-            'flop' => $nbFlopQuizz);
+            'flop' => $nbFlopQuizz,
+            'derniersJoueurs' => $derniersJoueurs);
     }
 
         

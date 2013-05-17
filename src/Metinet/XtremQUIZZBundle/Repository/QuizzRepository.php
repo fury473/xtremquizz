@@ -37,22 +37,22 @@ class QuizzRepository extends EntityRepository
     public function getTopQuizz(){
         return $this->_em->createQuery('
                 SELECT
-                        i.title
+                        i.title, i.picture
                 FROM
                         MetinetXtremQUIZZBundle:Quizz i
                 ORDER BY
-                        i.nbLaunches ASC
+                        i.nbLaunches DESC
         ')->setMaxResults(3);
     }
     
     public function getFlopQuizz(){
         return $this->_em->createQuery('
                 SELECT
-                        i.title
+                        i.title, i.picture
                 FROM
                         MetinetXtremQUIZZBundle:Quizz i
                 ORDER BY
-                        i.nbLaunches DESC
+                        i.nbLaunches ASC
         ')->setMaxResults(3);
     }
 }
