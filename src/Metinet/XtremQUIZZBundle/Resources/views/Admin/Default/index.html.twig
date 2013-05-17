@@ -4,11 +4,12 @@
     {% set user = app.session.get('user') %}
 
 <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo-xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <ul class="menu menu-position">
         <li><a href="{{ path('admin') }}" class="lien-menu">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}" class="lien-menu">Gestion des thèmes</a></li>
         <li><a href="{{ path('admin_quizz') }}" class="lien-menu">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}" class="lien-menu">Déconnexion</a></li>
     </ul>
 </div>
 

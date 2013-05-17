@@ -3,20 +3,35 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-    <img src="{{ user.picture }}" alt="{{ user.firstname }} {{ user.lastname }}" />
-    <img src="https://graph.facebook.com/{{ user.fb_uid }}/picture?type=large"/>
-    <p>
-        {{ user.firstname }} {{ user.lastname }}<br />
-        Points: {{ points }} <br />
-            {% if classementJoueur == NULL %}
-                 Classement général: {{ totalJoueur }}/{{ totalJoueur }}
-            {% else %}
-                  Classement général: {{ classementJoueur }}/{{ totalJoueur }}
-            {% endif %}
-       
-    </p>
+    <div class="blockaccueil menu">
+        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+        <ul class="menu">
+            <li><a href="{{ path('admin') }}" class="lien-menu">Administration</a></li>
+        </ul>
+    </div>
+
+    <div class="blockaccueil corps">
+    <h3>Votre profil</h3>
     
-    <h2>Les derniers quizz disponibles</h2>
+    <table>
+        <tr>
+            <td class="width_100">
+                <img src="https://graph.facebook.com/{{ user.fb_uid }}/picture?type=large&width=120&height=120"/>
+            </td>
+            <td style="padding-bottom: 83px;">
+                <div class="titres-block">{{ user.firstname }} {{ user.lastname }}</div>
+                Points: {{ points }} <br />
+                    {% if classementJoueur == NULL %}
+                         Classement général: {{ totalJoueur }}/{{ totalJoueur }}
+                    {% else %}
+                          Classement général: {{ classementJoueur }}/{{ totalJoueur }}
+                    {% endif %}
+
+            </td>
+        </tr>
+    </table>
+    
+    <h3 style="margin-top: 15px;">Les derniers quizz disponibles</h3>
 
     <p>
         Quizz 1<br />
@@ -25,6 +40,12 @@
         Quizz 4
     </p>
     
-    <h2>Classement de vos amis</h2>
-	
+    <h3 style="margin-top: 15px;">Classement de vos amis</h3>
+    <p>
+        Ami 1<br />
+        Ami 2<br />
+        Ami 3<br />
+        Ami 4
+    </p>
+</div>
 {% endblock %}

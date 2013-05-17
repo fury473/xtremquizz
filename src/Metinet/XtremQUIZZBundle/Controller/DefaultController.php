@@ -23,13 +23,11 @@ class DefaultController extends Controller
             $classementJoueur = $user->getClassementJoueur($points[0]['points'],$averageTime[0]['averageTime'])->execute();
             
             $classementJoueur[0][1]++;
-            var_dump($classementJoueur);
         }
         else 
         {
             $classementJoueur[0][1] = NULL;
         }
-        var_dump($points[0]['points']);
         
         $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
 

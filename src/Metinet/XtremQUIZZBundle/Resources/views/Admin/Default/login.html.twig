@@ -1,25 +1,29 @@
-<h3>S'identifier</h3>
+{% extends '::base.html.twig' %}
 
-{% if error %}
- <div class="errors">{{ error.message }}</div>
-{% endif %}
 
-<form action="{{ path('login_check') }}" method="post">
- <table>
-  <tr>
-   <td>Login</td>
-   <td><input type="text" name="_username" id="usernameInput" value="" size="10" /></td>
-  </tr>
+{% block body %}
+    {% if error %}
+     <div class="errors">{{ error.message }}</div>
+    {% endif %}
+    {% set user = app.session.get('user') %}
 
-  <tr>
-   <td>Password</td>
-   <td><input type="password" name="_password" id="passwordInput" size="10" /></td>
-  </tr>
-   
-  <tr>
-   <td colspan="2"><input type="submit" value="S'identifier" class="myButton" /></td>
-  </tr>
- </table>
-      
- <input type="hidden" name="_target_path" value="/admin" />
-</form>
+    <div class="blockaccueil menu">
+        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    </div>
+ 
+    <div class="blockaccueil corps">
+        <h3>Se connecter en tant qu'administrateur</h3>
+        <form action="{{ path('login_check') }}" method="post">
+            <table width="200">
+                <tr>
+                    <td>Pseudo: <input type="text" name="_username" id="usernameInput" value="" size="10" /></td>
+                    <td>Mot de passe: <input type="password" name="_password" id="passwordInput" size="10" /></td>
+                    <td colspan="2"><input type="submit" value="S'identifier" class="myButton" style="margin-top: 15px"/></td>
+                </tr>
+            </table>
+
+            <input type="hidden" name="_target_path" value="/admin" />
+        </form>
+    </div>
+ {% endblock %}
+
