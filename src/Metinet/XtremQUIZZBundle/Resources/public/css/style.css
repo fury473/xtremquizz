@@ -36,15 +36,15 @@ h2 {
     color:#777;
 }
 
-h3 {
+.titres-block {
     color:#3b5998;
     background-color: #f6f7f8;
-    margin-top: -1px;
-    padding: 5px;
+    font-weight: bold;
 }
 
-.margintop {
-    margin-top: -143px;
+.titres-block td {
+    height: 20px;
+    border-bottom: 0;
 }
 
 p {

@@ -16,9 +16,13 @@
     <h2>Statistiques</h2>
 
     <table>
+        <tr class="titres-block">
+            <td>Joueurs</td>
+            <td>Classement</td>
+        </tr>
+        
         <tr>
             <td class="blockblue">
-                <h3>Joueurs</h3>
                 <div class="contenustat">
                     <p>Nombre de joueurs : {{ nbJoueur }}</p>
                     <p>Nouveaux joueurs (7 jours) : {{ nbJoueur7j }}</p>
@@ -27,7 +31,6 @@
             </td>
 
             <td rowspan="3" class="blockblue">
-                <h3 class="margintop">Classement</h3>
                 <div class="contenustat">
                     <ul id="menu-classement">
                         <li>Les 3 tops</li>
@@ -38,19 +41,30 @@
                         {% for t in top %}
                         <li>{{ t['title'] }}</li>
                         {% endfor %}
+                        <li>truc</li>
+                        <li>truc</li>
+                        <li>truc</li>
+                        <li>truc</li>
+                        <li>truc</li>
+                        <li>truc</li>
+                        <li>truc</li>
                     </ul>
                     <ul>
                         {% for f in flop %}
                         <li>{{ f['title'] }}</li>
                         {% endfor %}
+                        
                     </ul>
                 </div>
             </td>
         </tr>
 
+        <tr class="titres-block">
+            <td>Quizz</td>
+        </tr>
+        
         <tr>
             <td class="blockblue">
-                <h3>Quizz</h3>
                 <div class="contenustat">
                     <p>Nombre de quizz disponibles : {{ nbQuizz }}</p>
                     <p>Nombre de quizz lancés par les joueurs : {{ nbQuizzJoues }}</p>
