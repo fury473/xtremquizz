@@ -2,16 +2,17 @@
 
 {% block body %}
     <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo-xtremquizz.png') }}" id="logo"/>  
-        <ul class="block-liensmenu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>  
+        <ul class="menu">
             <li><a href="{{ path('admin') }}">Accueil</a></li>
             <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
             <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+            <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
         </ul>
     </div>
 
     <div class="blockaccueil corps">
-        <h2>Liste des thèmes</h2>
+        <h3>Liste des thèmes</h3>
         
         <div class="liens-ajout"><a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a></div>
 

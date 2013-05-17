@@ -6,13 +6,17 @@ body{
     background-color: #e9eaed;
 }
 
+#flop, #dixjoueurs {
+    display: none;
+}
+
 #logo {
     margin-left: -115px;
 }
 
 .blockaccueil {
     background-color: white;
-    width:600px;
+    width:700px;
     padding: 0 20px 0 20px;
     margin:auto;
     border: 1px solid #d3d6db;
@@ -24,12 +28,55 @@ body{
 
 .contenustat {
     padding:15px;
-    margin-top: -15px;
 }
 
-table td {
-    width: 250px;
+.contenustat span {
+    font-weight: bold;
+}
+
+.table-classement table td {
+    border:0;
+}
+
+#img-class-joueurs {
+    width:50px;
+    color:#333;
+}
+
+#pts-class-joueurs {
+    width:130px;
+    color:#333;
+}
+
+#img-class-top {
+    width:50px;
+    color:#333;
+}
+
+#pts-class-top {
+    width:130px;
+    color:#333;
+}
+
+#img-class-flop {
+    width:50px;
+    color:#333;
+}
+
+#pts-class-flop {
+    width:130px;
+    color:#333;
+}
+
+table tr td {
+    width: 330px;
     border:5px solid white;
+    border-top:0;
+}
+
+.overflow {
+    overflow-y: auto;
+    height: 230px;
 }
 
 h2 {
@@ -45,7 +92,7 @@ h3{
     border-bottom: 1px solid #e9eaed;
     margin-top: -20px;
     height: 25px;
-    width: 625px;
+    width: 725px;
     margin-left: -20px;
     padding-top: 5px;
     padding-left: 15px;
@@ -69,7 +116,7 @@ p {
 .menu li {
     list-style: none;
     display: inline-block;
-    width: 147px;
+    width: 150px;
     text-align: center;
     font-size: 13px;
     font-weight: bold;
@@ -95,14 +142,17 @@ p {
 
 .menu {
     margin-bottom: 10px;
-    width: 600px;
 }
 
-.menu-position{
-    margin-left: -50px;
+.block-liensmenu {
+    margin-bottom: -15px;
+    padding: 0;
+    text-align: center;
 }
+
 .corps {
    padding: 20px;
+   border: 1px solid #d3d6db;
 }
 
 #menu-classement li {
@@ -111,12 +161,43 @@ p {
     margin-right: 10px;
 }
 
-#menu-classement li:hover {
-    cursor: pointer;
-    background-color: #f6f7f8;
+#menu-classement a {
+    color:#3b5998;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#menu-classement a:hover {
+    text-decoration: underline;
 }
 
 .width_100{
     width: 100px;
 }
 
+.hidden {
+    display: none;
+}
+
+.records_list td {
+    background-color: #edeff4;
+    border-right: 0;
+    border-left: 0;
+    border-collapse: collapse;
+    padding-left: 10px;
+}
+
+.liens-ajout {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.liens-ajout a {
+    text-decoration: none;
+    color:#3b5998;
+    font-weight: bold;
+}
+
+.liens-ajout img {
+    vertical-align: middle;
+}
