@@ -120,4 +120,15 @@ class UserRepository extends EntityRepository {
         }
         return $qb->getQuery()->getResult();
     }
+    
+    public function get10DerJoueurs(){
+        return $this->_em->createQuery('
+                SELECT
+                        i.firstname, i.lastname, i.points, i.fbUid
+                FROM
+                        MetinetXtremQUIZZBundle:User i
+                ORDER BY
+                        i.createdAt DESC
+        ')->setMaxResults(10);
+    }
 }

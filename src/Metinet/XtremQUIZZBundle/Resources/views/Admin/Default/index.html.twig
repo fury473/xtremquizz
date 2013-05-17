@@ -31,31 +31,59 @@
                 </div>
             </td>
 
-            <td rowspan="3" class="blockblue">
-                <div class="contenustat">
-                    <ul id="menu-classement">
-                        <li>Les 3 tops</li>
-                        <li>Les 3 flops</li>
+            <td rowspan="3" class="blockblue" valign="top">
+                <ul id="menu-classement">
+                        <li><a href="#" onclick="show('top', 'flop', 'dixjoueurs');">Les 3 tops</a></li>
+                        <li><a href="#" onclick="show('flop', 'top', 'dixjoueurs');">Les 3 flops</a></li>
+                        <li><a href="#" onclick="show('dixjoueurs', 'flop', 'top');">Derniers joueurs</a></li>
                     </ul>
-                    
-                    <ul>
-                        {% for t in top %}
-                        <li>{{ t['title'] }}</li>
-                        {% endfor %}
-                        <li>truc</li>
-                        <li>truc</li>
-                        <li>truc</li>
-                        <li>truc</li>
-                        <li>truc</li>
-                        <li>truc</li>
-                        <li>truc</li>
-                    </ul>
-                    <ul>
-                        {% for f in flop %}
-                        <li>{{ f['title'] }}</li>
-                        {% endfor %}
+                
+                <div class="contenustat overflow">
+                    <!-- BLOCK 3 TOPS -->                    
+                    <div id="top" class="table-classement">
+                        <h4>Les trois quizz les plus lancés</h4>
+                        <table>
+                            {% for t in top %}
+                            <tr>
+                                <td id="img-class-top"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ t['picture']) }}" /></td>
+                                <td id="pts-class-top">{{ t['title'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                         
-                    </ul>
+                    </div>
+                    
+                    <!-- BLOCK 3 FLOPS -->
+                    <div id="flop" class="table-classement">
+                        <h4>Les trois quizz les moins lancés</h4>
+                        <table>
+                            {% for f in flop %}
+                            <tr>
+                                <td id="img-class-flop"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ f['picture']) }}" /></td>
+                                <td id="pts-class-flop">{{ f['title'] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>                        
+                    </div>
+                    
+                    <!-- BLOCK 10 DERNIERS JOUEURS -->
+                    <div id="dixjoueurs" class="table-classement">
+                        <h4>Les dix derniers inscrits sur l'application</h4>
+                        <table>
+                        {% for j in derniersJoueurs %}
+                                <tr>
+                                    <td id="img-class-joueurs"><img src="https://graph.facebook.com/{{ j['fbUid'] }}/picture" /></td>
+                                    <td id="pts-class-joueurs"><span>{{ j['firstname'] }} {{ j['lastname'] }}</span><br/>
+                                        {% if j['points'] == NULL %}
+                                            0 point
+                                        {% else %}
+                                            {{ j['points'] }} points
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                         {% endfor %}
+                         </table>
+                     </div>
                 </div>
             </td>
         </tr>
