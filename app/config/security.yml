@@ -30,7 +30,7 @@ security:
             security: false
 
         secured_area:
-            pattern:    ^/
+            pattern:    ^/admin
             form_login:
                 check_path: /admin/login_check
                 login_path: /admin/connexion

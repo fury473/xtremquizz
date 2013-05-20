@@ -26,7 +26,7 @@
                     {% else %}
                           Classement général: {{ classementJoueur }}/{{ totalJoueur }}
                     {% endif %}
-
+                    <button onclick="publishWALL({{ classementJoueur }}, {{ totalJoueur }})">Publier</button>
             </td>
         </tr>
     </table>
@@ -42,10 +42,65 @@
     
     <h3 style="margin-top: 15px;">Classement de vos amis</h3>
     <p>
-        Ami 1<br />
-        Ami 2<br />
-        Ami 3<br />
-        Ami 4
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Classement</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Points</th>
+                <th>Temps moyen</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+       {% for entity in entities %}
+            {% for friend in friends %}
+                {% if entity.fbUid == friend.id %}
+                    <tr>
+                        <td>{{ entity.rank }}</td>
+                        <td>{{ entity.firstname }}</td>
+                        <td>{{ entity.lastname }}</td>
+                        <td>{{ entity.points }}</td>
+                        <td>{{ entity.averageTime }}</td>
+                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button></td>
+                    </tr>
+                {% endif %}
+           {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
     </p>
 </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        function publishWALL(monClassement, total){
+               FB.ui(
+                {
+                    method: 'feed',
+                    name: 'XtremQUIZZ',
+                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                    caption: "XtremQUIZZ",
+                    description: "Mon classement à XtremQUIZZ :"+ monClassement + "/" + total
+                },
+                function(response) {
+                    if (response && response.post_id) {
+                    } else {
+                        alert('Erreur: Le message n’a pas été publié…');
+                    }
+                }
+                );
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+        function defierAmis(ID) {
+            FB.ui({method: 'apprequests',
+                message: "Oo C'est l'heure du dududu duel  ! oO",
+                to: ID
+            }, requestCallback);
+        }
+    </script>
 {% endblock %}

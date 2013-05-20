@@ -30,9 +30,7 @@ class UserController extends Controller
     {
         $i = 0;
         $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
-        
-                $em = $this->getDoctrine()->getManager();
-
+        $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:User')->getClassementAll()->execute();
         $temp_points = 0;
         $temp_time = 0;

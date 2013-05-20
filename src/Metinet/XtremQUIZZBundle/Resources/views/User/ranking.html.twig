@@ -10,7 +10,7 @@
         <strong>ID Facebook</strong>: {{ user.fb_uid }}<br />
         <strong>Créé en BDD le</strong>: {{ user.created_at|date('d/m/Y H:i') }}
     </p>
-    <h1>XTREM QUIZZ</h1>
+     <h1>XTREM QUIZZ</h1>
 
     <h2>Classement géneral</h2>
 
@@ -22,6 +22,7 @@
                 <th>Nom</th>
                 <th>Points</th>
                 <th>Temps moyen</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,7 +33,38 @@
                 <td>{{ entity.lastname }}</td>
                 <td>{{ entity.points }}</td>
                 <td>{{ entity.averageTime }}</td>
+                <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter/Défier</button></td>
             </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+      <h2>Classement des amis</h2>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Classement</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Points</th>
+                <th>Temps moyen</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+       {% for entity in entities %}
+            {% for friend in friends %}
+                {% if entity.fbUid == friend.id %}
+                    <tr>
+                        <td>{{ entity.rank }}</td>
+                        <td>{{ entity.firstname }}</td>
+                        <td>{{ entity.lastname }}</td>
+                        <td>{{ entity.points }}</td>
+                        <td>{{ entity.averageTime }}</td>
+                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button></td>
+                    </tr>
+                {% endif %}
+           {% endfor %}
         {% endfor %}
         </tbody>
     </table>
@@ -41,15 +73,14 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        function defierUnAmis() {
-            console.log('test');
-            FB.ui({
-                method: 'apprequests',
-                message: "Je te met au défi d'en savoir plus que moi sur XtremQUIZZ !",
-            }, requestCallback);
-        }
         function requestCallback(response) {
          // Handle callback here
+        }
+        function defierAmis(ID) {
+            FB.ui({method: 'apprequests',
+                message: "Oo C'est l'heure du dududu duel  ! oO",
+                to: ID
+            }, requestCallback);
         }
     </script>
 {% endblock %}
