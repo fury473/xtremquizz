@@ -2,6 +2,7 @@
 
 {% block body %}
 <h1>{{ quizz.title }}</h1>
+    <div id="timer"></div>
     {% for questionForm in questionsForm %}
     <form class="{% if loop.index != 1 %}hidden{% endif %}" action="{{ path('answer_validate') }}" method="post" {{ form_enctype(questionForm) }}>
         {{ form_widget(questionForm) }}
@@ -24,16 +25,71 @@
                 answer = $(this);
                 answer_id = answer.val();
                 question_id = answer.parent().attr('class').split(' ')[1].split('_')[1];
-                $.post(answer.parents("form").attr('action'), { "answer_id": answer_id }, function(data, textStatus) {
+                $.post(answer.parents("form").attr('action'), {"answer_id": answer_id})
+                .done(function(data) {
                     answer.parents("form").addClass("hidden");
-                    if(answer.parents("form").next("form").length > 0) {
+                    if (answer.parents("form").next("form").length > 0) {
                         answer.parents("form").next("form").removeClass("hidden");
                     } else {
                         $('#result_screen').html("Calcul du score");
+                        $.post("{{ path('quizz_end') }}", {'quizz_result_id': quizzResultId})
+                        .done(function(data) {
+                            Stop(timerID);
+                        });
                         $('#result_screen').removeClass("hidden");
                     }
-                }, "json");
+                });
+            });
+            
+            $.post("{{ path('quizz_start') }}", {'user_id': {{ user.id }}, 'quizz_id': {{ quizz.id }}})
+            .done(function(data) {
+                Start(data['createdAt']);
+                quizzResultId = data['quizz_result_id'];
+                chrono();
             });
         });
+        
+        var quizzResultId = 0;
+        var start = 0;
+        var end = 0;
+        var diff = 0;
+        var timerID = 0;
+        
+        function chrono() {
+            end = new Date();
+            diff = end - start;
+            diff = new Date(diff);
+            var sec = diff.getSeconds();
+            var min = diff.getMinutes();
+            var hr = diff.getHours() - 1;
+
+            if (sec < 10) {
+                sec = "0" + sec;
+            }
+            if (min == 0 && hr == 0) {
+                min = '';
+            } else if (min < 10) {
+                min = "0" + min + " : ";
+            } else {
+                min = min + " : ";
+            }
+            if (hr == 0) {
+                hr = '';
+            } else if (hr < 10) {
+                hr = "0" + hr + " : ";
+            } else {
+                hr = hr + " : ";
+            }
+            $("#timer").html(hr + min + sec);
+        }
+
+        function Start(createdAt) {
+            start = new Date(createdAt*1000)
+            timerID = setInterval(chrono, 1000);
+        }
+
+        function Stop() {
+            clearTimeout(timerID);
+        }
         </script>
 {% endblock %}

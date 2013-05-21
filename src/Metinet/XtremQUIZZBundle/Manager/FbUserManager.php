@@ -173,7 +173,7 @@ class FbUserManager
         $lstUserFriends = $this->getFriendUsers($fbId);
         $lstUserFriendsWhoCompletedQuizz = array();
         foreach($lstUserFriends as $userFriend) {
-            $hasCompletedQuizz = $this->getRepository("QuizzResult")->findByUserIdAndQuizzId($userFriend['id'], $quizzId);
+            $hasCompletedQuizz = $this->getRepository("QuizzResult")->getIdByUserIdAndQuizzId($userFriend['id'], $quizzId);
             if(!is_null($hasCompletedQuizz)) {
                 array_push($lstUserFriendsWhoCompletedQuizz, $userFriend);
             }

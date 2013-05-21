@@ -14,104 +14,104 @@ class UserRepository extends EntityRepository {
 
     public function getNbJoueur() {
         return $this->_em->createQuery('
-			SELECT
-				COUNT(i)
-			FROM
-				MetinetXtremQUIZZBundle:User i
-		');
+            SELECT
+                COUNT(i)
+            FROM
+                MetinetXtremQUIZZBundle:User i
+        ');
     }
-    
+
     public function getNbJoueur7jours() {
         $date = date('Y-m-d');
-        $NewDate=Date('Y-m-d', strtotime("-7 days"));
+        $NewDate = Date('Y-m-d', strtotime("-7 days"));
         return $this->_em->createQuery("
-			SELECT
-				COUNT(i)
-			FROM
-				MetinetXtremQUIZZBundle:User i
-                        WHERE
-                                i.createdAt BETWEEN '$NewDate' AND '$date'
-		");
+            SELECT
+                COUNT(i)
+            FROM
+                MetinetXtremQUIZZBundle:User i
+            WHERE
+                i.createdAt BETWEEN '$NewDate' AND '$date'
+        ");
     }
-    
+
     public function getNbJoueur30jours() {
         $date = date('Y-m-d');
-        $NewDate=Date('Y-m-d', strtotime("-30 days"));
+        $NewDate = Date('Y-m-d', strtotime("-30 days"));
         return $this->_em->createQuery("
-			SELECT
-				COUNT(i)
-			FROM
-				MetinetXtremQUIZZBundle:User i
-                        WHERE
-                                i.createdAt BETWEEN '$NewDate' AND '$date'
-		");
+            SELECT
+                COUNT(i)
+            FROM
+                MetinetXtremQUIZZBundle:User i
+            WHERE
+                i.createdAt BETWEEN '$NewDate' AND '$date'
+        ");
     }
-    
-    public function getScoreMoyen(){
+
+    public function getScoreMoyen() {
         return $this->_em->createQuery("
-                        SELECT
-                                AVG(i.points)
-                        FROM
-                                MetinetXtremQUIZZBundle:User i
-                ");
-        }
-	
-	public function getPoints(){
-        return $this->_em->createQuery("
-                        SELECT
-                                i.points
-                        FROM
-                                MetinetXtremQUIZZBundle:User i
-                ");
+            SELECT
+                AVG(i.points)
+            FROM
+                MetinetXtremQUIZZBundle:User i
+        ");
     }
-    
-        public function getAverageTime() {
+
+    public function getPoints() {
+        return $this->_em->createQuery("
+            SELECT
+                i.points
+            FROM
+                MetinetXtremQUIZZBundle:User i
+        ");
+    }
+
+    public function getAverageTime() {
         return $this->_em->createQuery('
-			SELECT
-				i.averageTime
-			FROM
-				MetinetXtremQUIZZBundle:User i
-		');
+            SELECT
+                i.averageTime
+            FROM
+                MetinetXtremQUIZZBundle:User i
+        ');
     }
-    
+
     public function getClassementJoueur($Jpoints, $averageTime) {
+        return $this->_em->createQuery("
+            SELECT
+                COUNT(i)
+            FROM
+                MetinetXtremQUIZZBundle:User i
+            WHERE
+                i.points > $Jpoints OR (i.points = $Jpoints AND i.averageTime < $averageTime)
+        ");
+    }
 
+    public function getClassementAll() {
         return $this->_em->createQuery("
-                        SELECT
-				COUNT(i)
-			FROM
-				MetinetXtremQUIZZBundle:User i
-                        WHERE
-                                i.points > $Jpoints OR (i.points = $Jpoints AND i.averageTime < $averageTime)
-		");
-        }
-    
-        public function getClassementAll() {
+            SELECT
+                i.id, i.fbUid, i.firstname, i.lastname, i.username, i.points, i.averageTime
+            FROM
+                MetinetXtremQUIZZBundle:User i
+            ORDER BY
+                i.points DESC
+        ");
+    }
 
+    public function getDoublonsPoints() {
         return $this->_em->createQuery("
-                        SELECT
-				i.id, i.fbUid, i.firstname, i.lastname, i.username, i.points, i.averageTime
-			FROM
-				MetinetXtremQUIZZBundle:User i
-                        ORDER BY
-                                i.points DESC
-		");
-        }
-        public function getDoublonsPoints() {
-        return $this->_em->createQuery("
-                        SELECT 
-                                i.id, i.points, COUNT(i.points) occ
-                        FROM 
-                                MetinetXtremQUIZZBundle:User i
-                        GROUP BY 
-                                i.points
-                        HAVING 
-                                COUNT(i.points) >1
-		");
-        }
-    public function getRank($limit = null, $offset = 0){
+            SELECT 
+                i.id, i.points, COUNT(i.points) occ
+            FROM 
+                MetinetXtremQUIZZBundle:User i
+            GROUP BY 
+                i.points
+            HAVING 
+                COUNT(i.points) >1
+        ");
+    }
+
+    public function getRank($limit = null, $offset = 0) {
         $qb = $this->createQueryBuilder('u')
-            ->orderBy('u.points', 'DESC');
+                ->orderBy('u.points', 'DESC');
         if ($limit) {
             $qb->setMaxResults($limit);
         }
@@ -120,15 +120,15 @@ class UserRepository extends EntityRepository {
         }
         return $qb->getQuery()->getResult();
     }
-    
-    public function get10DerJoueurs(){
+
+    public function get10DerJoueurs() {
         return $this->_em->createQuery('
-                SELECT
-                        i.firstname, i.lastname, i.points, i.fbUid
-                FROM
-                        MetinetXtremQUIZZBundle:User i
-                ORDER BY
-                        i.createdAt DESC
+            SELECT
+                i.firstname, i.lastname, i.points, i.fbUid
+            FROM
+                MetinetXtremQUIZZBundle:User i
+            ORDER BY
+                i.createdAt DESC
         ')->setMaxResults(10);
     }
 }

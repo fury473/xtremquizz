@@ -43,7 +43,7 @@ class QuizzController extends Controller
         $friendUsers = $fbUserManager->getFriendUsersWhoCompletedQuizz($fbUserManager->getMyFbId(), $id);
         $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
         $top10 = $em->getRepository('MetinetXtremQUIZZBundle:User')->getRank(10);
-        $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->findByUserIdAndQuizzId($fbUserManager->getMyId(), $id);
+        $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->getIdByUserIdAndQuizzId($fbUserManager->getMyId(), $id);
         
         if (is_null($friendUsers)) {
             $array = array(
@@ -117,6 +117,7 @@ class QuizzController extends Controller
 
         return array(
             'quizz' => $quizz,
+            'user' => $user,
             'questionsForm'   => $questionsForm
         );
     }
