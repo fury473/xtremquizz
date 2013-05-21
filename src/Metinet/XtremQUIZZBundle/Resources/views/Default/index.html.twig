@@ -6,7 +6,9 @@
     <div class="blockaccueil menu">
         <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
         <ul class="menu">
-            <li><a href="{{ path('admin') }}" class="lien-menu">Administration</a></li>
+            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
+            <li><a href="{{ path('admin') }}" class="lien-menu">Quizz</a></li>
+            <li><a href="{{ path('admin') }}" class="lien-menu">Invitation</a></li>
         </ul>
     </div>
 
@@ -21,6 +23,7 @@
             <td style="padding-bottom: 83px;">
                 <div class="titres-block">{{ user.firstname }} {{ user.lastname }}</div>
                 Points: {{ points }} <br />
+                Temps moyen : {{ averageTime }} secondes<br />
                     {% if classementJoueur == NULL %}
                          Classement général: {{ totalJoueur }}/{{ totalJoueur }}
                     {% else %}
@@ -33,15 +36,14 @@
     
     <h3 style="margin-top: 15px;">Les derniers quizz disponibles</h3>
 
-    <p>
-        Quizz 1<br />
-        Quizz 2<br />
-        Quizz 3<br />
-        Quizz 4
-    </p>
-    
-    <h3 style="margin-top: 15px;">Classement de vos amis</h3>
-    <p>
+    <p>   
+    {% for quizz in LastQuizz %}
+    <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a> <br/>
+    {% endfor %}
+     </p>
+     {% if displayFriend == 0 %}
+      <h2>Classement géneral</h2>
+
     <table class="records_list">
         <thead>
             <tr>
@@ -53,23 +55,72 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
-       {% for entity in entities %}
-            {% for friend in friends %}
-                {% if entity.fbUid == friend.id %}
+        <tbody>  
+        {% for entity in entities %}
+            {% if (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
                     <tr>
                         <td>{{ entity.rank }}</td>
                         <td>{{ entity.firstname }}</td>
                         <td>{{ entity.lastname }}</td>
                         <td>{{ entity.points }}</td>
                         <td>{{ entity.averageTime }}</td>
-                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button></td>
+                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
+                        <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                     </tr>
-                {% endif %}
-           {% endfor %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
+      {% else %}
+          <h2>Classement des amis</h2>
+
+            <table class="records_list">
+                <thead>
+                    <tr>
+                        <th>Classement général</th>
+                        <th>Classement</th>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Points</th>
+                        <th>Temps moyen</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+               {% set i = 1%}
+               {% for entity in entities %}
+                    {% if (entity.fbUid == user.fb_uid) %}
+                        <tr>
+                            <td>{{ entity.rank }}</td>
+                            <td>{{ i }}</td>
+                            <td>{{ entity.firstname }}</td>
+                            <td>{{ entity.lastname }}</td>
+                            <td>{{ entity.points }}</td>
+                            <td>{{ entity.averageTime }}</td>
+                            <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
+                            <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                        </tr>
+                        {% set i = i + 1 %}
+                    {% endif %}
+                    {% for friend in friends %}
+                        {% if (entity.fbUid == friend.id) and (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
+                            <tr>
+                                <td>{{ entity.rank }}</td>
+                                <td>{{ i }}</td>
+                                <td>{{ entity.firstname }}</td>
+                                <td>{{ entity.lastname }}</td>
+                                <td>{{ entity.points }}</td>
+                                <td>{{ entity.averageTime }}</td>
+                                <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
+                                <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                            </tr>
+                            {% set i = i + 1 %}
+                        {% endif %}
+                   {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+      {% endif %}
     </p>
 </div>
 {% endblock %}
@@ -88,7 +139,6 @@
                 function(response) {
                     if (response && response.post_id) {
                     } else {
-                        alert('Erreur: Le message n’a pas été publié…');
                     }
                 }
                 );
@@ -101,6 +151,23 @@
                 message: "Oo C'est l'heure du dududu duel  ! oO",
                 to: ID
             }, requestCallback);
+        }
+         function publishFriendWALL(ID){
+               FB.ui(
+                {
+                    method: 'feed',
+                    name: 'XtremQUIZZ',
+                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                    caption: 'Les quizz des vrais warrior',
+                    description: '',
+                    to: ID
+                },
+                function(response) {
+                    if (response && response.post_id) {
+                    } else {
+                    }
+                }
+                );
         }
     </script>
 {% endblock %}

@@ -55,4 +55,15 @@ class QuizzRepository extends EntityRepository
                         i.nbLaunches ASC
         ')->setMaxResults(3);
     }
+    public function getLastQuizzId() {
+        return $this->_em->createQuery('
+			SELECT
+				i.id, i.title
+			FROM
+				MetinetXtremQUIZZBundle:Quizz i
+                        ORDER BY
+                                i.createdAt DESC
+		')->setMaxResults(4);
+    }
+    
 }

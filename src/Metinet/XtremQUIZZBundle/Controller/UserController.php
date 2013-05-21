@@ -34,7 +34,8 @@ class UserController extends Controller
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:User')->getClassementAll()->execute();
         $temp_points = 0;
         $temp_time = 0;
-
+        $fbUserManager = $this->container->get('metinet.manager.fbuser');
+        $myfbUid = $fbUserManager->getMyFbId();
         $score = array();
         foreach($entities as $user){
             $score[$i] = $user['points'];
@@ -49,12 +50,16 @@ class UserController extends Controller
             $entities[$i]['rank'] = $i+1;
             $temp_points = $user['points'];
             $temp_time = $user['averageTime'];
+            if($myfbUid == $user['fbUid']){
+               $myRank =   $entities[$i]['rank']; 
+            }
             $i++;
         }
         
         // echo var_dump($entities);
         return array("friends" => $friends['data'],
             'entities' => $entities,
+            'myRank' => $myRank,
             );
     }
 }

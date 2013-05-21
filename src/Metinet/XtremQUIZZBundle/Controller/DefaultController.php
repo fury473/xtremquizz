@@ -15,9 +15,14 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $user = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:User');
+        $quizz = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
         $points = $user->getPoints()->execute();
         $totalJoueur = $user->getNbJoueur()->execute();
         $averageTime = $user->getAverageTime()->execute();
+        $QuizzIds = $quizz->getLastQuizzId()->execute();
+        $fbUserManager = $this->container->get('metinet.manager.fbuser');
+        $myfbUid = $fbUserManager->getMyFbId();
+        $listfriends = $fbUserManager->getUserFriends($myfbUid);
         if($averageTime != NULL)
         {
             $classementJoueur = $user->getClassementJoueur($points[0]['points'],$averageTime[0]['averageTime'])->execute();
@@ -45,18 +50,38 @@ class DefaultController extends Controller
         }
         // tri en priorité en fonction des points puis en fonction du temps moyen
         array_multisort($points, SORT_DESC, $averageTime, SORT_ASC, $entities);
+        $j =0;
         foreach($entities as $user){
             $entities[$i]['rank'] = $i+1;
             $temp_points = $user['points'];
             $temp_time = $user['averageTime'];
+            if($myfbUid == $user['fbUid']){
+               $myRank =   $entities[$i]['rank']; 
+            }
+             //Recherche du nombre d'amis jouant au jeu :
+            foreach($listfriends['data'] as $friend){
+                if($user['fbUid'] == $friend['id']){
+                        $j++;
+                }
+           }                
             $i++;
         }
+        //Booléen permettant l'affichage de la liste d'amis ou générale :
+        if($j >= 4)
+            $displayFriend = 1;
+        else
+            $displayFriend = 0;
+        
         return array("friends" => $friends['data'],
-                    "points" => $points[0]['points'],
+                    "points" => $points[0],
+                    "LastQuizz" => $QuizzIds,
+                    "ListeFriends" => $listfriends,
                     "totalJoueur" => $totalJoueur[0][1],
-                    "averageTime" => $averageTime[0]['averageTime'],
+                    "averageTime" => $averageTime[0],
                     "classementJoueur" => $classementJoueur[0][1],
                     "entities" => $entities,
+                    "displayFriend" => $displayFriend,
+                    'myRank' => $myRank,
                     );
     }
 }
