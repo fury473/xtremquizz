@@ -122,7 +122,7 @@ class FbUserManager
         }
     }
     
-    public function getUserFriends($fbId)
+    public function getFbFriends($fbId)
     {
         try {
             $lstFriends = $this->facebook->api('/'.$fbId."/friends");

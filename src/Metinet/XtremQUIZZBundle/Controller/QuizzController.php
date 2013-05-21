@@ -77,21 +77,43 @@ class QuizzController extends Controller
     public function processAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $fbUserManager = $this->container->get('metinet.manager.fbuser');
 
+        // On récupère le quizz
         $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
+        if (!$quizz) { throw $this->createNotFoundException('Quizz introuvable.'); }
+        
+        // On récupère l'utilisateur
+        $user = $em->getRepository('MetinetXtremQUIZZBundle:User')->find($fbUserManager->getMyId());
+        if (!$user) { throw $this->createNotFoundException('Utilisateur introuvable.'); }
+        
+        // On récupère les questions du quizz
         $questions = $quizz->getQuestions();
         $questionsForm = array();
         
         // On créer un formulaire par question que l'on stocke dans un tableau
         foreach($questions as $question) {
-            $questionForm  = $this->createForm(new ProcessQuestionType(), $question);
-            array_push($questionsForm, $questionForm->createView());
+            // On regarde si l'utilisateur a déjà répondu à la question.
+            // Pour cela on récupère d'abord toutes les réponses de cette question
+            $answers = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->getAnswersToQuestion($question);
+            $answered = false;
+            foreach($answers as $answer) {
+                // Puis pour chaque réponse, on regarde si l'utilisateur l'a déjà choisie
+                if(in_array($user, $answer->getUsers()->toArray())) {
+                    // Si la réponse est associée à l'utilisateur l'utilisateur a donc répondu à la question
+                    $answered = true;
+                }
+            }
+            
+            if(!$answered) {
+                // On génère le FormType de la question seulement si celle-ci n'a pas déjà eu de réponse
+                $questionForm  = $this->createForm(new ProcessQuestionType(), array('question' => $question));
+                array_push($questionsForm, $questionForm->createView());
+            }
         }
+        
+        // On mélange les questions
         shuffle($questionsForm);
-
-        if (!$quizz) {
-            throw $this->createNotFoundException('Quizz Introuvable.');
-        }
 
         return array(
             'quizz' => $quizz,
@@ -100,12 +122,23 @@ class QuizzController extends Controller
     }
     
     /**
-     * Validation of Quizz
+     * Start of Quizz
      *
-     * @Route("/{id}/validate", name="quizz_validate")
+     * @Route("/{id}/start", name="quizz_start")
      * @Template()
      */
-    public function validateAction($id)
+    public function startAction($id)
+    {
+        return array();
+    }
+    
+    /**
+     * Validation of Quizz
+     *
+     * @Route("/{id}/end", name="quizz_end")
+     * @Template()
+     */
+    public function endAction($id)
     {
         return array();
     }

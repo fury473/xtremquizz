@@ -31,7 +31,7 @@ class DefaultController extends Controller
         }
         var_dump($points[0]['points']);
         
-        $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
+        $friends = $this->container->get('metinet.manager.fbuser')->getFbFriends("me");
 
         return array("friends" => $friends['data'],
                     "points" => $points[0]['points'],

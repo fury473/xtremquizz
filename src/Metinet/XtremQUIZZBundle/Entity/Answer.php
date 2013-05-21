@@ -149,9 +149,10 @@ class Answer
      * @param \Metinet\XtremQUIZZBundle\Entity\User $users
      * @return Answer
      */
-    public function addUser(\Metinet\XtremQUIZZBundle\Entity\User $users)
+    public function addUser(\Metinet\XtremQUIZZBundle\Entity\User $user)
     {
-        $this->users[] = $users;
+        $this->users[] = $user;
+        $user->addAnswer($this);
 
         return $this;
     }

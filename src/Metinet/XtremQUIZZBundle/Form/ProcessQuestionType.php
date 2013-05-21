@@ -10,8 +10,8 @@ class ProcessQuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $question = $options['data'];
-        echo $question->getTitle();
+        $question = $options['data']['question'];
+        
         $builder->add('answers', 'entity', array(
         'class' => 'MetinetXtremQUIZZBundle:Answer',
         'label' => $question->getTitle(),
@@ -28,7 +28,7 @@ class ProcessQuestionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Metinet\XtremQUIZZBundle\Entity\Question'
+            'data_class' => null
         ));
     }
 

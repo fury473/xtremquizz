@@ -31,22 +31,25 @@ class AnswerController extends Controller {
     public function validateAction() {
         $content = $this->get('request')->request->all();
         $answerId = $content['answer_id'];
-        //if ($this->get('request')->isXmlHttpRequest()) {
+        if ($this->get('request')->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
             $fbUserManager = $this->container->get('metinet.manager.fbuser');
             
             $answer  = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->find($answerId);
             $user = $em->getRepository('MetinetXtremQUIZZBundle:User')->find($fbUserManager->getMyId());
             $answer->addUser($user);
-            $em->persist($answer);
-            $em->flush();
+            try {
+                $em->persist($answer);
+                $em->flush();
+            } catch(Exception $e) {
+                return new Response($e->getMessage(), 500);
+            }
+            return new Response(0, 200);
             
-            $return = json_encode(0);
-            return new Response($return, 200, array('Content-Type' => 'application/json'));
-        /*} else {
+        } else {
             $return = json_encode(-1);
             return new Response($return, 500, array('Content-Type' => 'application/json'));
-        }*/
+        }
     }
 
 }
