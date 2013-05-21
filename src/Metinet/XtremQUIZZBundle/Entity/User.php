@@ -401,9 +401,9 @@ class User
      * @param \Metinet\XtremQUIZZBundle\Entity\Answer $answers
      * @return User
      */
-    public function addAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answers)
+    public function addAnswer(\Metinet\XtremQUIZZBundle\Entity\Answer $answer)
     {
-        $this->answers[] = $answers;
+        $this->answers[] = $answer;
 
         return $this;
     }

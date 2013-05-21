@@ -33,6 +33,7 @@ class DefaultController extends Controller
         {
             $classementJoueur[0][1] = NULL;
         }
+
         $i = 0;
         $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
         $em = $this->getDoctrine()->getManager();
