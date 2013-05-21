@@ -5,6 +5,7 @@ namespace Metinet\XtremQUIZZBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Metinet\XtremQUIZZBundle\Form\ProcessQuestionType;
 
 /**
  * Quizz controller.
@@ -78,13 +79,23 @@ class QuizzController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
+        $questions = $quizz->getQuestions();
+        $questionsForm = array();
+        
+        // On créer un formulaire par question que l'on stocke dans un tableau
+        foreach($questions as $question) {
+            $questionForm  = $this->createForm(new ProcessQuestionType(), $question);
+            array_push($questionsForm, $questionForm->createView());
+        }
+        shuffle($questionsForm);
 
         if (!$quizz) {
             throw $this->createNotFoundException('Quizz Introuvable.');
         }
 
         return array(
-            'quizz' => $quizz
+            'quizz' => $quizz,
+            'questionsForm'   => $questionsForm
         );
     }
     
