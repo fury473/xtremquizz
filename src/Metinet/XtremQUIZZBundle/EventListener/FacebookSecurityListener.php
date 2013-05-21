@@ -70,7 +70,7 @@ class FacebookSecurityListener
             }
             else {
 
-                if (!$session->has('user') && $userId > 0) {
+                if ((!$session->has('user') || is_null($session->get('user'))) && $userId > 0) {
                     $session->set('user', $this->container->get('metinet.manager.fbuser')->findUserByFbId($userId));
                 }
 
