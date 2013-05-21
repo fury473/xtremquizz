@@ -1,34 +1,36 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>XTREM QUIZZ</h1>
-        
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
         <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
     </ul>
+</div>
 
-    <h2>Modification du thème {{ entity.title }}</h2>
+<div class="blockaccueil corps">
+    <h3>Modification du thème {{ entity.title }}</h3>
+    
+    <div class="liens">
+        <a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+    </div>
 
     <form action="{{ path('admin_theme_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+            {{ form_widget(edit_form) }}
         <p>
             <button type="submit">Modifier</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_theme') }}">Retour à la liste</a>
-    </li>
-    <li>
-        <form action="{{ path('admin_theme_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
+    
+    <form action="{{ path('admin_theme_delete', { 'id': entity.id }) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+                    {{ form_widget(delete_form) }}
+        <button type="submit">Supprimer</button>
+    </form>
+</div>
 {% endblock %}

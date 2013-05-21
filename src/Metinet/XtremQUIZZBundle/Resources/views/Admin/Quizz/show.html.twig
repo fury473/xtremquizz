@@ -1,86 +1,70 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>XTREM QUIZZ</h1>
-        
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
         <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
     </ul>
+</div>
 
-    <h2>Quizz {{ entity.title }}</h2>
+<div class="blockaccueil corps">
+    <h3>Quizz {{ entity.title }}</h3>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Titre</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ entity.picture }}</td>
-            </tr>
-            <tr>
-                <th>Courte description</th>
-                <td>{{ entity.shortDesc }}</td>
-            </tr>
-            <tr>
-                <th>Longue description</th>
-                <td>{{ entity.longDesc }}</td>
-            </tr>
-            <tr>
-                <th>Points à gagner</th>
-                <td>{{ entity.winPoints }}</td>
-            </tr>
-            <tr>
-                <th>Temps moyen</th>
-                <td>{{ entity.averageTime }}</td>
-            </tr>
-            <tr>
-                <th>Resultat 1</th>
-                <td>{{ entity.txtWin1 }}</td>
-            </tr>
-            <tr>
-                <th>Resultat 3</th>
-                <td>{{ entity.txtWin3 }}</td>
-            </tr>
-            <tr>
-                <th>Resultat 2</th>
-                <td>{{ entity.txtWin2 }}</td>
-            </tr>
-            <tr>
-                <th>Resultat 4</th>
-                <td>{{ entity.txtWin4 }}</td>
-            </tr>
-            <tr>
-                <th>Titre du partage</th>
-                <td>{{ entity.shareWallTitle }}</td>
-            </tr>
-            <tr>
-                <th>Description du partage</th>
-                <td>{{ entity.shareWallDesc }}</td>
-            </tr>
-            <tr>
-                <th>Date de création</th>
-                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="liens">
+        <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/images/update.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_quizz') }}">Retour à la liste</a>
-    </li>
-    <li>
-        <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier</a>
-    </li>
-    <li>
-        <form action="{{ path('admin_quizz_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
+    <div class="block_detail">
+        <table>
+            <tr>
+                <td><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" class="image" /></td>
+                <td><h2>{{ entity.title }}</h2>
+                    <em>Créé le {{ entity.createdAt|date('d-m-Y') }}</em></td>
+            </tr>
+        </table>
+
+        <div>
+            <h4>Informations</h4>
+            <p><strong>{{ entity.winPoints }}</strong> points à gagner.</p>
+            <p>Temps de réponse de <strong>{{ entity.averageTime }}</strong> minutes en moyenne.</p>
+        </div>
+
+        <div>
+            <h4>Description</h4>      
+            <p>{{ entity.longDesc }}</p>
+        </div>
+
+        <div>
+            <h4>Resultats</h4>
+            <h5>Premier</h5>
+            <p>{{ entity.txtWin1 }}</p>
+            <h5>Deuxième</h5>
+            <p>{{ entity.txtWin2 }}</p>
+            <h5>Troisième</h5>
+            <p>{{ entity.txtWin3 }}</p>
+            <h5>Quatrième</h5>
+            <p>{{ entity.txtWin4 }}</p>            
+        </div>
+
+        <div>
+            <h4>Partage</h4>
+            <h5>Titre du partage</h5>
+            <p>{{ entity.shareWallTitle }}</p>
+            <h5>Description du partage</h5>
+            <p>{{ entity.shareWallDesc }}</p>            
+        </div>
+    </div>
+
+    <form action="{{ path('admin_quizz_delete', { 'id': entity.id }) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
+        <button type="submit">Supprimer</button>
+    </form>
+</div>
 {% endblock %}

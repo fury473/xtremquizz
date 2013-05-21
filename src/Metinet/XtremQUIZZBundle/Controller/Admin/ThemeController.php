@@ -85,9 +85,10 @@ class ThemeController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('MetinetXtremQUIZZBundle:Theme')->find($id);
-
+        $rep = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
+        $quizzParTheme = $rep->getQuizzByTheme($id)->execute();
+            
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Theme entity.');
         }
@@ -97,6 +98,7 @@ class ThemeController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'quizz' => $quizzParTheme
         );
     }
 

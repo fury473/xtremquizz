@@ -10,10 +10,6 @@ body{
     display: none;
 }
 
-#logo {
-    margin-left: -115px;
-}
-
 .blockaccueil {
     background-color: white;
     width:700px;
@@ -38,32 +34,12 @@ body{
     border:0;
 }
 
-#img-class-joueurs {
+#img-class-joueurs, #img-class-top, #img-class-flop {
     width:50px;
     color:#333;
 }
 
-#pts-class-joueurs {
-    width:130px;
-    color:#333;
-}
-
-#img-class-top {
-    width:50px;
-    color:#333;
-}
-
-#pts-class-top {
-    width:130px;
-    color:#333;
-}
-
-#img-class-flop {
-    width:50px;
-    color:#333;
-}
-
-#pts-class-flop {
+#pts-class-joueurs, #pts-class-top, #pts-class-flop {
     width:130px;
     color:#333;
 }
@@ -79,11 +55,6 @@ table tr td {
     height: 230px;
 }
 
-h2 {
-    font-weight: lighter;
-    color:#777;
-}
-
 h3{
     font-weight: lighter;
     color:#777;
@@ -96,6 +67,21 @@ h3{
     margin-left: -20px;
     padding-top: 5px;
     padding-left: 15px;
+}
+
+.block_detail h4 {
+   margin-top: 0; 
+   text-transform: uppercase;
+   padding: 10px;
+   background-color: #d8dfea;
+   color:#333;
+}
+
+h5 {
+    font-size: 11px;
+    padding-left: 15px;
+    color:#3b5998;
+    margin-bottom: -5px;
 }
 
 .titres-block {
@@ -153,6 +139,7 @@ p {
 .corps {
    padding: 20px;
    border: 1px solid #d3d6db;
+   min-height: 200px;
 }
 
 #menu-classement li {
@@ -161,13 +148,7 @@ p {
     margin-right: 10px;
 }
 
-#menu-classement a {
-    color:#3b5998;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#menu-classement a:hover {
+#menu-classement a:hover, .actions a:hover, .liens a:hover, a.nouveauQuizz:hover {
     text-decoration: underline;
 }
 
@@ -179,25 +160,112 @@ p {
     display: none;
 }
 
+.records_list {
+    width: 300px;
+}
+
+.records_list tr {
+    height: 50px;
+}
+
+.records_list th {
+    width: 50px;
+} 
+
 .records_list td {
-    background-color: #edeff4;
     border-right: 0;
     border-left: 0;
-    border-collapse: collapse;
     padding-left: 10px;
 }
 
-.liens-ajout {
+.liste_quizz {
+    overflow: hidden;
+}
+
+.liste_quizz table td {
+    border:0;
+}
+
+.liste_quizz div {
+    float:left;
+    border:1px solid #d3d6db;
+    background-color: #edeff4;
+    margin: 0 20px 20px 0;
+    width: 325px;
+}
+
+.liens {
     text-align: right;
     margin-bottom: 20px;
 }
 
-.liens-ajout a {
+.liens a {
+    margin-left: 10px;
+}
+
+#menu-classement a, .actions a, .liens a, a.nouveauQuizz {
     text-decoration: none;
     color:#3b5998;
     font-weight: bold;
 }
 
-.liens-ajout img {
+.liens img {
     vertical-align: middle;
+}
+
+a.nouveauQuizz {
+    float: right;
+    margin-right: 15px;
+}
+
+td.actions {
+    width: 40px;
+}
+
+img.image {
+    width: 200px;
+    margin:0 10px 10px 0;
+}
+
+table.record_properties {
+    height: 250px;
+}
+
+.record_properties th {
+    text-align: left;
+}
+
+label {
+    display: block;
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 0;
+    text-align: right;
+    width: 150px;
+    vertical-align: middle;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+.block_detail p {
+    width: 400px;
+    text-align: justify;
+    padding: 0 10px 10px 15px;
+}
+
+.block_detail div {
+    border:1px dashed grey;
+    margin-bottom: 20px;
+    width: 450px;
+}
+
+.block_detail td {
+    width: 200px;
+}
+
+.padding table {
+    padding: 0 15px 15px 15px;
 }

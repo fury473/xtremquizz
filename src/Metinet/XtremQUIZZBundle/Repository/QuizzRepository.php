@@ -37,7 +37,7 @@ class QuizzRepository extends EntityRepository
     public function getTopQuizz(){
         return $this->_em->createQuery('
                 SELECT
-                        i.title, i.picture
+                        i.id, i.title, i.picture
                 FROM
                         MetinetXtremQUIZZBundle:Quizz i
                 ORDER BY
@@ -48,13 +48,14 @@ class QuizzRepository extends EntityRepository
     public function getFlopQuizz(){
         return $this->_em->createQuery('
                 SELECT
-                        i.title, i.picture
+                        i.id, i.title, i.picture
                 FROM
                         MetinetXtremQUIZZBundle:Quizz i
                 ORDER BY
                         i.nbLaunches ASC
         ')->setMaxResults(3);
     }
+
     public function getLastQuizzId() {
         return $this->_em->createQuery('
 			SELECT
@@ -66,4 +67,14 @@ class QuizzRepository extends EntityRepository
 		')->setMaxResults(4);
     }
     
+    public function getQuizzByTheme($idTheme) {
+        return $this->_em->createQuery("
+                    SELECT
+                            i.id, i.title, i.picture
+                    FROM
+                            MetinetXtremQUIZZBundle:Quizz i
+                    WHERE
+                            i.theme = $idTheme
+            ");
+    }
 }

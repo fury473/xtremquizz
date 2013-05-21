@@ -1,34 +1,38 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <div class="blockaccueil menu">
+<div class="blockaccueil menu">
     <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>  
-        <ul class="menu">
-            <li><a href="{{ path('admin') }}">Accueil</a></li>
-            <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-            <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-            <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-        </ul>
-    </div>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
+    </ul>
+</div>
 
-    <div class="blockaccueil corps">
-        <h3>Liste des quizz</h3>
+<div class="blockaccueil corps">
+    <h3>Liste des quizz</h3>
 
-        <div class="liens-ajout"><a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a></div>
-        
-        <table class="records_list">
-            {% for entity in entities %}
+    <div class="liens"><a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" /></a></div>
+       
+    <div class="liste_quizz">
+        {% for entity in entities %}
+        <div>
+            <table class="records_list">
                 <tr>
-                    <th><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></th>
-                    <td>{{ entity.title }}</td>
-                    <td>{{ entity.shortDesc }}</td>
-                    <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>
+                    <th><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" width="50" /></th>
+                    <td><strong>{{ entity.title }}</strong><br/>
+                            {{ entity.shortDesc }}</td>
+                    <td class="actions">
                         <a href="{{ path('admin_quizz_show', { 'id': entity.id }) }}">Afficher</a>
                         <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier</a>
                     </td>
                 </tr>
-            {% endfor %}
-        </table>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+
     </div>
 {% endblock %}

@@ -1,46 +1,60 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-<h1>XTREM QUIZZ</h1>
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
+    </ul>
+</div>
 
-<ul class="menu">
-    <li><a href="{{ path('admin') }}">Accueil</a></li>
-    <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-    <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-</ul>
+<div class="blockaccueil corps">
+    <h3>Theme {{ entity.title }}</h3>
 
-<h2>Theme {{ entity.title }}</h2>
+    <div class="liens">
+        <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/images/update.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+    </div>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Image</th>
-            <td>{{ entity.picture }}</td>
-        </tr>
-        <tr>
-            <th>Petite description</th>
-            <td>{{ entity.shortDesc }}</td>
-        </tr>
-        <tr>
-            <th>Grande description</th>
-            <td>{{ entity.longDesc }}</td>
-        </tr>
-    </tbody>
-</table>
+    <div class="block_detail">
+        <table>
+            <tr>
+                <td><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" class="image" /></td>
+                <td><h2>Theme {{ entity.title }}</h2></td>
+            </tr>
+        </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_theme') }}">Retour à la liste</a>
-    </li>
-    <li>
-        <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier</a>
-    </li>
-    <li>
-        <form action="{{ path('admin_theme_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
+        <div>
+            <h4>Description</h4>
+            <p>{{ entity.longDesc }}</p>
+        </div>
+
+        <div class="padding">
+            <h4>Quizz liés à ce thème</h4>
+            
+            <a href="{{ path('admin_quizz_new') }}" class="nouveauQuizz">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
+            
+            <table>
+            {% for q in quizz %}
+                <tr>
+                    <th><a href="{{ path('admin_quizz') }} {{ q['id'] }}/show"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ q['picture']) }}" width="50" /></a></th>
+                    <td>{{ q['title'] }}</td>
+                </tr>
+            {% else %}
+                <p>Aucun quizz à ce jour.</p>
+            {% endfor %}    
+            </table>
+        </div>
+    </div>
+
+    <form action="{{ path('admin_theme_delete', { 'id': entity.id }) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
+        <button type="submit">Supprimer</button>
+    </form>
+</div>
 {% endblock %}

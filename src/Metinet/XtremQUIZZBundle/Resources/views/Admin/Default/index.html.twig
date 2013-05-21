@@ -4,7 +4,7 @@
     {% set user = app.session.get('user') %}
 
 <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
@@ -33,10 +33,10 @@
 
             <td rowspan="3" class="blockblue" valign="top">
                 <ul id="menu-classement">
-                        <li><a href="#" onclick="show('top', 'flop', 'dixjoueurs');">Les 3 tops</a></li>
-                        <li><a href="#" onclick="show('flop', 'top', 'dixjoueurs');">Les 3 flops</a></li>
-                        <li><a href="#" onclick="show('dixjoueurs', 'flop', 'top');">Derniers joueurs</a></li>
-                    </ul>
+                    <li><a href="#" onclick="show('top', 'flop', 'dixjoueurs');">Les 3 tops</a></li>
+                    <li><a href="#" onclick="show('flop', 'top', 'dixjoueurs');">Les 3 flops</a></li>
+                    <li><a href="#" onclick="show('dixjoueurs', 'flop', 'top');">Derniers joueurs</a></li>
+                </ul>
                 
                 <div class="contenustat overflow">
                     <!-- BLOCK 3 TOPS -->                    
@@ -45,7 +45,7 @@
                         <table>
                             {% for t in top %}
                             <tr>
-                                <td id="img-class-top"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ t['picture']) }}" /></td>
+                                <td id="img-class-top"><a href="{{ path('admin_quizz') }} {{ t['id'] }}/show"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ t['picture']) }}" width="50" /></a></td>
                                 <td id="pts-class-top">{{ t['title'] }}</td>
                             </tr>
                             {% endfor %}
@@ -59,7 +59,7 @@
                         <table>
                             {% for f in flop %}
                             <tr>
-                                <td id="img-class-flop"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ f['picture']) }}" /></td>
+                                <td id="img-class-flop"><a href="{{ path('admin_quizz') }} {{ f['id'] }}/show"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ f['picture']) }}" width="50" /></a></td>
                                 <td id="pts-class-flop">{{ f['title'] }}</td>
                             </tr>
                             {% endfor %}
