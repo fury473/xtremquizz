@@ -59,7 +59,7 @@ class QuizzRepository extends EntityRepository
     public function getLastQuizzId() {
         return $this->_em->createQuery('
 			SELECT
-				i.id, i.title
+				i.id, i.title, i.picture, i.winPoints
 			FROM
 				MetinetXtremQUIZZBundle:Quizz i
                         ORDER BY
