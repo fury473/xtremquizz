@@ -178,20 +178,23 @@ p {
     padding-left: 10px;
 }
 
-.liste_quizz {
+.liste {
     overflow: hidden;
 }
 
-.liste_quizz table td {
+.liste table td {
     border:0;
 }
 
-.liste_quizz div {
+.liste div {
     float:left;
     border:1px solid #d3d6db;
     background-color: #edeff4;
-    margin: 0 20px 20px 0;
     width: 325px;
+}
+
+.margin_block_qt {
+    margin: 0 20px 20px 0;
 }
 
 .liens {
@@ -268,4 +271,15 @@ textarea {
 
 .padding table {
     padding: 0 15px 15px 15px;
+}
+
+div.logotq {
+    width:50px;
+    height:50px;
+    overflow:hidden;
+}
+
+.logotq img {
+    max-width:150%;
+    min-height: 100%;
 }

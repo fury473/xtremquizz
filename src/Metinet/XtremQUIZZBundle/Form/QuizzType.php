@@ -12,7 +12,7 @@ class QuizzType extends AbstractType
     {
         $builder
             ->add('title','text',array('label'=>'Titre'))
-            ->add('picture','text',array('label'=>'Image'))
+            ->add('picture','file',array('label'=>'Image'))
             ->add('shortDesc','text',array('label'=>'Courte description'))
             ->add('longDesc','text',array('label'=>'Longue description'))
             ->add('winPoints','integer',array('label'=>'Points à gagner'))

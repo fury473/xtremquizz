@@ -16,12 +16,12 @@
 
     <div class="liens"><a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" /></a></div>
        
-    <div class="liste_quizz">
+    <div class="liste">
         {% for entity in entities %}
-        <div>
+        <div class="margin_block_qt">
             <table class="records_list">
                 <tr>
-                    <th><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" width="50" /></th>
+                    <th><div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div></th>
                     <td><strong>{{ entity.title }}</strong><br/>
                             {{ entity.shortDesc }}</td>
                     <td class="actions">
