@@ -29,7 +29,7 @@ class UserController extends Controller
     public function rankingAction()
     {
         $i = 0;
-        $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
+        $friends = $this->container->get('metinet.manager.fbuser')->getFbFriends("me");
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:User')->getClassementAll()->execute();
         $temp_points = 0;

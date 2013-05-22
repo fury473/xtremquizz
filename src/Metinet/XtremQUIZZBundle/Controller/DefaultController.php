@@ -22,7 +22,7 @@ class DefaultController extends Controller
         $QuizzIds = $quizz->getLastQuizzId()->execute();
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         $myfbUid = $fbUserManager->getMyFbId();
-        $listfriends = $fbUserManager->getUserFriends($myfbUid);
+        $listfriends = $fbUserManager->getFbFriends($myfbUid);
         if($averageTime != NULL)
         {
             $classementJoueur = $user->getClassementJoueur($points[0]['points'],$averageTime[0]['averageTime'])->execute();
@@ -35,7 +35,7 @@ class DefaultController extends Controller
         }
 
         $i = 0;
-        $friends = $this->container->get('metinet.manager.fbuser')->getUserFriends("me");
+        $friends = $this->container->get('metinet.manager.fbuser')->getFbFriends("me");
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:User')->getClassementAll()->execute();
         $temp_points = 0;
