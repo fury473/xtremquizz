@@ -51,12 +51,12 @@
             {% else %}
                 {{ quizz.txtWin1 }}
             {% endif %}
+            <br/><a href="{{ path('quizz_result', { 'id': quizz.id }) }}">Voir mon résultat</a>
         {% else %}
             Quizz non complété.
+            <br/><a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
         {% endif %}
     </div>
-    
-    <a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
     
     <div>
         <a href="{{ path('quizz') }}">

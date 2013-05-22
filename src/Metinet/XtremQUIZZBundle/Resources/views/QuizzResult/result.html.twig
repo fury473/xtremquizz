@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div id="result_screen">
+        <h1>{{ quizz.title }} - Résultat</h1>
+        <div>{{ quizz.picture }} {{ quizz.txtWin }}</div>
+        <div>
+            <p>Temps moyen: {{ quizz.averageTime }} secondes</p>
+            <p>Temps écoulé: {{ quizzResult.elapsedTime }}</p>
+            <p>Taux de réussite: {{ quizzResult.average }}</p>
+        </div>
+    </div>
+{% endblock %}
