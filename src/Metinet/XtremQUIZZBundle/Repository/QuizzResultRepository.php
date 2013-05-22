@@ -11,21 +11,19 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class QuizzResultRepository extends EntityRepository
-{
-    private function getNbQuizzLances(){
+{ 
+    public function getByUserIdAndQuizzId($user_id, $quizz_id) {
         $qb = $this->createQueryBuilder('q')
             ->where('q.user = :user')
             ->andWhere('q.quizz = :quizz')
             ->setParameters(array('user' => $user_id, 'quizz' => $quizz_id))
             ->getQuery()
-            ->getResult();
-        if(count($qb) > 0)
-            return $qb[0];
-        else
-            return null;
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+        return $qb;
     }
     
-    public function findByUserIdAndQuizzId($user_id, $quizz_id) {
+    public function getIdByUserIdAndQuizzId($user_id, $quizz_id) {
         $qb = $this->createQueryBuilder('q')
             ->select('q.id')
             ->where('q.user = :user')
@@ -36,5 +34,4 @@ class QuizzResultRepository extends EntityRepository
             ->getOneOrNullResult();
         return $qb;
     }
-
 }

@@ -71,7 +71,7 @@
         function defierUnAmis() {
             FB.ui({
                 method: 'apprequests',
-                message: "Je te met au défi d'en savoir plus que moi sur {{ quizz.title }}",
+                message: {{ quizz.shareWallDesc }}",
             }, requestCallback);
         }
         function requestCallback(response) {

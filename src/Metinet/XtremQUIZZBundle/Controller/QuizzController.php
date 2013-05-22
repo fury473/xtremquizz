@@ -43,7 +43,7 @@ class QuizzController extends Controller
         $friendUsers = $fbUserManager->getFriendUsersWhoCompletedQuizz($fbUserManager->getMyFbId(), $id);
         $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
         $top10 = $em->getRepository('MetinetXtremQUIZZBundle:User')->getRank(10);
-        $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->findByUserIdAndQuizzId($fbUserManager->getMyId(), $id);
+        $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->getByUserIdAndQuizzId($fbUserManager->getMyId(), $id);
         
         if (is_null($friendUsers)) {
             $array = array(
@@ -112,34 +112,98 @@ class QuizzController extends Controller
             }
         }
         
-        // On mélange les questions
-        shuffle($questionsForm);
+        if(count($questionsForm) > 0) {
+            // On mélange les questions
+            shuffle($questionsForm);
 
+            return array(
+                'quizz' => $quizz,
+                'userId' => $user->getId(),
+                'questionsForm'  => $questionsForm
+            );
+        } else { //S'il n'y a pas de question c'est que le quizz est terminé on redirige alors sur la page de résultat
+            return $this->redirect($this->generateUrl('quizz_result', array('id' => $id)), 301);
+        }
+    }
+    
+    /**
+     * Resultat d'un Quizz
+     *
+     * @Route("/{id}/result", name="quizz_result")
+     * @Template()
+     */
+    public function resultAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fbUserManager = $this->container->get('metinet.manager.fbuser');
+        
+        // On récupère le quizz
+        $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
+        if (!$quizz) { throw $this->createNotFoundException('Quizz introuvable.'); }
+        
+        $userId = $fbUserManager->getMyId();
+        
+        $quizzResult = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->getByUserIdAndQuizzId($userId, $id);
+        $txtWin = null;
+        if ($quizzResult->getAverage() == 100) {
+            $txtWin = $quizz->getTxtWin1();
+        } else if ($quizzResult->getAverage() > 75) {
+            $txtWin = $quizz->getTxtWin2();
+        } else if ($quizzResult->getAverage() > 50) {
+            $txtWin = $quizz->getTxtWin3();
+        } else if ($quizzResult->getAverage() > 25) {
+            $txtWin = $quizz->getTxtWin4();
+        }
+
+        $quizz = array(
+            'id' => $id,
+            'title' => $quizz->getTitle(),
+            'txtWin' => $txtWin,
+            'averageTime' => $quizz->getAverageTime(),
+            'picture' => $quizz->getPicture()
+        );
+        
+        // On fait une phrase pour décrire le temps écoulé
+        $elapsedTime = $quizzResult->getDateEnd()->diff($quizzResult->getDateStart());
+        if ($elapsedTime->format('%h') > 0) {
+            $plurielH = '';
+            $plurielM = '';
+            $plurielS = '';
+            if ($elapsedTime->format('%h') > 1) { $plurielH = 's'; }
+            if ($elapsedTime->format('%i') > 1) { $plurielM = 's'; }
+            if ($elapsedTime->format('%s') > 1) { $plurielS = 's'; }
+            $elapsedTime = $elapsedTime->format("%h heure$plurielH, %i minute$plurielM et %s seconde$plurielS");
+        } else if ($elapsedTime->format('%m') > 0) {
+            $plurielM = '';
+            $plurielS = '';
+            if ($elapsedTime->format('%i') > 1) { $plurielM = 's'; }
+            if ($elapsedTime->format('%s') > 1) { $plurielS = 's'; }
+            $elapsedTime = $elapsedTime->format("%i minute$plurielM et %s seconde$plurielS");
+        } else {
+            $plurielS = '';
+            if ($elapsedTime->format('%s') > 1) { $plurielS = 's'; }
+            $elapsedTime = $elapsedTime->format("%s seconde$plurielS");
+        }
+
+        $quizzResult = array(
+            'elapsedTime' => $elapsedTime,
+            'average' => $quizzResult->getAverage()
+        );
+
+        if ($this->get('request')->isXmlHttpRequest()) {
+            $response = new Response();
+            $response->setContent(json_encode(array(
+                'quizz' => $quizz,
+                'userId' => $userId,
+                'quizzResult' => $quizzResult
+            )));
+            $response->headers->set('Content-Type', 'application/json');
+            return response;
+        }
         return array(
             'quizz' => $quizz,
-            'questionsForm'   => $questionsForm
+            'userId' => $userId,
+            'quizzResult' => $quizzResult
         );
-    }
-    
-    /**
-     * Start of Quizz
-     *
-     * @Route("/{id}/start", name="quizz_start")
-     * @Template()
-     */
-    public function startAction($id)
-    {
-        return array();
-    }
-    
-    /**
-     * Validation of Quizz
-     *
-     * @Route("/{id}/end", name="quizz_end")
-     * @Template()
-     */
-    public function endAction($id)
-    {
-        return array();
     }
 }

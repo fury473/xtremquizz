@@ -47,8 +47,7 @@ class AnswerController extends Controller {
             return new Response(0, 200);
             
         } else {
-            $return = json_encode(-1);
-            return new Response($return, 500, array('Content-Type' => 'application/json'));
+            return new Response("La requête doit être de type XmlHttpRequest.", 500);
         }
     }
 
