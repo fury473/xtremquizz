@@ -16,12 +16,11 @@ class QuizzResultController extends Controller
     /**
      * Resultat d'un Quizz
      *
-     * @Route("/{id}", name="quizz_result")
+     * @Route("/{id}/result", name="quizz_result")
      * @Template()
      */
     public function resultAction($id)
     {
-        echo 'test';
         $em = $this->getDoctrine()->getManager();
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         
@@ -178,17 +177,57 @@ class QuizzResultController extends Controller
                 }
                 
                 /* CALCUL DU SCORE : Taux de réussite + Points gagnés */
-                $average = $nbGoodAnswers/$nbQuestions;
-                $winPoints  = 100;
                 
-                $quizzResult->setAverage($average);
+                // temps moyen du quizz
+                $averageTime = $quizzResult->getQuizz()->getAverageTime();
+                // temps écoulé pour répondre au quizz
+                $elapsedTime = abs($quizzResult->getDateEnd()->getTimestamp() - $quizzResult->getDateStart()->getTimestamp());
+                // nombre de point que rapporte le quizz
+                $quizzValue = $quizzResult->getQuizz()->getWinPoints();
+                // taux de reussite
+                $average = ($nbGoodAnswers/$nbQuestions);
+                // minoration des points selon le taux de réussite
+                $winPoints = $average*$quizzValue;
+                
+                // Le bonus ou malhus correspond toujours à 25% de sa valeur en point
+                $bonus = 0.25*$quizzValue;
+                if($elapsedTime > $averageTime) {
+                    // Si l'utilisateur est plus lent que le temps moyen, on lui applique en malhus
+                    $winPoints -= $bonus;
+                } else {
+                    // Sinon bonus
+                    $winPoints += $bonus;
+                }
+                
+                // on arrondie les points gagnés au point supérieur
+                $winPoints = round($winPoints, 0);
+                // mise à jour des points et du nombres de quizz réalisés par l'utilisateurs
+                $userPoints = $user->getPoints();
+                $userNbQuizz = $user->getNbQuizz();
+                
+                $quizzResult->setAverage($average*100);
+                $quizzResult->setElapsedTime($elapsedTime);
                 $quizzResult->setWinPoints($winPoints);
+                
+                $user->setNbQuizz($userNbQuizz + 1);
+                $user->setPoints($userPoints + $winPoints);
                 try {
                     $em->persist($quizzResult);
                     $em->flush();
                 } catch(Exception $e) {
                     return new Response($e->getMessage(), 500);
                 }
+                
+                // On doit d'abord stoquer le nouveau temps pour pouvoir recalculer la moyenne, c'est pour cela qu'on persist deux fois.
+                $userAverageTime = $em->getRepository('MetinetXtremQUIZZBundle:QuizzResult')->getUserAvarageTime($user->getId());
+                $user->setAverageTime($userAverageTime);
+                try {
+                    $em->persist($quizzResult);
+                    $em->flush();
+                } catch(Exception $e) {
+                    return new Response($e->getMessage(), 500);
+                }
+                
             } else {
                 throw $this->createNotFoundException('QuizzResult introuvable.');
             }

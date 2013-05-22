@@ -45,7 +45,7 @@
                         .done(function(data) {
                             //Une fois validée on arrête le chronomètre et on redirige sur la page de résultat
                             Stop(timerID);
-                            top.location.href={{ path('quizz_result', { 'id': quizz.id }) }};
+                            top.location.href="{{ path('quizz_result', { 'id': quizz.id }) }}";
                         });
                     }
                 });

@@ -7,7 +7,11 @@
         <div>
             <p>Temps moyen: {{ quizz.averageTime }} secondes</p>
             <p>Temps écoulé: {{ quizzResult.elapsedTime }}</p>
-            <p>Taux de réussite: {{ quizzResult.average }}</p>
+            <p>Taux de réussite: {{ quizzResult.average }}%</p>
         </div>
+        <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">
+            Retour à la fiche
+        </a>
     </div>
+    
 {% endblock %}

@@ -59,7 +59,7 @@ class User
     /**
      * @var float
      *
-     * @ORM\Column(name="points", type="float", nullable=true)
+     * @ORM\Column(name="points", type="float")
      */
     private $points;
 
@@ -73,7 +73,7 @@ class User
     /**
      * @var float
      *
-     * @ORM\Column(name="nb_quizz", type="float", nullable=true)
+     * @ORM\Column(name="nb_quizz", type="float")
      */
     private $nbQuizz;
 
@@ -110,8 +110,9 @@ class User
         $this->quizzResults = new \Doctrine\Common\Collections\ArrayCollection();
         $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->points = 0;
+        $this->nbQuizz = 0;
         $this->createdAt = new \DateTime();
-        $this->averageTime = 0;
+        $this->averageTime = null;
     }
     
     /**

@@ -41,6 +41,13 @@ class QuizzResult
      * @ORM\Column(name="average", type="float", nullable=true)
      */
     private $average;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="elapsed_time", type="integer", nullable=true)
+     */
+    private $elapsedTime;
 
     /**
      * @var integer
@@ -146,6 +153,29 @@ class QuizzResult
     public function getAverage()
     {
         return $this->average;
+    }
+    
+    /**
+     * Set elapsed time
+     *
+     * @param integer $elapsedTime
+     * @return QuizzResult
+     */
+    public function setElapsedTime($elapsedTime)
+    {
+        $this->elapsedTime = $elapsedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get elapsed time
+     *
+     * @return integer
+     */
+    public function getElapsedTime()
+    {
+        return $this->elapsedTime;
     }
 
     /**

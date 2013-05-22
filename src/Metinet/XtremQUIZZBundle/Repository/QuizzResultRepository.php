@@ -31,4 +31,31 @@ class QuizzResultRepository extends EntityRepository
             ->getOneOrNullResult();
         return $qb;
     }
+    
+    public function getUserAvarageTime($user_id) {
+        $quizzResults = $this->createQueryBuilder('q')
+            ->select('q.elapsedTime')
+            ->where('q.user = :user')
+            ->setParameters(array('user' => $user_id))
+            ->getQuery()
+            ->getResult();
+        $elapsedTimes = array();
+        foreach($quizzResults as $quizzResult) {
+            if(!is_null($quizzResult['elapsedTime'])) {
+                array_push($elapsedTimes, $quizzResult['elapsedTime']);
+            }
+        }
+        
+        $average = null;
+        $nbTimes = count($elapsedTimes);
+        if($nbTimes > 0) {
+            $average = 0;
+            foreach($elapsedTimes as $elapsedTime) {
+                $average += $elapsedTime;
+            }
+            $average = $average/$nbTimes;
+        }
+    
+        return $average;
+    }
 }

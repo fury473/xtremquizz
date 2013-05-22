@@ -41,7 +41,7 @@
     
     <div>
         {% if quizzResult is not null %}
-            Quizz complété à {{ quizzResult.average }} pour {{ quizzResult.winPoints }} points.
+            Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
             {% if quizzResult.average <= 25 %}
                 {{ quizz.txtWin4 }}
             {% elseif quizzResult.average <= 50 %}
