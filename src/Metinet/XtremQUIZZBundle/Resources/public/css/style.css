@@ -283,3 +283,16 @@ div.logotq {
     max-width:150%;
     min-height: 100%;
 }
+
+.gras{
+    font-weight: bold;
+}
+
+.classement_list{
+    width: 330px;
+}
+
+#timer{
+    float: right;
+    margin-top: -11px;
+}

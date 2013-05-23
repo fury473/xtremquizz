@@ -36,57 +36,37 @@
     
     <h3 style="margin-top: 15px;">Les derniers quizz disponibles</h3>
 
-    <p>   
-    {% for quizz in LastQuizz %}
-    <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a> <br/>
-    {% endfor %}
-     </p>
-     {% if displayFriend == 0 %}
-      <h2>Classement géneral</h2>
-
-    <table class="records_list">
-        <thead>
+    <table style="width: 210px">
+        {% for quizz in LastQuizz %}
             <tr>
-                <th>Classement</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Points</th>
-                <th>Temps moyen</th>
-                <th>Action</th>
+                <td><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" width="50" /></a></td>
+                <td><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
+                    Points à gagner: {{ quizz.winPoints }}</td>
             </tr>
-        </thead>
-        <tbody>  
+        {% endfor %}
+    </table>
+     
+    {% if displayFriend == 0 %}
+      <h3 style="margin-top: 25px">Classement général</h3>
+
+    <table class="classement_list">
         {% for entity in entities %}
             {% if (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
                     <tr>
                         <td>{{ entity.rank }}</td>
-                        <td>{{ entity.firstname }}</td>
-                        <td>{{ entity.lastname }}</td>
-                        <td>{{ entity.points }}</td>
-                        <td>{{ entity.averageTime }}</td>
-                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
+                        <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
+                            {{ entity.points }} points<br />
+                            Temps moyen: {{ entity.averageTime }}sec</td>
+                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
                         <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                     </tr>
             {% endif %}
         {% endfor %}
-        </tbody>
     </table>
       {% else %}
-          <h2>Classement des amis</h2>
+          <h3 style="margin-top: 25px">Classement des amis</h3>
 
             <table class="records_list">
-                <thead>
-                    <tr>
-                        <th>Classement général</th>
-                        <th>Classement</th>
-                        <th>Prénom</th>
-                        <th>Nom</th>
-                        <th>Points</th>
-                        <th>Temps moyen</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
                {% set i = 1%}
                {% for entity in entities %}
                     {% if (entity.fbUid == user.fb_uid) %}
@@ -118,7 +98,6 @@
                         {% endif %}
                    {% endfor %}
                 {% endfor %}
-                </tbody>
             </table>
       {% endif %}
     </p>
