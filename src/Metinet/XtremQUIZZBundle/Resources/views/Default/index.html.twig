@@ -37,29 +37,32 @@
     </table>
     
     <h3 style="margin-top: 15px;">Les derniers quizz disponibles</h3>
-
-    <table style="width: 210px">
+    <div class="classement_accueil">
         {% for quizz in LastQuizz %}
+        <div class="block_classement_accueil">
+        <table class="table_quizz_accueil">
             <tr>
-                <td><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" width="50" /></a></td>
-                <td><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
+                <td class="img_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" width="50" /></a></td>
+                <td class="infosquizz_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
                     Points à gagner: {{ quizz.winPoints }}</td>
             </tr>
+        </table>
+        </div>
         {% endfor %}
-    </table>
+    </div>
+    
      
     {% if displayFriend == 0 %}
       <h3 style="margin-top: 25px">Classement général</h3>
 
     <div class="classement_accueil">
         {% for entity in entities %}
-            
             {% if (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
                 <div class="block_classement_accueil">
                 <table class="classement_list">
                     <tr>
-                        <td id="rang_joueur_accueil">{{ entity.rank }}</td>
-                        <td id="img_joueur_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
+                        <td class="rang_accueil">{{ entity.rank }}</td>
+                        <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
                         <td id="infos_joueur_accueil"><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
                         {% if entity.averageTime != NULL %}
@@ -72,7 +75,6 @@
                 </table>     
                 </div> 
             {% endif %}
-            
         {% endfor %}
     </div>
       {% else %}
