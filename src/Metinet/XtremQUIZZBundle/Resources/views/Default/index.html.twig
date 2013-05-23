@@ -7,10 +7,12 @@
         <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
         <ul class="menu">
             <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
+            <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
+            <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
+            <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li> 
         </ul>
     </div>
+
 
     <div class="blockaccueil corps">
     <h3>Votre profil</h3>
@@ -50,7 +52,20 @@
         </div>
         {% endfor %}
     </div>
-    
+       {% if promotedQuizz.id !=0 %}
+    <h3 style="margin-top: 15px;">Quizz populaire</h3>
+    <div class="classement_accueil">
+        <div class="block_classement_accueil">
+        <table class="table_quizz_accueil">
+            <tr>
+                <td class="img_accueil"><a href="{{ path('quizz_show', { 'id': promotedQuizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ promotedQuizz.picture) }}" width="50" /></a></td>
+                <td class="infosquizz_accueil"><a href="{{ path('quizz_show', { 'id': promotedQuizz.id }) }}">{{promotedQuizz.title}}</a><br/>
+                    Points à gagner: {{ promotedQuizz.winPoints }}</td>
+            </tr>
+        </table>
+        </div>
+    </div>
+    {% endif %}
      
     {% if displayFriend == 0 %}
       <h3 style="margin-top: 25px">Classement général</h3>
