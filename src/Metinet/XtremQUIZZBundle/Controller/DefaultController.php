@@ -19,6 +19,7 @@ class DefaultController extends Controller
         $points = $user->getPoints()->execute();
         $totalJoueur = $user->getNbJoueur()->execute();
         $QuizzIds = $quizz->getLastQuizzId()->execute();
+        $promotedQuizz = $quizz->getPromotedQuizz()->execute();
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         $myfbUid = $fbUserManager->getMyFbId();
         $averageTime = $user->getAverageTime($myfbUid)->execute();
@@ -80,6 +81,7 @@ class DefaultController extends Controller
                     "entities" => $entities,
                     "displayFriend" => $displayFriend,
                     'myRank' => $myRank,
+                    "promotedQuizz" => $promotedQuizz[0],
                     );
     }
 }

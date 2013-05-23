@@ -125,4 +125,30 @@ class QuizzController extends Controller
             return $this->redirect($this->generateUrl('quizz_result', array('id' => $id)), 301);
         }
     }
+     
+    /**
+     * @Route("/{id}/", name="quizz_list")
+     * @Template()
+     */
+    public function listAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if($id == 0){
+           $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->findAll();
+
+           return array(
+               'entities' => $allQuizz,
+               'theme' => 0,
+           );   
+        }
+        else{
+           $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->getQuizzByTheme($id)->execute();
+           $theme =  $em->getRepository('MetinetXtremQUIZZBundle:Theme')->getThemeByID($id)->execute();
+           var_dump($allQuizz);
+           return array(
+               'entities' => $allQuizz,
+               'theme' => $theme[0],
+           ); 
+        }
+    }
 }

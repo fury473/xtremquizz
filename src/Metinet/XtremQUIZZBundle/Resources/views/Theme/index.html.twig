@@ -1,5 +1,31 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    
+{% block body %}
+{% set user = app.session.get('user') %}
+
+    <div class="blockaccueil menu">
+        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
+        <ul class="menu">
+            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
+            <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
+            <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
+            <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="blockaccueil corps">
+    <h3>Liste des thèmes :</h3>
+
+    <table class="record_properties">
+            {% for entity in entities %}
+                 {% if entity.nbQuizz > 0 %}
+            <h5>{{ entity.title }} : </h5> <br/>
+            <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
+                    Déscription : {{ entity.shortDesc }} <br/>
+                    Nombre de quizz : {{entity.nbQuizz}} <br/>
+                <a href="{{ path('quizz_list', { 'id': entity.id }) }}">Voir les Quizz</a>
+                 {% endif %}
+            {% endfor %}
+    </div>
 {% endblock %}
