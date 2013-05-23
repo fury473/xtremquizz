@@ -2,7 +2,7 @@
 
 {% block body -%}
 <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
@@ -12,19 +12,19 @@
 </div>
 
 <div class="blockaccueil corps">
-    <h3>Theme {{ entity.title }}</h3>
+    <h3>{{ entity.title }}</h3>
 
     <div class="liens">
-        <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/images/update.png') }}" size="10" /></a>
-        <a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
-        <a href="{{ path('admin_theme') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/css/images/update.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_theme') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
     <div class="block_detail">
         <table>
             <tr>
                 <td><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" class="image" /></td>
-                <td><h2>Theme {{ entity.title }}</h2></td>
+                <td><h2>Thème {{ entity.title }}</h2></td>
             </tr>
         </table>
 
@@ -36,7 +36,7 @@
         <div class="padding">
             <h4>Quizz liés à ce thème</h4>
             
-            <a href="{{ path('admin_quizz_new') }}" class="nouveauQuizz">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
+            <a href="{{ path('admin_quizz_new') }}" class="nouveauQuizz">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" size="10" /></a>
             
             <table>
             {% for q in quizz %}

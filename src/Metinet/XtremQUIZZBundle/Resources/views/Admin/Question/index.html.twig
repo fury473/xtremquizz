@@ -1,13 +1,28 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Question list</h1>
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
+    </ul>
+</div>
 
+<div class="blockaccueil corps">
+    <h3>Questions</h3>
+    
+    <div class="liens">
+        <a href="{{ path('admin_question_new') }}">Nouvelle question</a>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste des quizz</a>
+    </div>
+    
     <table class="records_list">
         <thead>
             <tr>
                 <th>Titre</th>
-                <th>Image</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,7 +30,6 @@
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.title }}</td>
-                <td>{{ entity.picture }}</td>
                 <td>
                 <ul>
                     <li>
@@ -30,10 +44,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('admin_question_new') }}">Nouvelle question</a>
-        </li>
-    </ul>
+</div>
     {% endblock %}

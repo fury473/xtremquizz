@@ -42,7 +42,7 @@ class Theme
     {
         return null === $this->picture
             ? null
-            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
+            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->picture;
     }
     
     public function getWebPath()
@@ -57,11 +57,11 @@ class Theme
     }
  
     protected function getTmpUploadRootDir() {
-        return $_SERVER['DOCUMENT_ROOT'].'/bundles/metinetxtremquizz/images/';
+        return $_SERVER['DOCUMENT_ROOT'].$this->getUploadDir();
     }
     
     protected function getUploadDir() {
-        return '/bundles/metinetxtremquizz/images/' . $this->getId() . "/";
+        return '/bundles/metinetxtremquizz/images/';
     }
  
     /**

@@ -2,7 +2,7 @@
 
 {% block body -%}
 <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
@@ -15,7 +15,7 @@
     <h3>Nouveau quizz</h3>
     
     <div class="liens">
-        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
     <form action="{{ path('admin_quizz_create') }}" method="post" {{ form_enctype(form) }}>

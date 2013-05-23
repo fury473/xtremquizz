@@ -3,12 +3,15 @@
 namespace Metinet\XtremQUIZZBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Quizz
  *
  * @ORM\Table(name="quizz")
  * @ORM\Entity(repositoryClass="Metinet\XtremQUIZZBundle\Repository\QuizzRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Quizz
 {
@@ -34,6 +37,51 @@ class Quizz
      * @ORM\Column(name="picture", type="string", length=255)
      */
     private $picture;
+    
+    public function getAbsolutePath()
+    {
+        return null === $this->picture
+            ? null
+            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->picture;
+    }
+    
+    public function getWebPath()
+    {
+        return null === $this->picture
+            ? null
+            : $this->getUploadDir().'/'.$this->picture;
+    }
+ 
+    protected function getUploadRootDir() {
+        return $_SERVER['DOCUMENT_ROOT'].$this->getUploadDir();
+    }
+ 
+    protected function getTmpUploadRootDir() {
+        return $_SERVER['DOCUMENT_ROOT'].$this->getUploadDir();
+    }
+    
+    protected function getUploadDir() {
+        return '/bundles/metinetxtremquizz/images/';
+    }
+ 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function uploadPicture() {
+        // the file property can be empty if the field is not required
+        if (null === $this->picture) {
+            return;
+        }
+        if (!$this->id) {
+            $this->picture->move($this->getTmpUploadRootDir(), $this->picture->getClientOriginalName());
+        } else {
+            $this->picture->move($this->getUploadRootDir(), $this->picture->getClientOriginalName());
+        }
+        $this->setPicture($this->picture->getClientOriginalName());
+    }
+    
+    private $temp;
 
     /**
      * @var string
@@ -150,6 +198,11 @@ class Quizz
      */
     protected $theme;
 
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+    
     /**
      * Constructor
      */
@@ -547,6 +600,89 @@ class Quizz
     {
         return $this->nbLaunches;
     }
+    
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        if (is_file($this->getAbsolutePath())) {
+            // store the old name to delete after the update
+            $this->temp = $this->getAbsolutePath();
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $this->path = $this->getFile()->guessExtension();
+        }
+    }
+    
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+        
+        $this->getFile()->move($this->getUploadRootDir(), $this->picture);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->getFile()->guessExtension()
+        );
+
+        $this->setFile(null);
+    }
+    
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
 
 
     /**
@@ -581,6 +717,8 @@ class Quizz
     {
         return $this->quizzResults;
     }
+    
+    
 
     /**
      * Add questions
