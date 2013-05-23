@@ -1,13 +1,44 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <h1>{{ quizz.title }}</h1>
-    <div>{{ quizz.picture }}</div>
+<div class="blockaccueil menu">
+        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
+        <ul class="menu">
+            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
+            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
+            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
+        </ul>
+</div>
+<div class="blockaccueil corps">
+    <h3>Quizz</h3>
+        
+    <div class="liens">
+        <a href="{{ path('quizz') }}">Retour à la liste</a><img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" />
+    </div>
     
-    <div>{{ quizz.longDesc }}</div>
-    <div>Nombre de questions: {{ quizz.questions|length }}</div>
+    <table>
+        <tr>
+            <td style="width:200px"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" /></td>
+            <td><h2>{{ quizz.title }}</h2>
+                <div class="button">
+                    {% if quizzResult is not null %}
+                        <a href="{{ path('quizz_result', { 'id': quizz.id }) }}">Voir mon résultat</a>
+                    {% else %}
+                        <a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    </table>
     
-    <div>
+    <div class="block_detail">
+    
+        <div>
+            <h4>Description</h4>
+            <p>{{ quizz.longDesc }}</p>
+            <p>Nombre de questions: {{ quizz.questions|length }}</p>
+        </div>
+        
         {% if friendUsers is defined %}
             <ul>
                 {% for friendUser in friendUsers %}
@@ -17,52 +48,42 @@
         {% else %}
             <button onclick="defierUnAmis()">Défier un ami</button>
         {% endif %}
-    </div>
-    
-    <div>
-        Classement:
-        <table>
-            <thead>
-                <th>Position</th>
-                <th>Prénom</th>
-                <th>Score</th>
-            </thead>
-            <tbody>
-        {% for user in top10 %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.points }}</td>
-            </tr>
-        {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    
-    <div>
-        {% if quizzResult is not null %}
-            Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
-            {% if quizzResult.average <= 25 %}
-                {{ quizz.txtWin4 }}
-            {% elseif quizzResult.average <= 50 %}
-                {{ quizz.txtWin3 }}
-            {% elseif quizzResult.average < 100 %}
-                {{ quizz.txtWin2 }}
-            {% else %}
-                {{ quizz.txtWin1 }}
+
+        <div>
+            {% if quizzResult is not null %}
+                Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
+                {% if quizzResult.average <= 25 %}
+                    {{ quizz.txtWin4 }}
+                {% elseif quizzResult.average <= 50 %}
+                    {{ quizz.txtWin3 }}
+                {% elseif quizzResult.average < 100 %}
+                    {{ quizz.txtWin2 }}
+                {% else %}
+                    {{ quizz.txtWin1 }}
+                {% endif %}
             {% endif %}
-            <br/><a href="{{ path('quizz_result', { 'id': quizz.id }) }}">Voir mon résultat</a>
-        {% else %}
-            Quizz non complété.
-            <br/><a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
-        {% endif %}
+        </div>
+    
     </div>
     
-    <div>
-        <a href="{{ path('quizz') }}">
-            Retour à la liste
-        </a>
+    <h3 style="margin-top:20px;">Classement</h3>
+    <div class="classement_accueil">
+    {% for user in top10 %}
+        <div class="block_classement_accueil">
+        <table class="classement_list">
+            <tr>
+                <td class="rang_accueil">{{ loop.index }}</td>
+                <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fbUid }}/picture" /></td>
+                <td><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
+                    {{ user.points }} points
+                </td>
+            </tr>
+        </table>
+        </div>
+    {% endfor %}
     </div>
+    
+</div>
 {% endblock %}
     
 {% block javascripts %}

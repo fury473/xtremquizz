@@ -1,17 +1,34 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-    <div id="result_screen">
-        <h1>{{ quizz.title }} - Résultat</h1>
-        <div>{{ quizz.picture }} {{ quizz.txtWin }}</div>
-        <div>
-            <p>Temps moyen: {{ quizz.averageTime }} secondes</p>
-            <p>Temps écoulé: {{ quizzResult.elapsedTime }}</p>
-            <p>Taux de réussite: {{ quizzResult.average }}%</p>
-        </div>
-        <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">
-            Retour à la fiche
-        </a>
+<div class="blockaccueil menu">
+        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
+        <ul class="menu">
+            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
+            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
+            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
+        </ul>
     </div>
+<div class="blockaccueil corps">
+       <h3>Résultat du quizz {{ quizz.title }}</h3>
+
+	   <div class="liens">
+			<a href="{{ path('quizz_show', { 'id': quizz.id }) }}">Retour à la fiche</a><img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" />
+	   </div>
+	   
+    <div id="result_screen">
+		
+        <table>
+			<tr>
+				<td style="width:200px"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" /></td>
+				<td><h2>{{ quizz.txtWin }}</h2>
+					<p>Temps moyen: {{ quizz.averageTime }} secondes<br/>
+					Temps écoulé: {{ quizzResult.elapsedTime }}<br/>
+					Taux de réussite: {{ quizzResult.average }}%</p>
+				</td>
+			</tr>
+		</table>
+    </div>
+</div>
     
 {% endblock %}

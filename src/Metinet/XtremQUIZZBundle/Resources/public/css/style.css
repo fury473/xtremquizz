@@ -207,7 +207,7 @@ p {
     margin-left: 10px;
 }
 
-#menu-classement a, .actions a, .liens a, a.nouveauQuizz {
+#menu-classement a, .actions a, .liens a, a.nouveauQuizz, .infosquizz_accueil a {
     text-decoration: none;
     color:#3b5998;
     font-weight: bold;
@@ -313,12 +313,85 @@ td#infos_joueur_accueil {
     padding-left: 10px;
 }
 
-#rang_joueur_accueil {
+.table_quizz_accueil td {
+    border:0;
+    height: 50px;
+}
+
+.img_accueil {
+    width:50px;
+}
+
+.infosquizz_accueil {
+    padding-left: 10px;
+}
+
+.rang_accueil {
     font-size: 13px;
     font-weight: bold;
+    width: 20px;
+    text-align: center;
+}
+
+.libelle_liste {
+    font-weight:lighter;
+    font-size:12px;
+    text-align: center;
+}
+
+.pointsagagner {
+    text-align: center;
 }
 
 #timer{
     float: right;
     margin-top: -11px;
+}
+
+.isCorrect {
+    color: green;
+    font-weight: bold;
+}
+
+.isNotCorrect {
+    color: red;
+    font-weight: bold;
+}
+
+
+.button {
+   border-top: 1px solid #96d1f8;
+   background: #ff4400;
+   background: -webkit-gradient(linear, left top, left bottom, from(#ffbf00), to(#ff4400));
+   background: -webkit-linear-gradient(top, #ffbf00, #ff4400);
+   background: -moz-linear-gradient(top, #ffbf00, #ff4400);
+   background: -ms-linear-gradient(top, #ffbf00, #ff4400);
+   background: -o-linear-gradient(top, #ffbf00, #ff4400);
+   padding: 15.5px 31px;
+   -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 17px;
+   font-family: Georgia, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   border-top-color: #a30000;
+   background: #a30000;
+   color: #ccc;
+   }
+.button:active {
+   border-top-color: #1b435e;
+   background: #1b435e;
+   }
+   
+.button a {
+    text-decoration: none;
+    color:white;
 }
