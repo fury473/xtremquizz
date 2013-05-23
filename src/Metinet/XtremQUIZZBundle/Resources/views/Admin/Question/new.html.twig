@@ -1,7 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Nouvelle question</h1>
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="blockaccueil corps">
+    <h3>Nouvelle question</h3>
+    
+    <div class="liens">
+        <a href="{{ path('admin_question') }}">Retour à la liste</a>
+    </div>
 
     <form action="{{ path('admin_question_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
@@ -9,10 +24,5 @@
             <button type="submit">Créer</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_question') }}">Retour à la liste</a>
-    </li>
-</ul>
+</div>
 {% endblock %}

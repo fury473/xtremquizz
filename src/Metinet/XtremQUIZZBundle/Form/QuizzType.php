@@ -12,20 +12,23 @@ class QuizzType extends AbstractType
     {
         $builder
             ->add('title','text',array('label'=>'Titre'))
-            ->add('picture','file',array('label'=>'Image'))
+            ->add('picture','file',array('label'=>'Image',
+                                'data_class' => null,
+                                'property_path' => 'picture'))
             ->add('shortDesc','text',array('label'=>'Courte description'))
-            ->add('longDesc','text',array('label'=>'Longue description'))
+            ->add('longDesc','textarea',array('label'=>'Longue description'))
             ->add('winPoints','integer',array('label'=>'Points à gagner'))
             ->add('averageTime','integer',array('label'=>'Temps moyen'))
-            ->add('txtWin1','text',array('label'=>'Premier résultat'))
-            ->add('txtWin2','text',array('label'=>'Deuxième résultat'))
-            ->add('txtWin3','text',array('label'=>'Troisième résultat'))
-            ->add('txtWin4','text',array('label'=>'Quatrième résultat'))
+            ->add('txtWin1','textarea',array('label'=>'Résultat (100%)'))
+            ->add('txtWin2','textarea',array('label'=>'Résultat (75%)'))
+            ->add('txtWin3','textarea',array('label'=>'Résultat (50%)'))
+            ->add('txtWin4','textarea',array('label'=>'Résultat (25%)'))
             ->add('shareWallTitle','text',array('label'=>'Titre du partage'))
             ->add('shareWallDesc','text',array('label'=>'Description du partage'))
-            ->add('isPromoted','checkbox',array('label' => 'Publier'))
-            ->add('state','integer',array('label'=>'Etat'))
-            ->add('theme')
+            ->add('isPromoted','checkbox',array('label' => 'Mettre en avant'))
+            ->add('state','integer',array('label'=>'Etat (1 si actif)'))
+            ->add('theme','entity',array('label'=>'Thème',
+                                'class' => 'MetinetXtremQUIZZBundle:Theme'))
         ;
     }
 

@@ -85,8 +85,9 @@ class QuizzController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
+        $repQuestion = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Question');
+        $nbQuestion = $repQuestion->getnbQuestionParQuizz($id)->execute();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Quizz entity.');
@@ -97,6 +98,7 @@ class QuizzController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'nbQuestion' => $nbQuestion[0][1]
         );
     }
 
@@ -197,5 +199,49 @@ class QuizzController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+    * @Template()
+    */
+    public function uploadAction()
+    {
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
+            ->getForm()
+        ;
+
+        if ($this->getRequest()->getMethod() === 'POST') {
+            $form->bindRequest($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+
+                $em->persist($document);
+                $em->flush();
+            }
+        }
+
+        return array('form' => $form->createView());
+    }
+    
+    public function upload()
+    {
+        // la propriété « file » peut être vide si le champ n'est pas requis
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // la méthode « move » prend comme arguments le répertoire cible et
+        // le nom de fichier cible où le fichier doit être déplacé
+        $this->getFile()->move($this->getUploadRootDir(), $this->getFile()->getClientOriginalName());
+
+        // définit la propriété « path » comme étant le nom de fichier où vous
+        // avez stocké le fichier
+        $this->path = $this->getFile()->getClientOriginalName();
+
+        // « nettoie » la propriété « file » comme vous n'en aurez plus besoin
+        $this->file = null;
     }
 }

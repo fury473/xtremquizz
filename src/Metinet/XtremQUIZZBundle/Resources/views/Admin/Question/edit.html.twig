@@ -1,7 +1,22 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Modification d'une question</h1>
+<div class="blockaccueil menu">
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <ul class="menu">
+        <li><a href="{{ path('admin') }}">Accueil</a></li>
+        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="blockaccueil corps">
+    <h3>Modification d'une question</h3>
+    
+    <div class="liens">
+        <a href="{{ path('admin_question') }}">Retour à la liste</a>
+    </div>
 
     <form action="{{ path('admin_question_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
@@ -10,17 +25,11 @@
             <button type="submit">Modifier</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_question') }}">Retour à la liste</a>
-    </li>
-    <li>
-        <form action="{{ path('admin_question_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
+    
+    <form action="{{ path('admin_question_delete', { 'id': entity.id }) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        {{ form_widget(delete_form) }}
+        <button type="submit">Supprimer</button>
+    </form>
+</div>
 {% endblock %}

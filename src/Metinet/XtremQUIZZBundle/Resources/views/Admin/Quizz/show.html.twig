@@ -2,7 +2,7 @@
 
 {% block body -%}
 <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
     <ul class="menu">
         <li><a href="{{ path('admin') }}">Accueil</a></li>
         <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
@@ -12,20 +12,22 @@
 </div>
 
 <div class="blockaccueil corps">
-    <h3>Quizz {{ entity.title }}</h3>
+    <h3>{{ entity.title }}</h3>
 
     <div class="liens">
-        <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/images/update.png') }}" size="10" /></a>
-        <a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/images/plus.png') }}" size="10" /></a>
-        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/images/retour.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/css/images/update.png') }}" size="10" /></a>
+        <a href="{{ path('admin_question') }}">Voir les questions <img src="{{ asset('/bundles/metinetxtremquizz/css/images/oeil.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
     <div class="block_detail">
         <table>
             <tr>
                 <td><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" class="image" /></td>
-                <td><h2>{{ entity.title }}</h2>
-                    <em>Créé le {{ entity.createdAt|date('d-m-Y') }}</em></td>
+                <td><h2>Quizz {{ entity.title }}</h2>
+                    <em>Créé le {{ entity.createdAt|date('d-m-Y') }}<br/>
+                     {{ nbQuestion }} questions</em></td>
             </tr>
         </table>
 

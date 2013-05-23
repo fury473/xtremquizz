@@ -25,7 +25,6 @@ class QuestionController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:Question')->findAll();
 
         return array(
