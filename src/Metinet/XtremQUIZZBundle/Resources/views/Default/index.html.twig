@@ -4,10 +4,10 @@
     {% set user = app.session.get('user') %}
 
     <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
+        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
         <ul class="menu">
             <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('admin') }}" class="lien-menu">Quizz</a></li>
+            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
             <li><a href="{{ path('admin') }}" class="lien-menu">Invitation</a></li>
         </ul>
     </div>
@@ -23,7 +23,9 @@
             <td style="padding-bottom: 83px;">
                 <div class="titres-block">{{ user.firstname }} {{ user.lastname }}</div>
                 Points: {{ points }} <br />
+                {% if averageTime != NULL %}
                 Temps moyen : {{ averageTime }} secondes<br />
+                {% endif %}
                     {% if classementJoueur == NULL %}
                          Classement général: {{ totalJoueur }}/{{ totalJoueur }}
                     {% else %}
@@ -56,7 +58,9 @@
                         <td>{{ entity.rank }}</td>
                         <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
-                            Temps moyen: {{ entity.averageTime }}sec</td>
+                        {% if entity.averageTime != NULL %}
+                            Temps moyen : {{ entity.averageTime }} secondes<br />
+                        {% endif %}
                         <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
                         <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                     </tr>

@@ -62,13 +62,15 @@ class UserRepository extends EntityRepository {
         ");
     }
 
-    public function getAverageTime() {
-        return $this->_em->createQuery('
+    public function getAverageTime($fbUid) {
+        return $this->_em->createQuery("
             SELECT
                 i.averageTime
             FROM
                 MetinetXtremQUIZZBundle:User i
-        ');
+            WHERE
+                i.fbUid = $fbUid
+        ");
     }
 
     public function getClassementJoueur($Jpoints, $averageTime) {

@@ -18,19 +18,20 @@ class DefaultController extends Controller
         $quizz = $this->getDoctrine()->getRepository('MetinetXtremQUIZZBundle:Quizz');
         $points = $user->getPoints()->execute();
         $totalJoueur = $user->getNbJoueur()->execute();
-        $averageTime = $user->getAverageTime()->execute();
         $QuizzIds = $quizz->getLastQuizzId()->execute();
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         $myfbUid = $fbUserManager->getMyFbId();
+        $averageTime = $user->getAverageTime($myfbUid)->execute();
         $listfriends = $fbUserManager->getFbFriends($myfbUid);
-        if($averageTime != NULL)
+        if($averageTime[0]['averageTime'] != NULL)
         {
             $classementJoueur = $user->getClassementJoueur($points[0]['points'],$averageTime[0]['averageTime'])->execute();
-            
+            $myAverage = $averageTime[0]['averageTime'];
             $classementJoueur[0][1]++;
         }
         else 
         {
+            $myAverage = NULL;
             $classementJoueur[0][1] = NULL;
         }
 
@@ -41,10 +42,6 @@ class DefaultController extends Controller
         $temp_points = 0;
         $temp_time = 0;
 
-        $score = array();
-        foreach($entities as $user){
-            $score[$i] = $user['points'];
-        }
         foreach ($entities as $key => $row) {
             $averageTime[$key] = $row['averageTime'];
             $points[$key] = $row['points'];
@@ -78,7 +75,7 @@ class DefaultController extends Controller
                     "LastQuizz" => $QuizzIds,
                     "ListeFriends" => $listfriends,
                     "totalJoueur" => $totalJoueur[0][1],
-                    "averageTime" => $averageTime[0],
+                    "averageTime" => $myAverage,
                     "classementJoueur" => $classementJoueur[0][1],
                     "entities" => $entities,
                     "displayFriend" => $displayFriend,
