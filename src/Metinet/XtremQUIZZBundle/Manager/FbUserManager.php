@@ -172,16 +172,17 @@ class FbUserManager
     public function getFriendUsersWhoCompletedQuizz($fbId, $quizzId) {
         $lstUserFriends = $this->getFriendUsers($fbId);
         $lstUserFriendsWhoCompletedQuizz = array();
-        foreach($lstUserFriends as $userFriend) {
-            $hasCompletedQuizz = $this->getRepository("QuizzResult")->getIdByUserIdAndQuizzId($userFriend['id'], $quizzId);
-            if(!is_null($hasCompletedQuizz)) {
-                array_push($lstUserFriendsWhoCompletedQuizz, $userFriend);
+        if(!is_null($lstUserFriends)) {
+            foreach($lstUserFriends as $userFriend) {
+                $hasCompletedQuizz = $this->getRepository("QuizzResult")->getIdByUserIdAndQuizzId($userFriend['id'], $quizzId);
+                if(!is_null($hasCompletedQuizz)) {
+                    array_push($lstUserFriendsWhoCompletedQuizz, $userFriend);
+                }
+            }
+            if(count($lstUserFriendsWhoCompletedQuizz) > 0) {
+                return $lstUserFriendsWhoCompletedQuizz;
             }
         }
-        if(count($lstUserFriendsWhoCompletedQuizz) > 0) {
-            return $lstUserFriendsWhoCompletedQuizz;
-        }
-        
         return null;
     }
     
