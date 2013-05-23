@@ -34,9 +34,10 @@ body{
     border:0;
 }
 
-#img-class-joueurs, #img-class-top, #img-class-flop {
+#img-class-joueurs, #img-class-top, #img-class-flop, #img_joueur_accueil, #rang_joueur_accueil {
     width:50px;
     color:#333;
+    text-align: center;
 }
 
 #pts-class-joueurs, #pts-class-top, #pts-class-flop {
@@ -193,7 +194,7 @@ p {
     width: 325px;
 }
 
-.margin_block_qt {
+.margin_block_qt, .block_classement_accueil {
     margin: 0 20px 20px 0;
 }
 
@@ -288,8 +289,33 @@ div.logotq {
     font-weight: bold;
 }
 
-.classement_list{
-    width: 330px;
+.classement_list tr {
+    background-color: #edeff4;
+    border: 1px solid #d3d6db;
+}
+
+td.bouton_liste_defier {
+    width:120px;
+}
+
+td#infos_joueur_accueil {
+    width: 125px;
+}
+
+.classement_accueil div {
+    border:1px solid #d3d6db;
+    background-color: #edeff4;
+    width: 400px;
+}
+
+.classement_list td {
+    border: 0;
+    padding-left: 10px;
+}
+
+#rang_joueur_accueil {
+    font-size: 13px;
+    font-weight: bold;
 }
 
 #timer{
