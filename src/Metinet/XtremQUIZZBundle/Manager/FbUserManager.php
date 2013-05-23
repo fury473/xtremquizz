@@ -70,7 +70,7 @@ class FbUserManager
         return $user;
     }
 
-    public function findUserByFbId($fbId)
+    public function findOrCreateUserByFbId($fbId)
     {
         $user = null;
 
@@ -89,6 +89,21 @@ class FbUserManager
         }
 
         // Cache
+        return $user;
+    }
+    
+    public function findUserByFbId($fbId)
+    {
+        $user = null;
+
+        $dbal = $this->em->getConnection();
+
+        $query = sprintf('SELECT u.* FROM user u WHERE u.fb_uid = %s', $dbal->quote($fbId, \PDO::PARAM_STR));
+
+        $std = $dbal->query($query);
+
+        $user = $std->fetch(\PDO::FETCH_ASSOC);
+
         return $user;
     }
     

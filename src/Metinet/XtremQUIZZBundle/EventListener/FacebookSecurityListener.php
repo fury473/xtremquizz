@@ -71,7 +71,7 @@ class FacebookSecurityListener
             else {
 
                 if ((!$session->has('user') || is_null($session->get('user'))) && $userId > 0) {
-                    $session->set('user', $this->container->get('metinet.manager.fbuser')->findUserByFbId($userId));
+                    $session->set('user', $this->container->get('metinet.manager.fbuser')->findOrCreateUserByFbId($userId));
                 }
 
                 $request->attributes->set('check-fb', true);
