@@ -28,7 +28,7 @@ function chrono() {
 
 function Start(createdAt) {
     start = new Date(createdAt*1000);
-    timerID = setInterval(chrono, 1000);
+    timerID = setInterval(chrono, 100);
 }
 
 function Stop() {

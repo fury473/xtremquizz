@@ -41,7 +41,7 @@
     
     <div>
         {% if quizzResult is not null %}
-            Quizz complété à {{ quizzResult.average }} pour {{ quizzResult.winPoints }} points.
+            Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
             {% if quizzResult.average <= 25 %}
                 {{ quizz.txtWin4 }}
             {% elseif quizzResult.average <= 50 %}
@@ -51,12 +51,12 @@
             {% else %}
                 {{ quizz.txtWin1 }}
             {% endif %}
+            <br/><a href="{{ path('quizz_result', { 'id': quizz.id }) }}">Voir mon résultat</a>
         {% else %}
             Quizz non complété.
+            <br/><a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
         {% endif %}
     </div>
-    
-    <a href="{{ path('quizz_process', { 'id': quizz.id }) }}">Lancer le quizz</a>
     
     <div>
         <a href="{{ path('quizz') }}">

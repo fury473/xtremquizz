@@ -49,18 +49,19 @@
                         answer.parents("form").next("form").removeClass("hidden");
                     } else {
                         // S'il n'y a plus de question on valide la fin du Quizz en Ajax
-                        $.post("{{ path('quizz_end') }}", {'quizz_result_id': quizzResultId})
+                        $.post("{{ path('quizz_result_end') }}", {'quizz_result_id': quizzResultId})
                         .done(function(data) {
                             //Une fois validée on arrête le chronomètre et on redirige sur la page de résultat
                             Stop(timerID);
-                            top.location.href= '{{ path('quizz_result', { 'id': quizz.id }) }}';
+                            top.location.href="{{ path('quizz_result', { 'id': quizz.id }) }}";
                         });
                     }
                 });
             });
             
             // Dès que la page a finie de charger on enregistre en base la date de début du quizz et on lance un chronomètre
-            $.post("{{ path('quizz_start') }}", {'user_id': {{ userId }}, 'quizz_id': {{ quizz.id }}})
+            
+            $.post("{{ path('quizz_result_start') }}", {'user_id': {{ userId }}, 'quizz_id': {{ quizz.id }}})
             .done(function(data) {
                 // Si l'utilisateur reviens sur un quizz déjà commencé on récupère la date à laquelle il l'avait commencé pour ajuster le chronomètre
                 Start(data['createdAt']);

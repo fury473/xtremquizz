@@ -16,12 +16,6 @@ class UserType extends AbstractType
             ->add('lastname')
             ->add('username')
             ->add('picture')
-            ->add('points')
-            ->add('averageTime')
-            ->add('nbQuizz')
-            ->add('createdAt')
-            ->add('lastconnectAt')
-            ->add('answers')
         ;
     }
 
