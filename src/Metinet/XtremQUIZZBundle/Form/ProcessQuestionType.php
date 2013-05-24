@@ -14,8 +14,8 @@ class ProcessQuestionType extends AbstractType
         
         $builder->add('answers', 'entity', array(
         'class' => 'MetinetXtremQUIZZBundle:Answer',
-        'label' => $question->getTitle(),
-        'attr' => array('class' => 'answers answersToQuestion_'.$question->getId()),
+        'label' => ' ',
+        'attr' => array('class' => 'answers answersToQuestion_'.$question->getId().' reponse'),
         'expanded' => 'true',
         'query_builder' => function(EntityRepository $er) use ($question) {
             return $er->createQueryBuilder('a')

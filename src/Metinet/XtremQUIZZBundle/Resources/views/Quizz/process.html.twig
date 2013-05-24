@@ -7,19 +7,23 @@
     <div id="timer"></div>
     <h3>Quizz {{ quizz.title }}</h3>
     
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" />
-
-    {% for questionForm in questionsForm %}
-    <form class="{% if loop.index != 1 %}hidden{% endif %}" action="{{ path('answer_validate') }}" method="post" {{ form_enctype(questionForm) }}>
-        {{ form_widget(questionForm) }}
-    </form>
-    {% endfor %}
-        
-    <div>
+    <div class="liens">
         <a href="{{ path('quizz_show', { 'id': quizz.id }) }}">
             Retour à la fiche
         </a>
     </div>
+    
+    <img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" />
+
+    {% for questionForm in questionsForm %}
+    <form class="{% if loop.index != 1 %}hidden{% endif %}" action="{{ path('answer_validate') }}" method="post" {{ form_enctype(questionForm) }}>
+        
+        <h3 style="margin-top:20px;">{{ questionForm.vars.value.question.title }}</h3>
+        {{ form_widget(questionForm) }}
+    </form>
+    {% endfor %}
+        
+    
 </div>
 {% endblock %}
 
