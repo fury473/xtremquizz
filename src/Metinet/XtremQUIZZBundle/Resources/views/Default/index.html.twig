@@ -85,9 +85,10 @@
       {% else %}
                 <h3 style="margin-top: 25px">Classement des amis</h3>
 
-                <div class="classement_accueil">
+                
                {% set i = 1%}
                {% for entity in entities %}
+                <div class="classement_accueil">
                     {% if (entity.fbUid == user.fb_uid) %}
                         <div class="block_classement_accueil">
                         <table class="classement_list">
@@ -130,12 +131,10 @@
                             </table>     
                             </div> 
                         {% endif %}
-                </div>
                    {% endfor %}
+                </div>
                 {% endfor %}
-                            </table>
       {% endif %}
-                        </p>
                     </div>
 {% endblock %}
 {% block javascripts %}

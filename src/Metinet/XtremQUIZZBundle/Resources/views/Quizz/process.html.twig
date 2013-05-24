@@ -12,12 +12,15 @@
             Retour à la fiche
         </a>
     </div>
-    
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" />
 
     {% for questionForm in questionsForm %}
+    {% if questionForm.vars.value.question.webPath is not null %}
+        {% set webPath = questionForm.vars.value.question.webPath %}
+    {% else %}
+        {% set webPath = questionForm.vars.value.question.quizz.webPath %}
+    {% endif %}
     <form class="{% if loop.index != 1 %}hidden{% endif %}" action="{{ path('answer_validate') }}" method="post" {{ form_enctype(questionForm) }}>
-        
+        <img src="{{ asset(webPath) }}" class="image" />
         <h3 style="margin-top:20px;">{{ questionForm.vars.value.question.title }}</h3>
         {{ form_widget(questionForm) }}
     </form>
