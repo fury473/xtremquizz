@@ -2,83 +2,113 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
-        </ul>
-    </div>
+    
 <div class="blockaccueil corps">
        <h3>TOP 10</h3>
 
-    <table class="classement_list">
+       <div class="classement_accueil">            
         {% for entity in entities %}
             {% if (entity.rank <= 10) %}
+                <div class="block_classement_accueil">
+                    <table class="classement_list">
                      <tr>
-                        <td>{{ entity.rank }}</td>
+                        <td class="rang_accueil">{{ entity.rank }}</td>
+                        <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
                         <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
-                            Temps moyen: {{ entity.averageTime }}sec</td>
+                            {% if entity.averageTime != NULL %}
+                                Temps moyen: {{ entity.averageTime }} s
+                            {% endif %}
+                        </td>
                         <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
                         <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                     </tr>
+                  </table>  
+                </div>
             {% endif %}
         {% endfor %}
-    </table>
+        </div>
        
     <h3 style="margin-top: 20px">Classement général</h3>
 
-    <table class="classement_list">
+    <div class="classement_accueil">
         {% for entity in entities %}
             {% if (entity.rank <= myRank + 5) and (entity.rank >= myRank - 5) %}
-                   <tr>
-                        <td>{{ entity.rank }}</td>
-                        <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
-                            {{ entity.points }} points<br />
-                            Temps moyen: {{ entity.averageTime }}sec</td>
-                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
-                        <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
-                    </tr>
+                <div class="block_classement_accueil">
+                    <table class="classement_list">
+                        <tr>
+                             <td class="rang_accueil">{{ entity.rank }}</td>
+                             <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
+                             <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
+                                 {{ entity.points }} points<br />
+                                 {% if entity.averageTime != NULL %}
+                                    Temps moyen: {{ entity.averageTime }} s
+                                {% endif %}
+                            </td>
+                             <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
+                             <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                         </tr>
+                    </table>
+                </div>
             {% endif %}
         {% endfor %}
-    </table>
+    </div>
     
     
     <h3 style="margin-top: 20px">Classement des amis</h3>
 
-    <table class="classement_list">
+    
        {% set i = 1%}
        {% for entity in entities %}
+        <div class="classement_accueil">
             {% if (entity.fbUid == user.fb_uid) %}
+                <div class="block_classement_accueil">
+                <table class="classement_list">
                 <tr>
-                    <td>{{ entity.rank }}</td>
-                    <td>{{ i }}</td>
+                    <td class="rang_accueil"><span class="libelle_liste">Général</span><br/>{{ entity.rank }}</td>
+                    <td class="rang_accueil"><span class="libelle_liste">Amis</span><br/>{{ i }}</td>
+                    <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
                     <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
-                            Temps moyen: {{ entity.averageTime }}sec</td>
-                        <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
-                        <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                            {% if entity.averageTime != NULL %}
+                                Temps moyen: {{ entity.averageTime }} s
+                            {% endif %}
+                    </td>
+                    <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
+                    <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                 </tr>
                 {% set i = i + 1 %}
+                </table>
+                </div>
             {% endif %}
+        </div>
+            
+            <div class="classement_accueil">
             {% for friend in friends %}
                 {% if (entity.fbUid == friend.id) %}
+                    <div class="block_classement_accueil">
+                    <table class="classement_list">
                     <tr>
-                        <td>{{ entity.rank }}</td>
-                        <td>{{ i }}</td>
+                        <td class="rang_accueil"><span class="libelle_liste">Général</span><br/>{{ entity.rank }}</td>
+                        <td class="rang_accueil"><span class="libelle_liste">Amis</span><br/>{{ i }}</td>
+                        <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
                         <td><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
-                            Temps moyen: {{ entity.averageTime }}sec</td>
+                            {% if entity.averageTime != NULL %}
+                                Temps moyen: {{ entity.averageTime }} s
+                            {% endif %}
+                        </td>
                         <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
                         <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
                     </tr>
                     {% set i = i + 1 %}
+                    </table>
+                    </div>
                 {% endif %}
            {% endfor %}
+            </div>
         {% endfor %}
-    </table>
+    
 </div>
 {% endblock %}
         

@@ -3,20 +3,10 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
-            <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
-            <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li> 
-        </ul>
-    </div>
 
-
-    <div class="blockaccueil corps">
+<div class="blockaccueil corps">
     <h3>Votre profil</h3>
-    
+
     <table>
         <tr>
             <td class="width_100">
@@ -29,28 +19,29 @@
                 Temps moyen : {{ averageTime }} secondes<br />
                 {% endif %}
                     {% if classementJoueur == NULL %}
-                         Classement général: {{ totalJoueur }}/{{ totalJoueur }}
+                Classement général: {{ totalJoueur }}/{{ totalJoueur }}
                     {% else %}
-                          Classement général: {{ classementJoueur }}/{{ totalJoueur }}
+                Classement général: {{ classementJoueur }}/{{ totalJoueur }}
                     {% endif %}
-                    <button onclick="publishWALL({{ classementJoueur }}, {{ totalJoueur }})">Publier</button>
+                <button onclick="publishWALL({{ classementJoueur }}, {{ totalJoueur }})">Publier</button>
             </td>
         </tr>
     </table>
-    
+
     <h3 style="margin-top: 15px;">Les derniers quizz disponibles</h3>
     <div class="classement_accueil">
         {% for quizz in LastQuizz %}
-        <div class="block_classement_accueil">
-        <table class="table_quizz_accueil">
-            <tr>
-                <td class="img_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" width="50" /></a></td>
-                <td class="infosquizz_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
-                    Points à gagner: {{ quizz.winPoints }}</td>
-            </tr>
-        </table>
-        </div>
+            <div class="block_classement_accueil">
+                <table class="table_quizz_accueil">
+                    <tr>
+                        <td class="img_accueil"><div class="logotq" style="width: 50px;"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" /></a></div></td>
+                        <td class="infosquizz_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
+                            Points à gagner: {{ quizz.winPoints }}</td>
+                    </tr>
+                </table>
+            </div>
         {% endfor %}
+
     </div>
        {% if promotedQuizz.id !=0 %}
     <h3 style="margin-top: 15px;">Quizz populaire</h3>
@@ -68,114 +59,130 @@
     {% endif %}
      
     {% if displayFriend == 0 %}
-      <h3 style="margin-top: 25px">Classement général</h3>
+        <h3 style="margin-top: 25px">Classement général</h3>
 
-    <div class="classement_accueil">
+        <div class="classement_accueil">
         {% for entity in entities %}
             {% if (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
                 <div class="block_classement_accueil">
-                <table class="classement_list">
-                    <tr>
-                        <td class="rang_accueil">{{ entity.rank }}</td>
-                        <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
-                        <td id="infos_joueur_accueil"><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
+                    <table class="classement_list">
+                        <tr>
+                            <td class="rang_accueil">{{ entity.rank }}</td>
+                            <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
+                            <td id="infos_joueur_accueil"><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
                             {{ entity.points }} points<br />
                         {% if entity.averageTime != NULL %}
-                            Temps moyen : {{ entity.averageTime }} s<br />
+                                    Temps moyen : {{ entity.averageTime }} s<br />
                         {% endif %}
-                        </td>
-                        <td class="bouton_liste_defier"><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
-                        <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
-                    </tr>
-                </table>     
-                </div> 
+                                </td>
+                                <td class="bouton_liste_defier"><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
+                                    <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                            </tr>
+                        </table>     
+                    </div> 
             {% endif %}
         {% endfor %}
-    </div>
+        </div>
       {% else %}
-          <h3 style="margin-top: 25px">Classement des amis</h3>
+                <h3 style="margin-top: 25px">Classement des amis</h3>
 
-            <table class="records_list">
+                <div class="classement_accueil">
                {% set i = 1%}
                {% for entity in entities %}
                     {% if (entity.fbUid == user.fb_uid) %}
+                        <div class="block_classement_accueil">
+                        <table class="classement_list">
                         <tr>
-                            <td>{{ entity.rank }}</td>
-                            <td>{{ i }}</td>
-                            <td>{{ entity.firstname }}</td>
-                            <td>{{ entity.lastname }}</td>
-                            <td>{{ entity.points }}</td>
-                            <td>{{ entity.averageTime }}</td>
-                            <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
-                            <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
-                        </tr>
+                            <td class="rang_accueil">{{ entity.rank }}</td>
+                            <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
+                            <td id="infos_joueur_accueil"><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
+                            {{ entity.points }} points<br />
+                        {% if entity.averageTime != NULL %}
+                                    Temps moyen : {{ entity.averageTime }} s<br />
+                        {% endif %}
+                                </td>
+                                <td class="bouton_liste_defier"><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
+                                    <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                            </tr>
+                            </table>     
+                        </div> 
                         {% set i = i + 1 %}
                     {% endif %}
+                </div>
+                
+                <div class="classement_accueil">
                     {% for friend in friends %}
                         {% if (entity.fbUid == friend.id) and (entity.rank <= myRank + 2) and (entity.rank >= myRank - 2) %}
+                            <div class="block_classement_accueil">
+                            <table class="classement_list">
                             <tr>
-                                <td>{{ entity.rank }}</td>
-                                <td>{{ i }}</td>
-                                <td>{{ entity.firstname }}</td>
-                                <td>{{ entity.lastname }}</td>
-                                <td>{{ entity.points }}</td>
-                                <td>{{ entity.averageTime }}</td>
-                                <td><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button><br/>
-                                <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
-                            </tr>
+                                <td class="rang_accueil">{{ entity.rank }}</td>
+                                <td class="img_accueil"><img src="https://graph.facebook.com/{{ entity.fbUid }}/picture" /></td>
+                                <td id="infos_joueur_accueil"><span class="gras">{{ entity.firstname }} {{ entity.lastname }}</span><br />
+                                {{ entity.points }} points<br />
+                                {% if entity.averageTime != NULL %}
+                                        Temps moyen : {{ entity.averageTime }} s<br />
+                                {% endif %}
+                                    </td>
+                                    <td class="bouton_liste_defier"><button onclick="defierAmis({{ entity.fbUid }})">Inviter</button>
+                                        <button onclick="publishFriendWALL({{ entity.fbUid }})">Défier</button></td>
+                                </tr>
                             {% set i = i + 1 %}
+                            </table>     
+                            </div> 
                         {% endif %}
+                </div>
                    {% endfor %}
                 {% endfor %}
-            </table>
+                            </table>
       {% endif %}
-    </p>
-</div>
+                        </p>
+                    </div>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-    <script>
-        function publishWALL(monClassement, total){
-               FB.ui(
-                {
-                    method: 'feed',
-                    name: 'XtremQUIZZ',
-                    link: 'http://apps.facebook.com/xtremquizz-mamori',
-                    caption: "XtremQUIZZ",
-                    description: "Mon classement à XtremQUIZZ :"+ monClassement + "/" + total
-                },
-                function(response) {
-                    if (response && response.post_id) {
-                    } else {
+                    <script>
+                    function publishWALL(monClassement, total) {
+                        FB.ui(
+                                {
+                                    method: 'feed',
+                                    name: 'XtremQUIZZ',
+                                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                                    caption: "XtremQUIZZ",
+                                    description: "Mon classement à XtremQUIZZ :" + monClassement + "/" + total
+                                },
+                        function(response) {
+                            if (response && response.post_id) {
+                            } else {
+                            }
+                        }
+                        );
                     }
-                }
-                );
-        }
-        function requestCallback(response) {
-         // Handle callback here
-        }
-        function defierAmis(ID) {
-            FB.ui({method: 'apprequests',
-                message: "Oo C'est l'heure du dududu duel  ! oO",
-                to: ID
-            }, requestCallback);
-        }
-         function publishFriendWALL(ID){
-               FB.ui(
-                {
-                    method: 'feed',
-                    name: 'XtremQUIZZ',
-                    link: 'http://apps.facebook.com/xtremquizz-mamori',
-                    caption: 'Les quizz des vrais warrior',
-                    description: '',
-                    to: ID
-                },
-                function(response) {
-                    if (response && response.post_id) {
-                    } else {
+                    function requestCallback(response) {
+                        // Handle callback here
                     }
-                }
-                );
-        }
-    </script>
+                    function defierAmis(ID) {
+                        FB.ui({method: 'apprequests',
+                            message: "Oo C'est l'heure du dududu duel  ! oO",
+                            to: ID
+                        }, requestCallback);
+                    }
+                    function publishFriendWALL(ID) {
+                        FB.ui(
+                                {
+                                    method: 'feed',
+                                    name: 'XtremQUIZZ',
+                                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                                    caption: 'Les quizz des vrais warrior',
+                                    description: '',
+                                    to: ID
+                                },
+                        function(response) {
+                            if (response && response.post_id) {
+                            } else {
+                            }
+                        }
+                        );
+                    }
+                        </script>
 {% endblock %}

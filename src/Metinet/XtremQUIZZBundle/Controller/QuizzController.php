@@ -21,11 +21,23 @@ class QuizzController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->findAll();
+        $tab = Array();
+        foreach($allQuizz as $key=>$q){
+            $chaine = $q->getShortDesc();
+            $key = $q->getId();
+            if (strlen($chaine) > 40) {
+		$chaine = substr($chaine, 0, 40);
+		$position_espace = strrpos($chaine, " ");
+		$texte = substr($chaine, 0, $position_espace); 
+		$chaine = $texte."...";
+            }
+            $tab[$key] = $chaine;
+        }
 
         return array(
             'entities' => $allQuizz,
+            'descriptions' => $tab
         );
     }
     

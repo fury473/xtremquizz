@@ -1,26 +1,26 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Liste des Quizz</h1>
+<div class="blockaccueil corps">
+    <h3>Liste des Quizz</h3>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Points à gagner</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="liste">
         {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('quizz_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
-                <td>{{ entity.picture }}</td>
-                <td>{{ entity.shortDesc }}</td>
-                <td>{{ entity.winPoints }}</td>
-            </tr>
+        <div class="marginblock_listquizz">
+            <table class="records_list">
+                <tr>
+                    <th><div class="logotq"><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></a></div></th>
+                    <td><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><strong>{{ entity.title }}</strong></a><br/>
+                            {{ descriptions[entity.id] }}
+                    </td>
+                    <td class="pointsagagner">Points à gagner<br/>{{ entity.winPoints }}</td>
+                </tr>
+                <tr style="height: 20px;">
+                    <td colspan="3">j'aime - envoyer</td>
+                </tr>
+            </table>
+        </div>
         {% endfor %}
-        </tbody>
-    </table>
-    {% endblock %}
+    </div>
+</div>
+{% endblock %}
