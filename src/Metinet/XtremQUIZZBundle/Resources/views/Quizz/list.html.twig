@@ -6,9 +6,9 @@
 <div class="blockaccueil corps">
     {%if theme != 0 %}
         <h3>Liste des Quizz sur le theme : {{theme.title}}</h3>
-        <div class="liste">
+        <div class="liste2">
         {% for entity in entities %}
-            <div class="marginblock_listquizz">
+            <div class="marginblock_listquizz marginblock_listquizz2">
                 <table class="records_list">
                     <tr>
                         <th><div class="logotq"><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></a></div></th>
@@ -29,7 +29,6 @@
                                         {% if user.average_time != NULL %}
                                             Temps moyen : {{ user.average_time }} s<br />
                                         {% endif %}
-                                        </td>
                                         <button onclick="publishFriendWALL({{ user.fb_uid }},'{{entity.title}}')">Défier</button></td>
                                     </tr>
                         {% endfor %}
@@ -40,9 +39,9 @@
         </div>
     {% else %}
     <h3>Liste des Quizz</h3>
-    <div class="liste">
+    <div class="liste2">
         {% for entity in entities %}
-            <div class="marginblock_listquizz">
+            <div class="marginblock_listquizz marginblock_listquizz2">
                 <table class="records_list">
                     <tr>
                         <th><div class="logotq"><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></a></div></th>
@@ -63,7 +62,6 @@
                             {% if user.average_time != NULL %}
                                 Temps moyen : {{ user.average_time }} s<br />
                             {% endif %}
-                            </td>
                             <button onclick="publishFriendWALL({{ user.fb_uid }}, '{{ entity.title }}')">Défier</button></td>
                         </tr>
                     {% endfor %}

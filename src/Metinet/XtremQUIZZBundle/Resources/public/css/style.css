@@ -194,6 +194,11 @@ p {
     width: 325px;
 }
 
+.liste2 div {
+    border:1px solid #d3d6db;
+    background-color: #edeff4;
+}
+
 .marginblock_listquizz {
     margin: 0 20px 35px 0;
 }
@@ -204,6 +209,10 @@ p {
 
 .margin_block_qt, .marginblock_listquizz {
     height: 58px;
+}
+
+.marginblock_listquizz2 {
+    height: auto;
 }
 
 .liens {
