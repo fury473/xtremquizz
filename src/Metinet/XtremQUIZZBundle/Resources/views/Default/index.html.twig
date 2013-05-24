@@ -3,15 +3,6 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-        <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
-        <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
-    </ul>
-</div>
-
 <div class="blockaccueil corps">
     <h3>Votre profil</h3>
 
@@ -42,7 +33,7 @@
             <div class="block_classement_accueil">
                 <table class="table_quizz_accueil">
                     <tr>
-                        <td class="img_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" width="50" /></a></td>
+                        <td class="img_accueil"><div class="logotq" style="width: 50px;"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" /></a></div></td>
                         <td class="infosquizz_accueil"><a href="{{ path('quizz_show', { 'id': quizz.id }) }}">{{quizz.title}}</a><br/>
                             Points à gagner: {{ quizz.winPoints }}</td>
                     </tr>

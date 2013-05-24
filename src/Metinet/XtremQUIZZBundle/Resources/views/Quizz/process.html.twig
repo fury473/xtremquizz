@@ -3,12 +3,9 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-    </div>
 <div class="blockaccueil corps">
-<div id="timer"></div>
-<h3>Quizz {{ quizz.title }}</h3>
+    <div id="timer"></div>
+    <h3>Quizz {{ quizz.title }}</h3>
     
     <img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ quizz.picture) }}" class="image" />
 

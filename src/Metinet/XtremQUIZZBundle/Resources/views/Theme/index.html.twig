@@ -1,19 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-{% set user = app.session.get('user') %}
-
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
-            <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
-            <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li>
-            
-        </ul>
-    </div>
-
+    {% set user = app.session.get('user') %}
     <div class="blockaccueil corps">
     <h3>Liste des thèmes :</h3>
 

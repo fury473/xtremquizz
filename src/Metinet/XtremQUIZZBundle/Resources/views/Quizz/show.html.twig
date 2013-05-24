@@ -1,14 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-<div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
-        </ul>
-</div>
+
 <div class="blockaccueil corps">
     <h3>Quizz</h3>
         
@@ -39,31 +32,39 @@
             <p>Nombre de questions: {{ quizz.questions|length }}</p>
         </div>
         
-        {% if friendUsers is defined %}
-            <ul>
-                {% for friendUser in friendUsers %}
-                    <li>{{ friendUser.firstname }} {{ friendUser.lastname }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <button onclick="defierUnAmis()">Défier un ami</button>
-        {% endif %}
-
         <div>
-            {% if quizzResult is not null %}
-                Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
-                {% if quizzResult.average <= 25 %}
-                    {{ quizz.txtWin4 }}
-                {% elseif quizzResult.average <= 50 %}
-                    {{ quizz.txtWin3 }}
-                {% elseif quizzResult.average < 100 %}
-                    {{ quizz.txtWin2 }}
+            <h4>Amis</h4>
+            <p>
+                {% if friendUsers is defined %}
+                    <ul>
+                        {% for friendUser in friendUsers %}
+                            <li>{{ friendUser.firstname }} {{ friendUser.lastname }}</li>
+                        {% endfor %}
+                    </ul>
                 {% else %}
-                    {{ quizz.txtWin1 }}
+                    <button onclick="defierUnAmis()">Défier un ami</button>
                 {% endif %}
-            {% endif %}
+            </p>
         </div>
-    
+                
+            {% if quizzResult is not null %}
+                <div>
+                    <h4>Résultat</h4>
+                    <p>
+                        Quizz complété à {{ quizzResult.average }}% pour {{ quizzResult.winPoints }} points.
+                        {% if quizzResult.average <= 25 %}
+                            {{ quizz.txtWin4 }}
+                        {% elseif quizzResult.average <= 50 %}
+                            {{ quizz.txtWin3 }}
+                        {% elseif quizzResult.average < 100 %}
+                            {{ quizz.txtWin2 }}
+                        {% else %}
+                            {{ quizz.txtWin1 }}
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+        
     </div>
     
     <h3 style="margin-top:20px;">Classement</h3>
