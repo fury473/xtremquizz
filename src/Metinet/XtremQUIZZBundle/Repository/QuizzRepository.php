@@ -91,6 +91,17 @@ class QuizzRepository extends EntityRepository
                             i.theme = $idTheme AND i.state = 1
             ");
     }
+        public function getAllQuizz() {
+        return $this->_em->createQuery("
+                    SELECT
+                            i.id, i.title, i.picture, i.shortDesc, i.winPoints
+                    FROM
+                            MetinetXtremQUIZZBundle:Quizz i
+                    WHERE
+                            i.state = 1
+            ");
+    }
+    
      public function getNbQuizzTheme($idTheme) {
         return $this->_em->createQuery("
                     SELECT

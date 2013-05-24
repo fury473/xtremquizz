@@ -2,14 +2,6 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Quizz</a></li>
-            <li><a href="{{ path('quizz') }}" class="lien-menu">Invitation</a></li>
-        </ul>
-    </div>
 <div class="blockaccueil corps">
        <h3>TOP 10</h3>
 
@@ -110,6 +102,14 @@
                     }
                 }
                 );
+        }
+                function sendRequestViaMultiFriendSelector() {
+            FB.ui({method: 'apprequests',
+                message: 'Oo Viens jouer avec moi ! oO',
+            }, requestCallback);
+        }
+        function requestCallback(response) {
+         // Handle callback here
         }
     </script>
 {% endblock %}

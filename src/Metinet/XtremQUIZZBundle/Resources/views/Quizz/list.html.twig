@@ -2,39 +2,128 @@
 
 {% block body %}
     {% set user = app.session.get('user') %}
-
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-        <ul class="menu">
-            <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-            <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
-            <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
-            <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li>
-            
-        </ul>
-    </div>
 <div class="blockaccueil corps">
     {%if theme != 0 %}
         <h1>Liste des Quizz sur le theme : {{theme.title}}</h1>
         {% for entity in entities %}
             <fieldset>
-                <h5>{{ entity.title }}</h5>
+                <h5>{{ entity.title }}</h5><br/>
                 <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
                 Déscription : {{ entity.shortDesc }}<br/>
                 Points à gagner : {{ entity.winPoints }}<br/>
                 <a href="{{ path('quizz_show', { 'id': entity.id }) }}">voir le quizz !</a><br/>
+                <div class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+                {% if entity.user != 'NULL' %}
+                <br/>
+                    {% for user in entity.user %}
+                
+                                <tr>
+                                    <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
+                                    <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
+                                        {{ user.points }} points<br />
+                                    {% if user.average_time != NULL %}
+                                        Temps moyen : {{ user.average_time }} s<br />
+                                    {% endif %}
+                                    </td>
+                                    <button onclick="publishFriendWALL({{ user.fb_uid }},'{{entity.title}}')">Défier</button></td>
+                                </tr>
+                    {% endfor %}
+                {% endif %}
             </fieldset>
         {% endfor %}
     {% else %}
     <h1>Liste des Quizz</h1>
         {% for entity in entities %}
             <fieldset>
+                <h5>{{ entity.title }}</h5><br/>
                 <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
                 Déscription : {{ entity.shortDesc }}<br/>
                 Points à gagner : {{ entity.winPoints }}<br/>
                 <a href="{{ path('quizz_show', { 'id': entity.id }) }}">voir le quizz !</a><br/>
+                <div class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+                 {% if entity.user != 'NULL' %}
+                <br/>
+                    {% for user in entity.user %}
+                
+                                <tr>
+                                    <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
+                                    <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
+                                        {{ user.points }} points<br />
+                                    {% if user.average_time != NULL %}
+                                        Temps moyen : {{ user.average_time }} s<br />
+                                    {% endif %}
+                                    </td>
+                                    <button onclick="publishFriendWALL({{ user.fb_uid }}, '{{ entity.title }}')">Défier</button></td>
+                                </tr>
+                    {% endfor %}
+                {% endif %}
             </fieldset>
         {% endfor %}
     {% endif %}
     </div>
-    {% endblock %}
+<div id="fb-root"></div>
+<script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1&appId=155515477957724";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script>
+        function publishWALL(monClassement, total){
+               FB.ui(
+                {
+                    method: 'feed',
+                    name: 'XtremQUIZZ',
+                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                    caption: "XtremQUIZZ",
+                    description: "Mon classement à XtremQUIZZ :"+ monClassement + "/" + total
+                },
+                function(response) {
+                    if (response && response.post_id) {
+                    } else {
+                    }
+                }
+                );
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+        function defierAmis(ID) {
+            FB.ui({method: 'apprequests',
+                message: "Oo C'est l'heure du dududu duel  ! oO",
+                to: ID
+            }, requestCallback);
+        }
+         function publishFriendWALL(ID,quizzTitle){
+               FB.ui(
+                {
+                    method: 'feed',
+                    name: 'XtremQUIZZ',
+                    link: 'http://apps.facebook.com/xtremquizz-mamori',
+                    caption: 'XtremQuizz',
+                    description: "Je te défie d'en savoir plus que moi sur le quizz : "+quizzTitle,
+                    to: ID
+                },
+                function(response) {
+                    if (response && response.post_id) {
+                    } else {
+                    }
+                }
+                );
+        }
+         function sendRequestViaMultiFriendSelector() {
+            FB.ui({method: 'apprequests',
+                message: 'Oo Viens jouer avec moi ! oO',
+            }, requestCallback);
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+    </script>
+{% endblock %}
