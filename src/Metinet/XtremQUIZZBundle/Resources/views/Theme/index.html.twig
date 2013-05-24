@@ -3,19 +3,34 @@
 {% block body %}
     {% set user = app.session.get('user') %}
     <div class="blockaccueil corps">
-    <h3>Liste des thèmes :</h3>
+    <h3>Liste des thèmes</h3>
 
-    <table class="record_properties">
+    <div class="paging_container">
+        <div class="liste">
             {% for entity in entities %}
-                 {% if entity.nbQuizz > 0 %}
-            <h5>{{ entity.title }} : </h5> <br/>
-            <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
-                    Déscription : {{ entity.shortDesc }} <br/>
-                    Nombre de quizz : {{entity.nbQuizz}} <br/>
-                <a href="{{ path('quizz_list', { 'id': entity.id }) }}">Voir les Quizz</a>
-                 {% endif %}
+                {% if entity.nbQuizz > 0 %}
+                    <span class="content">
+                        <div class="margin_block_qt">
+                            <table class="records_list">
+                                <tr>
+                                    <th><div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div></th>
+                                    <td><strong>{{ entity.title }}</strong><br/>
+                                        {{ entity.shortDesc }}</td>
+                                    <td>{{entity.nbQuizz}} quizz</td>
+                                    <td class="actions_quizz">
+                                        <a href="{{ path('quizz_list', { 'id': entity.id }) }}">Voir les Quizz</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </span>
+                {% endif %}
             {% endfor %}
+        </div>
+        <div class="page_navigation"></div>
     </div>
+
+
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
