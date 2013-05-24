@@ -234,6 +234,11 @@ td.actions {
     width: 40px;
 }
 
+td.actions_quizz {
+    width: 100px;
+    text-align:center;
+}
+
 img.image {
     width: 200px;
     margin:0 10px 10px 0;
@@ -404,4 +409,22 @@ td#infos_joueur_accueil {
     text-decoration: none;
     color:white;
     font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+
+.reponse label {
+    margin-bottom: 20px;
+    width: 93%;
+    text-align: left;
+    padding-left: 7px;
+}
+
+.reponse {
+    display: inline-block;
+    margin: 20px 50px;
+    width: 80%;
+}
+
+.reponse input {
+    float: left;
+    display: inline-block;
 }
