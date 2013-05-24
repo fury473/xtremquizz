@@ -3,7 +3,6 @@
 {% block body %}
     {% set user = app.session.get('user') %}
 
-
 <div class="blockaccueil corps">
     <h3>Votre profil</h3>
 
@@ -141,48 +140,57 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-                    <script>
-                    function publishWALL(monClassement, total) {
-                        FB.ui(
-                                {
-                                    method: 'feed',
-                                    name: 'XtremQUIZZ',
-                                    link: 'http://apps.facebook.com/xtremquizz-mamori',
-                                    caption: "XtremQUIZZ",
-                                    description: "Mon classement à XtremQUIZZ :" + monClassement + "/" + total
-                                },
-                        function(response) {
-                            if (response && response.post_id) {
-                            } else {
-                            }
-                        }
-                        );
-                    }
-                    function requestCallback(response) {
-                        // Handle callback here
-                    }
-                    function defierAmis(ID) {
-                        FB.ui({method: 'apprequests',
-                            message: "Oo C'est l'heure du dududu duel  ! oO",
-                            to: ID
-                        }, requestCallback);
-                    }
-                    function publishFriendWALL(ID) {
-                        FB.ui(
-                                {
-                                    method: 'feed',
-                                    name: 'XtremQUIZZ',
-                                    link: 'http://apps.facebook.com/xtremquizz-mamori',
-                                    caption: 'Les quizz des vrais warrior',
-                                    description: '',
-                                    to: ID
-                                },
-                        function(response) {
-                            if (response && response.post_id) {
-                            } else {
-                            }
-                        }
-                        );
-                    }
-                        </script>
+        <script>
+        function publishWALL(monClassement, total) {
+            FB.ui(
+                    {
+                        method: 'feed',
+                        name: 'XtremQUIZZ',
+                        link: 'http://apps.facebook.com/xtremquizz-mamori',
+                        caption: "XtremQUIZZ",
+                        description: "Mon classement à XtremQUIZZ :" + monClassement + "/" + total
+                    },
+            function(response) {
+                if (response && response.post_id) {
+                } else {
+                }
+            }
+            );
+        }
+        function requestCallback(response) {
+            // Handle callback here
+        }
+        function defierAmis(ID) {
+            FB.ui({method: 'apprequests',
+                message: "Oo C'est l'heure du dududu duel  ! oO",
+                to: ID
+            }, requestCallback);
+        }
+        function publishFriendWALL(ID) {
+            FB.ui(
+                    {
+                        method: 'feed',
+                        name: 'XtremQUIZZ',
+                        link: 'http://apps.facebook.com/xtremquizz-mamori',
+                        caption: 'Les quizz des vrais warrior',
+                        description: '',
+                        to: ID
+                    },
+            function(response) {
+                if (response && response.post_id) {
+                } else {
+                }
+            }
+            );
+        }
+
+        function sendRequestViaMultiFriendSelector() {
+            FB.ui({method: 'apprequests',
+                message: 'Oo Viens jouer avec moi ! oO',
+            }, requestCallback);
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+    </script>
 {% endblock %}

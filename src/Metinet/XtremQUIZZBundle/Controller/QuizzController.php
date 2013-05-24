@@ -145,21 +145,33 @@ class QuizzController extends Controller
     public function listAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $QuizzUrl = $this->container->getParameter('fb_app_canvas_url');
+        $fbUserManager = $this->container->get('metinet.manager.fbuser');
+        $myfbUid = $fbUserManager->getMyFbId();
+        $i=0;
         if($id == 0){
-           $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->findAll();
-
+           $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->getAllQuizz()->execute();
+           foreach($allQuizz as $quizz){
+               $allQuizz[$i]['user'] = $fbUserManager->getFriendUsersWhoCompletedQuizz($myfbUid,$quizz['id']);
+               $i++;
+           }
            return array(
                'entities' => $allQuizz,
                'theme' => 0,
+               'url'    => $QuizzUrl,
            );   
         }
         else{
            $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->getQuizzByTheme($id)->execute();
            $theme =  $em->getRepository('MetinetXtremQUIZZBundle:Theme')->getThemeByID($id)->execute();
-           var_dump($allQuizz);
+           foreach($allQuizz as $quizz){
+               $allQuizz[$i]['user'] = $fbUserManager->getFriendUsersWhoCompletedQuizz($myfbUid,$quizz['id']);
+               $i++;
+           }
            return array(
                'entities' => $allQuizz,
                'theme' => $theme[0],
+               'url'    => $QuizzUrl,
            ); 
         }
     }

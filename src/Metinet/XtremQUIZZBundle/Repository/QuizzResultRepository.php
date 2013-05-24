@@ -58,4 +58,14 @@ class QuizzResultRepository extends EntityRepository
     
         return $average;
     }
+     public function getUserIdByQuizzId($quizzId) {
+        return $this->_em->createQuery("
+                    SELECT
+                            i.user
+                    FROM
+                            MetinetXtremQUIZZBundle:QuizzResult i
+                    WHERE
+                            i.quizz = $quizzId
+            ");
+    }
 }

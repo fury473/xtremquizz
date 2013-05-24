@@ -17,3 +17,16 @@
             {% endfor %}
     </div>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+    <script>
+         function sendRequestViaMultiFriendSelector() {
+            FB.ui({method: 'apprequests',
+                message: 'Oo Viens jouer avec moi ! oO',
+            }, requestCallback);
+        }
+        function requestCallback(response) {
+         // Handle callback here
+        }
+    </script>
+{% endblock %}
