@@ -1,7 +1,12 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Nouvelle réponse</h1>
+<div class="blockaccueil corps">
+    <h3>Nouvelle réponse</h3>
+    
+    <div class="liens">
+        <a href="{{ path('admin_question_show', { 'id': entity.question.id }) }}">Retour à la liste des réponses <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
+    </div>
 
     <form action="{{ path('admin_answer_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
@@ -9,10 +14,5 @@
             <button type="submit">Créer</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_answer') }}">Retour à la liste</a>
-    </li>
-</ul>
+</div>
 {% endblock %}

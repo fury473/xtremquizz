@@ -25,7 +25,7 @@ class QuizzType extends AbstractType
             ->add('txtWin4','textarea',array('label'=>'Résultat (25%)'))
             ->add('shareWallTitle','text',array('label'=>'Titre du partage'))
             ->add('shareWallDesc','text',array('label'=>'Description du partage'))
-            ->add('isPromoted','checkbox',array('label' => 'Mettre en avant'))
+            ->add('isPromoted','checkbox',array('label' => 'Mettre en avant', 'required' => false))
             ->add('state','integer',array('label'=>'Etat (1 si actif)'))
             ->add('theme','entity',array('label'=>'Thème',
                                 'class' => 'MetinetXtremQUIZZBundle:Theme'))

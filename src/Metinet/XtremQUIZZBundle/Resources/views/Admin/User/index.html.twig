@@ -1,55 +1,76 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
     <h1>Liste des utilisateurs</h1>
-
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Fbuid</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Username</th>
-                <th>Picture</th>
-                <th>Points</th>
-                <th>Averagetime</th>
-                <th>Nbquizz</th>
-                <th>Createdat</th>
-                <th>Lastconnectat</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.fbUid }}</td>
-                <td>{{ entity.firstname }}</td>
-                <td>{{ entity.lastname }}</td>
-                <td>{{ entity.username }}</td>
-                <td>{{ entity.picture }}</td>
-                <td>{{ entity.points }}</td>
-                <td>{{ entity.averageTime }}</td>
-                <td>{{ entity.nbQuizz }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.lastconnectAt %}{{ entity.lastconnectAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">Afficher</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">Modifier</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="paging_container">
+        <table class="records_list">
+            <thead>
+                <tr>
+                    <th>Fbuid</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Username</th>
+                    <th>Picture</th>
+                    <th>Points</th>
+                    <th>Averagetime</th>
+                    <th>Nbquizz</th>
+                    <th>Createdat</th>
+                    <th>Lastconnectat</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="content">
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.fbUid }}</td>
+                    <td>{{ entity.firstname }}</td>
+                    <td>{{ entity.lastname }}</td>
+                    <td>{{ entity.username }}</td>
+                    <td>{{ entity.picture }}</td>
+                    <td>{{ entity.points }}</td>
+                    <td>{{ entity.averageTime }}</td>
+                    <td>{{ entity.nbQuizz }}</td>
+                    <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.lastconnectAt %}{{ entity.lastconnectAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">Afficher</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">Modifier</a>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="page_navigation"></div>
+    </div>
 
         <ul>
         <li>
             <a href="{{ path('admin_user_new') }}">Nouvel utilisateur</a>
         </li>
     </ul>
-    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery-1.9.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery.pajinate.min.js') }}"></script>
+    <script type="text/javascript">	
+        $(document).ready(function(){
+                $('.paging_container').pajinate({
+                        nav_label_first : '<<',
+                        nav_label_last : '>>',
+                        nav_label_prev : '<',
+                        nav_label_next : '>',
+                        items_per_page : 5,
+                        num_page_links_to_display : 3,
+                        abort_on_small_lists: true
+                });
+        });
+    </script>
+{% endblock %}

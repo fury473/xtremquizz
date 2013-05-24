@@ -139,7 +139,7 @@ class QuizzController extends Controller
     }
      
     /**
-     * @Route("/{id}/", name="quizz_list")
+     * @Route("/{id}/list", name="quizz_list")
      * @Template()
      */
     public function listAction($id)
@@ -149,16 +149,31 @@ class QuizzController extends Controller
         $fbUserManager = $this->container->get('metinet.manager.fbuser');
         $myfbUid = $fbUserManager->getMyFbId();
         $i=0;
+        
         if($id == 0){
            $allQuizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->getAllQuizz()->execute();
            foreach($allQuizz as $quizz){
                $allQuizz[$i]['user'] = $fbUserManager->getFriendUsersWhoCompletedQuizz($myfbUid,$quizz['id']);
                $i++;
            }
+           
+           foreach($allQuizz as $key=>$q){
+            $chaine = $q['shortDesc'];
+            $key = $q['id'];
+            if (strlen($chaine) > 40) {
+		$chaine = substr($chaine, 0, 40);
+		$position_espace = strrpos($chaine, " ");
+		$texte = substr($chaine, 0, $position_espace); 
+		$chaine = $texte."...";
+            }
+            $tab[$key] = $chaine;
+        }
+           
            return array(
                'entities' => $allQuizz,
                'theme' => 0,
                'url'    => $QuizzUrl,
+               'descriptions' => $tab
            );   
         }
         else{
@@ -168,10 +183,24 @@ class QuizzController extends Controller
                $allQuizz[$i]['user'] = $fbUserManager->getFriendUsersWhoCompletedQuizz($myfbUid,$quizz['id']);
                $i++;
            }
+           
+           foreach($allQuizz as $key=>$q){
+                $chaine = $q['shortDesc'];
+                $key = $q['id'];
+                if (strlen($chaine) > 40) {
+                    $chaine = substr($chaine, 0, 40);
+                    $position_espace = strrpos($chaine, " ");
+                    $texte = substr($chaine, 0, $position_espace); 
+                    $chaine = $texte."...";
+                }
+                $tab[$key] = $chaine;
+            }
+           
            return array(
                'entities' => $allQuizz,
                'theme' => $theme[0],
                'url'    => $QuizzUrl,
+               'descriptions' => $tab
            ); 
         }
     }

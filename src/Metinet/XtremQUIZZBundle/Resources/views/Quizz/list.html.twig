@@ -5,61 +5,73 @@
 
 <div class="blockaccueil corps">
     {%if theme != 0 %}
-        <h1>Liste des Quizz sur le theme : {{theme.title}}</h1>
+        <h3>Liste des Quizz sur le theme : {{theme.title}}</h3>
+        <div class="liste">
         {% for entity in entities %}
-            <fieldset>
-                <h5>{{ entity.title }}</h5><br/>
-                <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
-                Déscription : {{ entity.shortDesc }}<br/>
-                Points à gagner : {{ entity.winPoints }}<br/>
-                <a href="{{ path('quizz_show', { 'id': entity.id }) }}">voir le quizz !</a><br/>
-                <div class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
-                {% if entity.user != 'NULL' %}
-                <br/>
-                    {% for user in entity.user %}
-                
-                                <tr>
-                                    <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
-                                    <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
-                                        {{ user.points }} points<br />
-                                    {% if user.average_time != NULL %}
-                                        Temps moyen : {{ user.average_time }} s<br />
-                                    {% endif %}
-                                    </td>
-                                    <button onclick="publishFriendWALL({{ user.fb_uid }},'{{entity.title}}')">Défier</button></td>
-                                </tr>
-                    {% endfor %}
-                {% endif %}
-            </fieldset>
+            <div class="marginblock_listquizz">
+                <table class="records_list">
+                    <tr>
+                        <th><div class="logotq"><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></a></div></th>
+                        <td><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><strong>{{ entity.title }}</strong></a><br/>
+                                {{ descriptions[entity.id] }}
+                        </td>
+                        <td class="pointsagagner">Points à gagner<br/>{{ entity.winPoints }}</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td colspan="3"><span class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></span></td>
+                    </tr>
+                    {% if entity.user != NULL %}
+                        {% for user in entity.user %}
+                                    <tr>
+                                        <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
+                                        <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
+                                            {{ user.points }} points<br />
+                                        {% if user.average_time != NULL %}
+                                            Temps moyen : {{ user.average_time }} s<br />
+                                        {% endif %}
+                                        </td>
+                                        <button onclick="publishFriendWALL({{ user.fb_uid }},'{{entity.title}}')">Défier</button></td>
+                                    </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
         {% endfor %}
+        </div>
     {% else %}
-    <h1>Liste des Quizz</h1>
+    <h3>Liste des Quizz</h3>
+    <div class="liste">
         {% for entity in entities %}
-            <fieldset>
-                <h5>{{ entity.title }}</h5><br/>
-                <div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div> <br/>
-                Déscription : {{ entity.shortDesc }}<br/>
-                Points à gagner : {{ entity.winPoints }}<br/>
-                <a href="{{ path('quizz_show', { 'id': entity.id }) }}">voir le quizz !</a><br/>
-                <div class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
-                 {% if entity.user != 'NULL' %}
-                <br/>
+            <div class="marginblock_listquizz">
+                <table class="records_list">
+                    <tr>
+                        <th><div class="logotq"><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></a></div></th>
+                        <td><a href="{{ path('quizz_show', { 'id': entity.id }) }}" title="Détail du quizz"><strong>{{ entity.title }}</strong></a><br/>
+                                {{ descriptions[entity.id] }}
+                        </td>
+                        <td class="pointsagagner">Points à gagner<br/>{{ entity.winPoints }}</td>
+                    </tr>
+                    <tr style="height: 20px;">
+                        <td colspan="3"><span class="fb-like" data-href ="{{ url}}{{ path('quizz_show', { 'id': entity.id }) }}" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></span></td>
+                    </tr>
+                {% if entity.user != 'NULL' %}
                     {% for user in entity.user %}
-                
-                                <tr>
-                                    <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
-                                    <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
-                                        {{ user.points }} points<br />
-                                    {% if user.average_time != NULL %}
-                                        Temps moyen : {{ user.average_time }} s<br />
-                                    {% endif %}
-                                    </td>
-                                    <button onclick="publishFriendWALL({{ user.fb_uid }}, '{{ entity.title }}')">Défier</button></td>
-                                </tr>
+                        <tr>
+                            <td class="img_accueil"><img src="https://graph.facebook.com/{{ user.fb_uid }}/picture" /></td>
+                            <td id="infos_joueur_accueil"><span class="gras">{{ user.firstname }} {{ user.lastname }}</span><br />
+                                {{ user.points }} points<br />
+                            {% if user.average_time != NULL %}
+                                Temps moyen : {{ user.average_time }} s<br />
+                            {% endif %}
+                            </td>
+                            <button onclick="publishFriendWALL({{ user.fb_uid }}, '{{ entity.title }}')">Défier</button></td>
+                        </tr>
                     {% endfor %}
                 {% endif %}
-            </fieldset>
+                </table>
+            </div>
         {% endfor %}
+    </div>
     {% endif %}
     </div>
 <div id="fb-root"></div>

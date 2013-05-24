@@ -1,0 +1,36 @@
+.ellipse{
+    float: left;
+}
+
+.page_navigation {
+    color: #3b5998;
+    padding-bottom: 10px;
+    max-width: 215px;
+    margin: auto;
+}
+
+.page_navigation a {
+    padding: 3px 5px;
+    margin: 2px;
+    color: white;
+    text-decoration: none;
+    float: left;
+    font-family: Tahoma;
+    font-size: 12px;
+    background-color: #5b74a8;
+    border: 1px outset #999;
+    border-color: #29447e #29447e #1a356e;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+}
+.active_page{
+    background-color: #edeff4 !important;
+    color: #5b74a8 !important;
+}
+
+.content, .alt_content{
+    color: black;
+}
+
+.content li, .alt_content li, .content > p{
+    padding: 5px
+}

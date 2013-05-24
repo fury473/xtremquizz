@@ -17,16 +17,16 @@ use Metinet\XtremQUIZZBundle\Form\AnswerType;
 class AnswerController extends Controller
 {
     /**
-     * Lists all Answer entities.
+     * Lists question Answers.
      *
-     * @Route("/", name="admin_answer")
+     * @Route("/{id}/answers", name="admin_answer")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->findAll();
+        $entities = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->findByQuestion($id);
 
         return array(
             'entities' => $entities,
@@ -50,7 +50,7 @@ class AnswerController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_answer_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_question_show', array('id' => $entity->getQuestion()->getId())));
         }
 
         return array(
@@ -75,6 +75,26 @@ class AnswerController extends Controller
             'form'   => $form->createView(),
         );
     }
+    
+    /**
+     * Displays a form to create a new Answer entity to a question.
+     *
+     * @Route("/{id}/new", name="admin_answer_new_question")
+     * @Template("MetinetXtremQUIZZBundle:Admin/Answer:new.html.twig")
+     */
+    public function newForQuestionAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository('MetinetXtremQUIZZBundle:Question')->find($id);
+        $entity = new Answer();
+        $entity->setQuestion($question);
+        $form   = $this->createForm(new AnswerType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
 
     /**
      * Finds and displays a Answer entity.
@@ -92,11 +112,9 @@ class AnswerController extends Controller
             throw $this->createNotFoundException('Unable to find Answer entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
         );
     }
 
@@ -117,12 +135,10 @@ class AnswerController extends Controller
         }
 
         $editForm = $this->createForm(new AnswerType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -142,7 +158,6 @@ class AnswerController extends Controller
             throw $this->createNotFoundException('Unable to find Answer entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new AnswerType(), $entity);
         $editForm->bind($request);
 
@@ -150,13 +165,12 @@ class AnswerController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_answer_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_question_show', array('id' => $entity->getQuestion()->getId())));
         }
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -165,38 +179,19 @@ class AnswerController extends Controller
      *
      * @Route("/{id}/delete", name="admin_answer_delete")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MetinetXtremQUIZZBundle:Answer')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Answer entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Answer entity.');
         }
 
-        return $this->redirect($this->generateUrl('admin_answer'));
-    }
+        $questionId = $entity->getQuestion()->getId();
+        $em->remove($entity);
+        $em->flush();
 
-    /**
-     * Creates a form to delete a Answer entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->redirect($this->generateUrl('admin_question_show', array('id' => $questionId)));
     }
 }

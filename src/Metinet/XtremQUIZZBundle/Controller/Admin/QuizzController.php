@@ -27,9 +27,23 @@ class QuizzController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->findAll();
+        
+        $tab = Array();
+        foreach($entities as $key=>$q){
+            $chaine = $q->getShortDesc();
+            $key = $q->getId();
+            if (strlen($chaine) > 40) {
+		$chaine = substr($chaine, 0, 40);
+		$position_espace = strrpos($chaine, " ");
+		$texte = substr($chaine, 0, $position_espace); 
+		$chaine = $texte."...";
+            }
+            $tab[$key] = $chaine;
+        }
 
         return array(
             'entities' => $entities,
+            'descriptions' => $tab
         );
     }
 
@@ -152,7 +166,7 @@ class QuizzController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_quizz_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_quizz_show', array('id' => $id)));
         }
 
         return array(
@@ -166,22 +180,17 @@ class QuizzController extends Controller
      * Deletes a Quizz entity.
      * @Route("/{id}/delete", name="admin_quizz_delete")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Quizz entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Quizz entity.');
         }
+
+        $em->remove($entity);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('admin_quizz'));
     }

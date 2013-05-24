@@ -11,20 +11,17 @@
         
     </head>
     <body>
+        <div id="fb-root"></div>
         <div class="blockaccueil menu">
-            <a href="{{ path('accueil') }}" class="lien-menu"><img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/></a>
+            <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
             <ul class="menu">
-                <li><a href="{{ path('ranking') }}" class="lien-menu">Classement</a></li>
-                <li><a href="{{ path('theme') }}" class="lien-menu">Thème</a></li>
-                <li><a href="{{ path('quizz_list',{ 'id' : 0}) }}" class="lien-menu">Quizz</a></li>
-                <li><a onclick="sendRequestViaMultiFriendSelector()" class="lien-menu">Invitation</a></li> 
+                <li><a href="{{ path('admin') }}">Accueil</a></li>
+                <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
+                <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
+                <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
             </ul>
         </div>
-        
-        <div id="fb-root"></div>
-        {% block body %}
-            
-        {% endblock %}
+        {% block body %}{% endblock %}
         {% block javascripts %}
         <script type="text/javascript">
           window.fbAsyncInit = function() {

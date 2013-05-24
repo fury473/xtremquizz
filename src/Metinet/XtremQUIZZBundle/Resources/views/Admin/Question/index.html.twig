@@ -1,48 +1,61 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
 
 <div class="blockaccueil corps">
     <h3>Questions</h3>
     
     <div class="liens">
-        <a href="{{ path('admin_question_new') }}">Nouvelle question</a>
-        <a href="{{ path('admin_quizz') }}">Retour à la liste des quizz</a>
+        <a href="{{ path('admin_question_new_quizz', { 'id': quizz_id }) }}">Nouvelle question <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" /></a>
+        <a href="{{ path('admin_quizz_show', { 'id': quizz_id }) }}">Retour au quizz <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
     
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.title }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_question_show', { 'id': entity.id }) }}">Afficher</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_question_edit', { 'id': entity.id }) }}">Modifier</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="paging_container">
+        <div class="liste paging_container">
+            {% for entity in entities %}
+                <span class="content">
+                    <div class="margin_block_qt">
+                        {% if entity.webPath is not null %}
+                            {% set webPath = entity.webPath %}
+                        {% else %}
+                            {% set webPath = entity.quizz.webPath %}
+                        {% endif %}
+                        <table class="records_list">
+                            <tr>
+                                <th><div class="logotq"><img src="{{ asset(webPath) }}" /></div></th>
+                                <td><strong>{{ entity.title }}</strong></td>
+                                <td class="actions">
+                                    <a href="{{ path('admin_question_show', { 'id': entity.id }) }}">Afficher</a>
+                                    <a href="{{ path('admin_question_edit', { 'id': entity.id }) }}">Modifier</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </span>
+            {% else %}
+                <p>Aucune question</p>
+            {% endfor %}
+        </div>
+        <div class="page_navigation"></div>
+    </div>
 </div>
-    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery-1.9.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery.pajinate.min.js') }}"></script>
+    <script type="text/javascript">	
+        $(document).ready(function(){
+                $('.paging_container').pajinate({
+                        nav_label_first : '<<',
+                        nav_label_last : '>>',
+                        nav_label_prev : '<',
+                        nav_label_next : '>',
+                        items_per_page : 5,
+                        num_page_links_to_display : 3,
+                        abort_on_small_lists: true
+                });
+        });
+    </script>
+{% endblock %}

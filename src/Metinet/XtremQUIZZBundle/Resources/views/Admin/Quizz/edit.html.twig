@@ -1,28 +1,19 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
-
 <div class="blockaccueil corps">
     <h3>Modification du quizz {{ entity.title }}</h3>
 
     <div class="liens">
         <a href="{{ path('admin_quizz_new') }}">Nouveau quizz <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" size="10" /></a>
-        <a href="{{ path('admin_quizz') }}">Retour à la liste <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz_delete', { 'id': entity.id }) }}">Supprimer <img src="{{ asset('/bundles/metinetxtremquizz/css/images/moins.png') }}" size="10" /></a>
+        <a href="{{ path('admin_quizz') }}">Retour à la liste des quizz <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
     <div class="block_detail">
         <table>
             <tr>
-                <td><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" class="image" /></td>
+                <td><img src="{{ asset(entity.webPath) }}" class="image" /></td>
                 <td><h2>{{ entity.title }}</h2></td>
             </tr>
         </table>
@@ -32,12 +23,6 @@
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
         <button type="submit">Modifier</button>
-    </form>
-    
-    <form action="{{ path('admin_quizz_delete', { 'id': entity.id }) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-        <button type="submit">Supprimer</button>
     </form>
 </div>
 {% endblock %}
