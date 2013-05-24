@@ -17,11 +17,33 @@
 				<td><h2>{{ quizz.txtWin }}</h2>
 					<p>Temps moyen: {{ quizz.averageTime }} secondes<br/>
 					Temps écoulé: {{ quizzResult.elapsedTime }}<br/>
-					Taux de réussite: {{ quizzResult.average }}%</p>
+					Taux de réussite: {{ quizzResult.average }}% <br/></p>
+                                        <button onclick="publishWALL('{{ quizz.title }}','{{ quizzResult.elapsedTime }}', {{ quizzResult.average }})">Partager</button>
 				</td>
 			</tr>
 		</table>
     </div>
 </div>
     
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script>
+        function publishWALL(quizz, monTemps, tauxReussite) {
+            FB.ui(
+                    {
+                        method: 'feed',
+                        name: 'XtremQUIZZ',
+                        link: 'http://apps.facebook.com/xtremquizz-mamori',
+                        caption: "XtremQUIZZ",
+                        description: "J'ai effectué un taux de réussite de " + tauxReussite + "% en " + monTemps + " sur le quizz : " + quizz
+                    },
+            function(response) {
+                if (response && response.post_id) {
+                } else {
+                }
+            }
+            );
+        }
+    </script>
 {% endblock %}
