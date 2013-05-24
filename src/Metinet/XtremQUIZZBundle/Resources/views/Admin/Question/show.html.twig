@@ -1,41 +1,33 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
-
 <div class="blockaccueil corps">
-    <h3>Question</h3>
+    <h3>{{ entity.title }}</h3>
     
     <div class="liens">
-        <a href="{{ path('admin_question_edit', { 'id': entity.id }) }}">Modifier</a>
-        <a href="{{ path('admin_question') }}">Retour à la liste</a>        
+        <a href="{{ path('admin_question_edit', { 'id': entity.id }) }}">Modifier <img src="{{ asset('/bundles/metinetxtremquizz/css/images/update.png') }}" size="10" /></a>
+        <a href="{{ path('admin_answer_new_question', { 'id': entity.id }) }}">Nouvelle Réponse <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" size="10" /></a>
+        <a href="{{ path('admin_question_delete', { 'id': entity.id }) }}">Supprimer <img src="{{ asset('/bundles/metinetxtremquizz/css/images/moins.png') }}" size="10" /></a>
+        <a href="{{ path('admin_question', { 'id': entity.quizz.id }) }}">Retour à la liste des questions <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Titre</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ entity.picture }}</td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <form action="{{ path('admin_question_delete', { 'id': entity.id }) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-        {{ form_widget(delete_form) }}
-        <button type="submit">Supprimer</button>
-    </form>
+    <div class="block_detail">
+        {% for answer in entity.answers %}
+        <div>
+            <h4 style="text-transform: none;">{{ answer.title }}</h4>
+            <p class="liens" >
+                {% if answer.isCorrect %}
+                    <span class="isCorrect">VRAI</span>
+                {% else %}
+                    <span class="isNotCorrect">FAUX</span>
+                {% endif %}
+                <a href="{{ path('admin_answer_edit', { 'id': answer.id }) }}">Modifier</a>
+                <a href="{{ path('admin_answer_delete', { 'id': answer.id }) }}">Supprimer</a>
+            </p>
+        </div>
+        {% else %}
+            <p>Aucune réponse</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

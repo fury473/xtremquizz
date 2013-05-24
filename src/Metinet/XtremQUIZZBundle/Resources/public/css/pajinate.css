@@ -1,6 +1,12 @@
+.ellipse{
+    float: left;
+}
+
 .page_navigation {
     color: #3b5998;
     padding-bottom: 10px;
+    max-width: 215px;
+    margin: auto;
 }
 
 .page_navigation a {

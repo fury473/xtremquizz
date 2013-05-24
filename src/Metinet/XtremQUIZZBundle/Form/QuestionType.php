@@ -11,9 +11,16 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('picture')
-            ->add('quizz')
+            ->add('title','text',array('label'=>'Titre'))
+            ->add('picture','file',array('label'=>'Image',
+                                'data_class' => null,
+                                'required' => false,
+                                'property_path' => 'picture'))
+            ->add('quizz','entity', array(
+                            'class' => 'Metinet\XtremQUIZZBundle\Entity\Quizz',
+                            'attr' => array('class'=>'hidden'),
+                            'label' => ' '
+                            ));
         ;
     }
 

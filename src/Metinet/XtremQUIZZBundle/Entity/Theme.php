@@ -42,7 +42,7 @@ class Theme
     {
         return null === $this->picture
             ? null
-            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->picture;
+            : $this->getUploadRootDir().'/'.$this->picture;
     }
     
     public function getWebPath()
@@ -276,7 +276,7 @@ class Theme
         $this->getFile()->move($this->getUploadRootDir(), $this->picture);
 
         // check if we have an old image
-        if (isset($this->temp)) {
+        if (isset($this->temp) && file_exists($this->temp)) {
             // delete the old image
             unlink($this->temp);
             // clear the temp image path
@@ -304,7 +304,7 @@ class Theme
      */
     public function removeUpload()
     {
-        if (isset($this->temp)) {
+        if (isset($this->temp) && file_exists($this->temp)) {
             unlink($this->temp);
         }
     }    

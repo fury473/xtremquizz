@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 
 {% block body %}
@@ -6,10 +6,6 @@
      <div class="errors">{{ error.message }}</div>
     {% endif %}
     {% set user = app.session.get('user') %}
-
-    <div class="blockaccueil menu">
-        <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-    </div>
  
     <div class="blockaccueil corps">
         <h3>Se connecter en tant qu'administrateur</h3>

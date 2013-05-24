@@ -1,17 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body %}
     {% set user = app.session.get('user') %}
-
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
 
 <div class="blockaccueil corps">
     <h3>Statistiques</h3>

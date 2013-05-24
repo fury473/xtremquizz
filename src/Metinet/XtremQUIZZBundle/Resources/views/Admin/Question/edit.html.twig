@@ -1,21 +1,26 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
-
 <div class="blockaccueil corps">
     <h3>Modification d'une question</h3>
     
     <div class="liens">
-        <a href="{{ path('admin_question') }}">Retour à la liste</a>
+        <a href="{{ path('admin_question_delete', { 'id': entity.id }) }}">Supprimer <img src="{{ asset('/bundles/metinetxtremquizz/css/images/moins.png') }}" size="10" /></a>
+        <a href="{{ path('admin_question', { 'id': entity.quizz.id }) }}">Retour à la liste des questions <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
+    </div>
+    
+    <div class="block_detail">
+        {% if entity.webPath is not null %}
+            {% set webPath = entity.webPath %}
+        {% else %}
+            {% set webPath = entity.quizz.webPath %}
+        {% endif %}
+        <table>
+            <tr>
+                <td><img src="{{ asset(webPath) }}" class="image" /></td>
+                <td><h2>{{ entity.title }}</h2></td>
+            </tr>
+        </table>
     </div>
 
     <form action="{{ path('admin_question_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
@@ -24,12 +29,6 @@
         <p>
             <button type="submit">Modifier</button>
         </p>
-    </form>
-    
-    <form action="{{ path('admin_question_delete', { 'id': entity.id }) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE" />
-        {{ form_widget(delete_form) }}
-        <button type="submit">Supprimer</button>
     </form>
 </div>
 {% endblock %}

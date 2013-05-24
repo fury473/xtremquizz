@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
     <h1>Liste des utilisateurs</h1>
@@ -68,7 +68,8 @@
                         nav_label_prev : '<',
                         nav_label_next : '>',
                         items_per_page : 5,
-                        num_page_links_to_display : 3
+                        num_page_links_to_display : 3,
+                        abort_on_small_lists: true
                 });
         });
     </script>

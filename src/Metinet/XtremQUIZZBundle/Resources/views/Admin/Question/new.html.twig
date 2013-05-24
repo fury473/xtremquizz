@@ -1,21 +1,11 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-<div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/images/logo_xtremquizz.png') }}" id="logo"/>
-    <ul class="menu">
-        <li><a href="{{ path('admin') }}">Accueil</a></li>
-        <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-        <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-        <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-    </ul>
-</div>
-
 <div class="blockaccueil corps">
     <h3>Nouvelle question</h3>
     
     <div class="liens">
-        <a href="{{ path('admin_question') }}">Retour à la liste</a>
+        <a href="{{ path('admin_question', { 'id': quizz_id }) }}">Retour à la liste des question <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
     </div>
 
     <form action="{{ path('admin_question_create') }}" method="post" {{ form_enctype(form) }}>

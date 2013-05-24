@@ -93,11 +93,8 @@ class ThemeController extends Controller
             throw $this->createNotFoundException('Unable to find Theme entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
             'quizz' => $quizzParTheme
         );
     }
@@ -119,12 +116,10 @@ class ThemeController extends Controller
         }
 
         $editForm = $this->createForm(new ThemeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -144,7 +139,6 @@ class ThemeController extends Controller
             throw $this->createNotFoundException('Unable to find Theme entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new ThemeType(), $entity);
         $editForm->bind($request);
 
@@ -152,13 +146,12 @@ class ThemeController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_theme_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_theme_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -167,39 +160,19 @@ class ThemeController extends Controller
      *
      * @Route("/{id}/delete", name="admin_theme_delete")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MetinetXtremQUIZZBundle:Theme')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MetinetXtremQUIZZBundle:Theme')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Theme entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Theme entity.');
         }
 
-        return $this->redirect($this->generateUrl('admin_theme'));
-    }
+        $em->remove($entity);
+        $em->flush();
 
-    /**
-     * Creates a form to delete a Theme entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        return $this->redirect($this->generateUrl('admin_theme'));
     }
     
     /**

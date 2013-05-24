@@ -17,18 +17,19 @@ use Metinet\XtremQUIZZBundle\Form\QuestionType;
 class QuestionController extends Controller
 {
     /**
-     * Lists all Question entities.
+     * Lists quizz questions.
      *
-     * @Route("/", name="admin_question")
-     * @Template()
+     * @Route("/{id}/questions", name="admin_question")
+     * @Template("")
      */
-    public function indexAction()
+    public function indexAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('MetinetXtremQUIZZBundle:Question')->findAll();
+        $entities = $em->getRepository('MetinetXtremQUIZZBundle:Question')->findByQuizz($id);
 
         return array(
             'entities' => $entities,
+            'quizz_id' => $id
         );
     }
 
@@ -76,6 +77,27 @@ class QuestionController extends Controller
     }
 
     /**
+     * Displays a form to create a new Question entity to a quizz.
+     *
+     * @Route("/{id}/new", name="admin_question_new_quizz")
+     * @Template("MetinetXtremQUIZZBundle:Admin/Question:new.html.twig")
+     */
+    public function newForQuizzAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $quizz = $em->getRepository('MetinetXtremQUIZZBundle:Quizz')->find($id);
+        $entity = new Question();
+        $entity->setQuizz($quizz);
+        $form   = $this->createForm(new QuestionType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'quizz_id' => $id,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
      * Finds and displays a Question entity.
      *
      * @Route("/{id}/show", name="admin_question_show")
@@ -91,11 +113,8 @@ class QuestionController extends Controller
             throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity'      => $entity
         );
     }
 
@@ -116,12 +135,10 @@ class QuestionController extends Controller
         }
 
         $editForm = $this->createForm(new QuestionType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -141,7 +158,6 @@ class QuestionController extends Controller
             throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new QuestionType(), $entity);
         $editForm->bind($request);
 
@@ -149,13 +165,12 @@ class QuestionController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_question_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_question_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form'   => $editForm->createView()
         );
     }
 
@@ -163,38 +178,63 @@ class QuestionController extends Controller
      * Deletes a Question entity.
      * @Route("/{id}/delete", name="admin_question_delete")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('MetinetXtremQUIZZBundle:Question')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MetinetXtremQUIZZBundle:Question')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Question entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
-        return $this->redirect($this->generateUrl('admin_question'));
-    }
+        $quizzId = $entity->getQuizz()->getId();
+        $em->remove($entity);
+        $em->flush();
 
+        return $this->redirect($this->generateUrl('admin_question', array('id' => $quizzId)));
+    }
+    
     /**
-     * Creates a form to delete a Question entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
+    * @Template()
+    */
+    public function uploadAction()
     {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
+        $document = new Document();
+        $form = $this->createFormBuilder($document)
+            ->add('name')
+            ->add('file')
             ->getForm()
         ;
+
+        if ($this->getRequest()->getMethod() === 'POST') {
+            $form->bindRequest($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+
+                $em->persist($document);
+                $em->flush();
+            }
+        }
+
+        return array('form' => $form->createView());
+    }
+    
+    public function upload()
+    {
+        // la propriété « file » peut être vide si le champ n'est pas requis
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // la méthode « move » prend comme arguments le répertoire cible et
+        // le nom de fichier cible où le fichier doit être déplacé
+        $this->getFile()->move($this->getUploadRootDir(), $this->getFile()->getClientOriginalName());
+
+        // définit la propriété « path » comme étant le nom de fichier où vous
+        // avez stocké le fichier
+        $this->path = $this->getFile()->getClientOriginalName();
+
+        // « nettoie » la propriété « file » comme vous n'en aurez plus besoin
+        $this->file = null;
     }
 }

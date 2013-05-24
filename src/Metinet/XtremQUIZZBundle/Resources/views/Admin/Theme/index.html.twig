@@ -1,37 +1,53 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body %}
-    <div class="blockaccueil menu">
-    <img src="{{ asset('/bundles/metinetxtremquizz/css/images/logo_xtremquizz.png') }}" id="logo"/>  
-        <ul class="menu">
-            <li><a href="{{ path('admin') }}">Accueil</a></li>
-            <li><a href="{{ path('admin_theme') }}">Gestion des thèmes</a></li>
-            <li><a href="{{ path('admin_quizz') }}">Gestion des quizz</a></li>
-            <li><a href="{{ path('deconnexion') }}">Déconnexion</a></li>
-        </ul>
-    </div>
+<div class="blockaccueil corps">
+    <h3>Liste des thèmes</h3>
 
-    <div class="blockaccueil corps">
-        <h3>Liste des thèmes</h3>
-        
-        <div class="liens"><a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" /></a></div>
+    <div class="liens"><a href="{{ path('admin_theme_new') }}">Nouveau thème <img src="{{ asset('/bundles/metinetxtremquizz/css/images/plus.png') }}" /></a></div>
 
+    <div class="paging_container">
         <div class="liste">
             {% for entity in entities %}
-            <div class="margin_block_qt">
-                <table class="records_list">
-                    <tr>
-                        <th><div class="logotq"><img src="{{ asset('/bundles/metinetxtremquizz/images/' ~ entity.picture) }}" /></div></th>
-                        <td><strong>{{ entity.title }}</strong><br/>
-                            {{ entity.shortDesc }}</td>
-                        <td class="actions">
-                            <a href="{{ path('admin_theme_show', { 'id': entity.id }) }}">Afficher</a>
-                            <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier</a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            {% endfor %}    
+            <span class="content">
+                <div class="margin_block_qt">
+                    <table class="records_list">
+                        <tr>
+                            <th><div class="logotq"><img src="{{ asset(entity.webPath) }}" /></div></th>
+                            <td><strong>{{ entity.title }}</strong><br/>
+                                {{ entity.shortDesc }}</td>
+                            <td class="actions">
+                                <a href="{{ path('admin_theme_show', { 'id': entity.id }) }}">Afficher</a>
+                                <a href="{{ path('admin_theme_edit', { 'id': entity.id }) }}">Modifier</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </span>
+            {% else %}
+                <p>Aucun thème</p>
+            {% endfor %}
         </div>
+        <div class="page_navigation"></div>
     </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery-1.9.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/bundles/metinetxtremquizz/js/jquery.pajinate.min.js') }}"></script>
+    <script type="text/javascript">	
+        $(document).ready(function(){
+                $('.paging_container').pajinate({
+                        nav_label_first : '<<',
+                        nav_label_last : '>>',
+                        nav_label_prev : '<',
+                        nav_label_next : '>',
+                        items_per_page : 8,
+                        num_page_links_to_display : 3,
+                        abort_on_small_lists: true
+                });
+        });
+    </script>
 {% endblock %}

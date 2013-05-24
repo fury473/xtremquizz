@@ -11,12 +11,16 @@ class AnswerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
+            ->add('title', 'text', array('label'=>'Titre'))
             ->add('isCorrect', 'checkbox', array(
                 'label'     => 'Bonne Réponse',
                 'required'  => false
             ))
-            ->add('question')
+            ->add('question','entity', array(
+                            'class' => 'Metinet\XtremQUIZZBundle\Entity\Question',
+                            'attr' => array('class'=>'hidden'),
+                            'label' => ' '
+                            ))
         ;
     }
 

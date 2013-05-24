@@ -1,8 +1,14 @@
-{% extends '::base.html.twig' %}
+{% extends '::baseAdmin.html.twig' %}
 
 {% block body -%}
-    <h1>Modification d'une réponse</h1>
+<div class="blockaccueil corps">
+    <h3>Modification d'une réponse</h3>
 
+    <div class="liens">
+        <a href="{{ path('admin_answer_delete', { 'id': entity.id }) }}">Supprimer <img src="{{ asset('/bundles/metinetxtremquizz/css/images/moins.png') }}" size="10" /></a>
+        <a href="{{ path('admin_question_show', { 'id': entity.question.id }) }}">Retour à la liste des réponses <img src="{{ asset('/bundles/metinetxtremquizz/css/images/retour.png') }}" size="10" /></a>
+    </div>
+    
     <form action="{{ path('admin_answer_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_widget(edit_form) }}
@@ -10,17 +16,5 @@
             <button type="submit">Modifier</button>
         </p>
     </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_answer') }}">Retour à la liste</a>
-    </li>
-    <li>
-        <form action="{{ path('admin_answer_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Supprimer</button>
-        </form>
-    </li>
-</ul>
+</div>
 {% endblock %}
