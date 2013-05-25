@@ -57,7 +57,7 @@ class QuizzRepository extends EntityRepository
         ')->setMaxResults(3);
     }
 
-    public function getLastQuizzId() {
+    public function getLastQuizz() {
         return $this->_em->createQuery('
 			SELECT
 				i.id, i.title, i.picture, i.winPoints
@@ -67,7 +67,7 @@ class QuizzRepository extends EntityRepository
                                 i.state = 1
                         ORDER BY
                                 i.createdAt DESC
-		')->setMaxResults(4);
+		')->setMaxResults(4)->getResult();
     }
     public function getPromotedQuizz() {
         return $this->_em->createQuery('
@@ -79,7 +79,7 @@ class QuizzRepository extends EntityRepository
                                 i.isPromoted = 1 AND i.state = 1
                         ORDER BY
                                 i.createdAt DESC
-		')->setMaxResults(1);
+		')->getOneOrNullResult();
     }
     public function getQuizzByTheme($idTheme) {
         return $this->_em->createQuery("
